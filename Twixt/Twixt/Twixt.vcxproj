@@ -132,7 +132,11 @@
   <ItemGroup>
     <ClCompile Include="pilon.cpp" />
     <ClCompile Include="pilon.cppm" />
+    <ClCompile Include="pod.cpp" />
+    <ClCompile Include="pod.cppm" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="tabla.cpp" />
+    <ClCompile Include="tabla.cppm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
