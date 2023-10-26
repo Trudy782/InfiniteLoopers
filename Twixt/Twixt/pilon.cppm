@@ -3,7 +3,10 @@ module;
 #include<cstdint>
 
 export module pilon;
+
+export import pod;
 import<iostream>;
+import<vector>;
 
 namespace twixt {
 	export class Pilon {
@@ -15,5 +18,6 @@ namespace twixt {
 	private:
 		Color m_color : 1;
 		std::pair<int, int>pozitie;
+		std::vector<Pod>poduri;
 	};
 }

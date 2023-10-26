@@ -18,5 +18,17 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="pilon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pilon.cppm">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pod.cppm">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pod.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
