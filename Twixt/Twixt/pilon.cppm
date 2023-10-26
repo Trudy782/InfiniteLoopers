@@ -17,6 +17,8 @@ namespace twixt {
 		Pilon (Color color,std::pair<int,int> pozitie);
 		Pilon();
 		Pilon(const Pilon& other);
+		Pilon& operator=(const Pilon& obj);
+		~Pilon();
 	private:
 		Color m_color : 1;
 		std::pair<int, int>m_pozitie;
@@ -31,6 +33,17 @@ namespace twixt {
 	}
 	Pilon::Pilon(const Pilon& other)
 		:m_color{ other.m_color }, m_pozitie{ other.m_pozitie }
+	{
+	}
+	Pilon& Pilon::operator=(const Pilon& obj)
+	{
+		if (this != &obj) {
+			m_color = obj.m_color;
+			m_pozitie = obj.m_pozitie;
+		}
+		return *this;
+	}
+	Pilon::~Pilon()
 	{
 	}
 }
