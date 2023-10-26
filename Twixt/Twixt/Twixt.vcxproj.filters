@@ -36,5 +36,11 @@
     <ClCompile Include="tabla.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="jucator.cppm">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="jucator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

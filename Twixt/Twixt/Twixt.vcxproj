@@ -130,6 +130,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="jucator.cpp" />
+    <ClCompile Include="jucator.cppm" />
     <ClCompile Include="pilon.cpp" />
     <ClCompile Include="pilon.cppm" />
     <ClCompile Include="pod.cpp" />
