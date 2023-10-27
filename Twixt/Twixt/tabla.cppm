@@ -15,6 +15,8 @@ namespace twixt
 	public:
 		Tabla(std::vector<std::optional<Pilon>>tabla, int size);
 		Tabla();
+		Tabla(const Tabla& other);
+		~Tabla();
 		
 	private:
 		std::vector<std::optional<Pilon>>m_tabla;
@@ -25,6 +27,13 @@ namespace twixt
 	{
 	}
 	Tabla::Tabla()
+	{
+	}
+	Tabla::Tabla(const Tabla& other)
+		: m_tabla{other.m_tabla}, m_size{other.m_size}
+	{
+	}
+	Tabla::~Tabla()
 	{
 	}
 }
