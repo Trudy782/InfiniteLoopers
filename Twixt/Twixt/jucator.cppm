@@ -20,6 +20,8 @@ namespace twixt {
 		Jucator(const Jucator& other);
 		Jucator& operator=(const Jucator& obj);
 		friend std::istream& operator>>(std::istream& is, Jucator& jucator);
+		void setColor(Color color);
+		void setNume(std::string_view nume);
 
 		~Jucator();
 
@@ -50,6 +52,14 @@ namespace twixt {
 				m_poduri = obj.m_poduri;
 			}
 			return *this;
+	}
+	void Jucator::setColor(Color color)
+	{
+		m_color = color;
+	}
+	void Jucator::setNume(std::string_view nume)
+	{
+		m_nume = nume;
 	}
 	Jucator::~Jucator()
 	{

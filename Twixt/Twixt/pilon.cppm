@@ -60,7 +60,7 @@ namespace twixt {
 		m_pozitie = pozitie;
 	}
 
-	Color Pilon::getColor() const
+	Pilon::Color Pilon::getColor() const
 	{
 		return m_color;
 	}
