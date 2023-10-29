@@ -22,6 +22,8 @@ namespace twixt {
 		friend std::istream& operator>>(std::istream& is, Jucator& jucator);
 		void setColor(Color color);
 		void setNume(std::string_view nume);
+		Color getColor() const;
+		std::string_view getNume() const;
 
 		~Jucator();
 
@@ -60,6 +62,14 @@ namespace twixt {
 	void Jucator::setNume(std::string_view nume)
 	{
 		m_nume = nume;
+	}
+	Jucator::Color Jucator::getColor() const
+	{
+		return m_color;
+	}
+	std::string_view Jucator::getNume() const
+	{
+		return m_nume;
 	}
 	Jucator::~Jucator()
 	{
