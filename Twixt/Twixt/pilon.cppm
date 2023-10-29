@@ -19,6 +19,8 @@ namespace twixt {
 		Pilon(const Pilon& other);
 		Pilon& operator=(const Pilon& obj);
 		~Pilon();
+		void setColor(Color color);
+		void setPozitie(std::pair<int, int> pozitie);
 	private:
 		Color m_color : 1;
 		std::pair<int, int>m_pozitie;
@@ -46,4 +48,14 @@ namespace twixt {
 	Pilon::~Pilon()
 	{
 	}
+	void Pilon::setColor(Color color)
+	{
+		m_color = color;
+	}
+
+	void Pilon::setPozitie(std::pair<int, int> pozitie)
+	{
+		m_pozitie = pozitie;
+	}
+
 }
