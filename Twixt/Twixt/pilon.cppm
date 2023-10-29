@@ -21,6 +21,8 @@ namespace twixt {
 		~Pilon();
 		void setColor(Color color);
 		void setPozitie(std::pair<int, int> pozitie);
+		Color getColor() const;
+		std::pair<int, int> getPozitie() const;
 	private:
 		Color m_color : 1;
 		std::pair<int, int>m_pozitie;
@@ -56,6 +58,16 @@ namespace twixt {
 	void Pilon::setPozitie(std::pair<int, int> pozitie)
 	{
 		m_pozitie = pozitie;
+	}
+
+	Color Pilon::getColor() const
+	{
+		return m_color;
+	}
+
+	std::pair<int, int> Pilon::getPozitie() const
+	{
+		return m_pozitie;
 	}
 
 }
