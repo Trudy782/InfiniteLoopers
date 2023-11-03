@@ -14,7 +14,8 @@ class Board
 		Board() = default;
 		Board(const Board& other);
 		~Board() = default;
-		
+
+		friend std::istream& operator>>(std::istream& is, Board& board);
 	private:
 		std::vector<std::optional<Peg>>m_board; //nu trebuie semantic moves
 		int m_size;
