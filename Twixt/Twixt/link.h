@@ -11,6 +11,8 @@ class Link {
 		~Link() = default;
 		Link(const Link& other);
 		Link& operator=(const Link& obj);
+		bool Validation();
+
 		void SetPieceStart(Peg pieceStart);
 		void SetPieceEnd(Peg pieceEnd);
 		const Peg& GetPegStart() const;
