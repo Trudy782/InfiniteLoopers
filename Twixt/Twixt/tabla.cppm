@@ -14,26 +14,21 @@ namespace twixt
 	{
 	public:
 		Tabla(std::vector<std::optional<Pilon>>tabla, int size);
-		Tabla();
+		Tabla() = default;
 		Tabla(const Tabla& other);
-		~Tabla();
+		~Tabla() = default;
 		
 	private:
-		std::vector<std::optional<Pilon>>m_tabla;
+		std::vector<std::optional<Pilon>>m_tabla; //nu trebuie semantic moves
 		int m_size;
 	};
 	Tabla::Tabla(std::vector<std::optional<Pilon>>tabla, int size)
 		:m_tabla{tabla}, m_size{size}
 	{
 	}
-	Tabla::Tabla()
-	{
-	}
+	
 	Tabla::Tabla(const Tabla& other)
 		: m_tabla{other.m_tabla}, m_size{other.m_size}
-	{
-	}
-	Tabla::~Tabla()
 	{
 	}
 }

@@ -16,29 +16,26 @@ namespace twixt {
 			Negru
 		};
 		Jucator(Color color, std::string_view nume, std::vector<Pilon> piloni, std::vector<Pod> poduri);
-		Jucator();
+		Jucator() = default;
 		Jucator(const Jucator& other);
 		Jucator& operator=(const Jucator& obj);
 		friend std::istream& operator>>(std::istream& is, Jucator& jucator);
 		void setColor(Color color);
 		void setNume(std::string_view nume);
 		Color getColor() const;
-		std::string_view getNume() const;
+		const std::string_view& getNume() const;
 
-		~Jucator();
+		~Jucator() = default;
 
 	private:
 		Color m_color : 1;
 		std::string_view m_nume;
-		std::vector<Pilon> m_piloni;
+		std::vector<Pilon> m_piloni;//nu necesita move semantics
 		std::vector<Pod> m_poduri;
 
 	};
 	Jucator::Jucator(Color color, std::string_view nume, std::vector<Pilon> piloni, std::vector<Pod> poduri)
 		:m_color{ color }, m_nume{ nume }, m_piloni{ piloni }, m_poduri{ poduri }
-	{
-	}
-	Jucator::Jucator()
 	{
 	}
 	Jucator::Jucator(const Jucator& other)
@@ -67,13 +64,9 @@ namespace twixt {
 	{
 		return m_color;
 	}
-	std::string_view Jucator::getNume() const
+	const std::string_view& Jucator::getNume() const
 	{
 		return m_nume;
-	}
-	Jucator::~Jucator()
-	{
-		
 	}
 	std::istream& operator>>(std::istream& is, Jucator& jucator)
 	{
