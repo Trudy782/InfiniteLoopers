@@ -21,22 +21,22 @@
     <ClCompile Include="pilon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pilon.cppm">
+    <ClCompile Include="pilon.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="pod.cppm">
+    <ClCompile Include="pod.h">
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="pod.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tabla.cppm">
+    <ClCompile Include="tabla.h">
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="tabla.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="jucator.cppm">
+    <ClCompile Include="jucator.h">
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="jucator.cpp">
