@@ -9,10 +9,6 @@
 
 class Jucator {
 	public :
-		enum class Color : uint8_t {
-			Rosu, 
-			Negru
-		};
 		Jucator(Color color, std::string_view nume, std::vector<pilon> piloni, std::vector<Pod> poduri);
 		Jucator() = default;
 		Jucator(const Jucator& other);

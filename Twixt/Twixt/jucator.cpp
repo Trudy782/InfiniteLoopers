@@ -26,7 +26,7 @@ void Jucator::setNume(std::string_view nume)
 {
 	m_nume = nume;
 }
-Jucator::Color Jucator::getColor() const
+Color Jucator::getColor() const
 {
 	return m_color;
 }

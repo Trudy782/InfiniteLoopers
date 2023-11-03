@@ -26,7 +26,7 @@ void pilon::setPozitie(std::pair<int, int> pozitie)
 	m_pozitie = pozitie;
 }
 
-const pilon::Color& pilon::getColor() const
+const Color& pilon::getColor() const
 {
 	return m_color;
 }

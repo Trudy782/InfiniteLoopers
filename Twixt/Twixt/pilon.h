@@ -5,12 +5,12 @@
 #include<iostream>
 #include<vector>
 
+enum class Color :uint8_t {
+	Rosu,
+	Negru
+};
 class pilon {
 	public:
-		enum class Color :uint8_t {
-			Rosu,
-			Negru
-		};
 		pilon(Color color,std::pair<int,int> pozitie);
 		pilon() = default;
 		pilon(const pilon& other);
