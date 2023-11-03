@@ -11,6 +11,10 @@ class Pod {
 		~Pod() = default;
 		Pod(const Pod& other);
 		Pod& operator=(const Pod& obj);
+		void setPiesaStart(pilon piesaStart);
+		void setPiesaStop(pilon piesaStop);
+		const pilon& getPilonStart() const;
+		const pilon& getPilonStop() const;
 	private:
 		pilon m_piesaStart;
 		pilon m_piesaStop;

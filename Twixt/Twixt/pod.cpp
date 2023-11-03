@@ -15,3 +15,19 @@ Pod& Pod::operator=(const Pod& obj)
 	}
 	return *this;
 }
+void Pod::setPiesaStart(pilon piesaStart)
+{
+	m_piesaStart = piesaStart;
+}
+void Pod::setPiesaStop(pilon piesaStop)
+{
+	m_piesaStop = piesaStop;
+}
+const pilon& Pod::getPilonStart() const
+{
+	return m_piesaStart;
+}
+const pilon& Pod::getPilonStop() const
+{
+	return m_piesaStop;
+}
