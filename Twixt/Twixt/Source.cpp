@@ -1,6 +1,6 @@
-#include "pilon.h"
-#include "pod.h"
-#include "jucator.h"
+#include "peg.h"
+#include "link.h"
+#include "player.h"
 
 
 int main()

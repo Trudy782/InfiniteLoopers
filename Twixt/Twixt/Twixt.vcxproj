@@ -130,15 +130,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="jucator.cpp" />
-    <ClCompile Include="jucator.h" />
-    <ClCompile Include="pilon.cpp" />
-    <ClCompile Include="pilon.h" />
-    <ClCompile Include="pod.cpp" />
-    <ClCompile Include="pod.h" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="player.h" />
+    <ClCompile Include="peg.cpp" />
+    <ClCompile Include="peg.h" />
+    <ClCompile Include="link.cpp" />
+    <ClCompile Include="link.h" />
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="tabla.cpp" />
-    <ClCompile Include="tabla.h" />
+    <ClCompile Include="board.cpp" />
+    <ClCompile Include="board.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

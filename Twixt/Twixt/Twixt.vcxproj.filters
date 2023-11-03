@@ -18,28 +18,28 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pilon.cpp">
+    <ClCompile Include="peg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pilon.h">
+    <ClCompile Include="peg.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="pod.h">
+    <ClCompile Include="link.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="pod.cpp">
+    <ClCompile Include="link.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tabla.h">
+    <ClCompile Include="board.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="tabla.cpp">
+    <ClCompile Include="board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="jucator.h">
+    <ClCompile Include="player.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="jucator.cpp">
+    <ClCompile Include="player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
