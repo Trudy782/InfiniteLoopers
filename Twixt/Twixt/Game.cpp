@@ -15,7 +15,5 @@ Game::Game()
     m_blackPlayer = Player{Color::Black, blackPlayerName, {}, {}};
 
     std::cin >> m_board;
-    std::vector<std::optional<Peg>> initialBoard(24 *24, std::nullopt);
-    m_board = Board{ initialBoard, 8 };
     m_isRedTurn = true;
 }

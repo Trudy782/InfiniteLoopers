@@ -20,6 +20,7 @@ class Board
 		int GetSize() const;
 		void SetSize(int size);
 
+		Board& operator=(const Board& obj);
 		friend std::istream& operator>>(std::istream& is, Board& board);
 	private:
 		std::vector<std::optional<Peg>>m_board; //nu trebuie semantic moves

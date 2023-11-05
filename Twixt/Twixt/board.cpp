@@ -30,9 +30,20 @@ void Board::SetSize(int size)
 	m_size = size;
 }
 
+Board& Board::operator=(const Board& obj)
+{
+	if (this == &obj) {
+		return *this;
+	}
+	m_board = obj.m_board;
+	m_size = obj.m_size;
+	return *this;
+}
+
 std::istream& operator>>(std::istream& is, Board& board)
 {
 	std::cout << "Enter the size of the board: ";
 	is >> board.m_size;
+	std::vector<std::optional<Peg>> initialBoard(board.m_size * board.m_size, std::nullopt);
 	return is;
 }
