@@ -40,6 +40,20 @@ Board& Board::operator=(const Board& obj)
 	return *this;
 }
 
+bool Board::pegValidation(int& row, int& col)
+{
+
+	if (row <= 0 || row >= this->m_size || col <= 0 || col >= this->m_size) {
+		return false;
+	}
+
+	if (this->m_board[row*this->m_size+col]) {
+		return false;
+	}
+
+	return true;
+}
+
 std::istream& operator>>(std::istream& is, Board& board)
 {
 	std::cout << "Enter the size of the board: ";

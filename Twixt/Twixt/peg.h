@@ -22,22 +22,6 @@ class Peg {
 		const Color& GetColor() const;
 		const std::pair<int, int>& GetPosition() const;
 
-		/*bool pegValidation(int& row, int& col, int& boardSize, Board& boardGame) {
-			std::pair<int, int> position;
-			position.first = row;
-			position.second = col;
-
-			if (position.first <= 0 || position.first >= boardSize || position.second <= 0 || position.second >= boardSize) {
-				return false;
-			}
-			
-			if (boardGame[position].has_value()) {
-				return false;
-			}
-
-			return true;
-		}*/
-
 	private:
 		Color m_color : 1;
 		std::pair<int, int>m_position;
