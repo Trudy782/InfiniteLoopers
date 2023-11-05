@@ -41,3 +41,23 @@ std::istream& operator>>(std::istream& is, Player& player)
 	player.m_name = name;
 	return is;
 }
+
+std::ostream& operator<<(std::ostream& os, const Player& player)
+{
+	switch (player.m_color)
+	{
+	case Color::Red:
+	{
+		os << player.GetName() << " plays with Red"<< "\n";
+		break;
+	}
+	case Color::Black:
+	{
+		os << player.GetName() << " plays with Black" << "\n";
+		break;
+	}
+	default:
+		break;
+	}
+	return os;
+}

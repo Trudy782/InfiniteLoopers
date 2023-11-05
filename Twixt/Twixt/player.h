@@ -14,6 +14,8 @@ class Player {
 		Player(const Player& other);
 		Player& operator=(const Player& obj);
 		friend std::istream& operator>>(std::istream& is, Player& player);
+		friend std::ostream& operator<<(std::ostream& os, const Player& player);
+
 		void SetColor(Color color);
 		void SetName(std::string_view name);
 		Color GetColor() const;
