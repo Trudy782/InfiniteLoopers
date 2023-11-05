@@ -10,6 +10,26 @@ Board::Board(const Board& other)
 {
 }
 
+const std::vector<std::optional<Peg>>& Board::GetBoard() const
+{
+	return m_board;
+}
+
+void Board::SetBoard(const std::vector<std::optional<Peg>>& board)
+{
+	m_board = board;
+}
+
+int Board::GetSize() const
+{
+	return m_size;
+}
+
+void Board::SetSize(int size)
+{
+	m_size = size;
+}
+
 std::istream& operator>>(std::istream& is, Board& board)
 {
 	std::cout << "Enter the size of the board: ";

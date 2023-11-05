@@ -15,6 +15,11 @@ class Board
 		Board(const Board& other);
 		~Board() = default;
 
+		const std::vector<std::optional<Peg>>& GetBoard() const;
+		void SetBoard(const std::vector<std::optional<Peg>>& board);
+		int GetSize() const;
+		void SetSize(int size);
+
 		friend std::istream& operator>>(std::istream& is, Board& board);
 	private:
 		std::vector<std::optional<Peg>>m_board; //nu trebuie semantic moves

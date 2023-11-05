@@ -3,7 +3,7 @@
 #include<iostream>
 #include<vector>
 
-#include "board.h"
+//#include "board.h"
 
 enum class Color :uint8_t {
 	Red,
@@ -22,7 +22,7 @@ class Peg {
 		const Color& GetColor() const;
 		const std::pair<int, int>& GetPosition() const;
 
-		bool pegValidation(int& row, int& col, int& boardSize, Board& boardGame) {
+		/*bool pegValidation(int& row, int& col, int& boardSize, Board& boardGame) {
 			std::pair<int, int> position;
 			position.first = row;
 			position.second = col;
@@ -36,7 +36,7 @@ class Peg {
 			}
 
 			return true;
-		}
+		}*/
 
 	private:
 		Color m_color : 1;
