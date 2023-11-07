@@ -11,7 +11,7 @@ public:
 	~Link() = default;
 	Link(const Link& other);
 	Link& operator=(const Link& obj);
-	bool Validation();
+	
 
 	void SetPegStart(Peg pieceStart);
 	void SetPegEnd(Peg pieceEnd);
