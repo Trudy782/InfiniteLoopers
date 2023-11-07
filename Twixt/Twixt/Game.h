@@ -6,6 +6,7 @@ class Game
 public:
 	Game();
 	void startGame();
+	void changePlayer();
 private:
 	Player m_redPlayer;
 	Player m_blackPlayer;

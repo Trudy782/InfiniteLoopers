@@ -2,7 +2,7 @@
 
 Game::Game()
 {
-	std::string redPlayerName;
+    std::string redPlayerName;
     std::string blackPlayerName;
 
     std::cout << "Enter the name of the Red Player: ";
@@ -12,8 +12,13 @@ Game::Game()
     std::cin >> blackPlayerName;
 
     m_redPlayer = Player{ Color::Red, redPlayerName, {}, {} };
-    m_blackPlayer = Player{Color::Black, blackPlayerName, {}, {}};
+    m_blackPlayer = Player{ Color::Black, blackPlayerName, {}, {} };
 
     std::cin >> m_board;
     m_isRedTurn = true;
+}
+
+void Game::changePlayer()
+{
+    m_isRedTurn = !m_isRedTurn;
 }

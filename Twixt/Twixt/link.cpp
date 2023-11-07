@@ -33,11 +33,11 @@ bool Link::Validation()
 
 	return true;
 }
-void Link::SetPieceStart(Peg pieceStart)
+void Link::SetPegStart(Peg pieceStart)
 {
 	m_pieceStart = pieceStart;
 }
-void Link::SetPieceEnd(Peg pieceEnd)
+void Link::SetPegEnd(Peg pieceEnd)
 {
 	m_pieceEnd = pieceEnd;
 }
