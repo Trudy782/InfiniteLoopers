@@ -20,6 +20,8 @@ class Player {
 		void SetName(std::string_view name);
 		Color GetColor() const;
 		const std::string_view& GetName() const;
+		const std::vector<Peg>& GetPeg() const;
+		const std::vector<Link>& GetLink() const;
 
 		~Player() = default;
 

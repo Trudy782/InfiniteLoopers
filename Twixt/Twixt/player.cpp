@@ -34,6 +34,14 @@ const std::string_view& Player::GetName() const
 {
 	return m_name;
 }
+const std::vector<Peg>& Player::GetPeg() const
+{
+	return m_pegs;
+}
+const std::vector<Link>& Player::GetLink() const
+{
+	return m_links;
+}
 std::istream& operator>>(std::istream& is, Player& player)
 {
 	std::string name;
