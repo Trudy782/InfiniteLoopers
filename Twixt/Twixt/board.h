@@ -10,6 +10,7 @@
 class Board
 	{
 	public:
+		using Position = std::pair<size_t, size_t>;
 		Board(std::vector<std::optional<Peg>>board, int size);
 		Board() = default;
 		Board(const Board& other);
@@ -21,6 +22,8 @@ class Board
 		void SetSize(int size);
 
 		Board& operator=(const Board& obj);
+		const std::optional<Peg>& operator[](const Position& index) const;
+		std::optional<Peg>& operator[](const Position& index);
 		friend std::istream& operator>>(std::istream& is, Board& board);
 
 		bool pegValidation(int& row, int& col);

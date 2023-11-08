@@ -40,6 +40,17 @@ Board& Board::operator=(const Board& obj)
 	return *this;
 }
 
+const std::optional<Peg>& Board::operator[](const Position& index) const
+{
+	const auto& [row, column] = index;
+	return m_board[row * m_size + column];
+}
+
+std::optional<Peg>& Board::operator[](const Position& index)
+{
+	return const_cast<std::optional<Peg>&>(std::as_const(*this)[index]);
+}
+
 bool Board::pegValidation(int& row, int& col)
 {
 
