@@ -67,8 +67,26 @@ bool Board::pegValidation(int& row, int& col)
 
 std::istream& operator>>(std::istream& is, Board& board)
 {
-	std::cout << "Enter the size of the board: ";
 	is >> board.m_size;
-	std::vector<std::optional<Peg>> initialBoard(board.m_size * board.m_size, std::nullopt);
+	board.m_board.resize(board.m_size * board.m_size);
 	return is;
+}
+
+std::ostream& operator<<(std::ostream& os, const Board& board)
+{
+	for (int line = 0; line < board.m_size; ++line)
+	{
+		for (int column = 0; column < board.m_size; ++column)
+		{
+			Board::Position position{ line, column };
+			if (const auto& pieceOpt{ board[position] }; pieceOpt.has_value())
+				os << pieceOpt.value();
+			else
+				os << '-';
+			os << ' ';
+		}
+		os << std::endl;
+	}
+
+	return os;
 }
