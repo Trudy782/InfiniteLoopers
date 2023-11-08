@@ -36,4 +36,15 @@ const Peg::Position& Peg::GetPosition() const
 	return m_position;
 }
 
+void Peg::swap(Peg& peg) noexcept
+{
+	Color color{ peg.m_color };
+	peg.m_color = m_color;
+	m_color = color;
+
+	Position position{ peg.m_position };
+	peg.m_position = m_position;
+	m_position = position;
+}
+
 

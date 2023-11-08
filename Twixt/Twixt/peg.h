@@ -22,7 +22,7 @@ class Peg {
 		const Color& GetColor() const;
 		const Position& GetPosition() const;
 
-	
+		void swap(Peg& peg) noexcept;
 
 	private:
 		Color m_color : 1;
