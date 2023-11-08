@@ -19,12 +19,12 @@ Game::Game()
 	std::cout << m_board;
 }
 
-void Game::changePlayer()
+void Game::ChangePlayer()
 {
     m_isRedTurn = !m_isRedTurn;
 }
 
-bool Game::Validation(const Peg& pStart, const Peg& pEnd)
+bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 {
 	int xStart{ pStart.GetPosition().first }; //a
 	int yStart{ pStart.GetPosition().second }; // b
@@ -79,16 +79,19 @@ bool Game::PegValidation(const size_t& row, const size_t& col)
 		return false;
 	}
 	if (row < 0 || row > size - 1 || col < 0 || col > size - 1) {
+		std::cerr << "Ati depasit perimetrul tablei!\n";
 		return false;
 	}
 	Board::Position index{ row, col };
 	if (m_board[index].has_value()) {
+		std::cerr << "Locul este ocupat de alta piesa!\n";
 		return false;
 	}
 	if (m_isRedTurn)
 	{
 		if (col == 0 || col == size - 1)
 		{
+			std::cerr << "Nu aveti voie sa puneti piesa in zona inamicului!\n";
 			return false;
 		}
 	}
@@ -96,6 +99,7 @@ bool Game::PegValidation(const size_t& row, const size_t& col)
 	{
 		if (row == 0 || row == size - 1)
 		{
+			std::cerr << "Nu aveti voie sa puneti piesa in zona inamicului!\n";
 			return false;
 		}
 	}

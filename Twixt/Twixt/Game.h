@@ -5,9 +5,9 @@ class Game
 {
 public:
 	Game();
-	void startGame();
-	void changePlayer();
-	bool Validation(const Peg& pStart, const Peg& pEnd);
+	void StartGame();
+	void ChangePlayer();
+	bool LinkValidation(const Peg& pStart, const Peg& pEnd);
 	bool PegValidation(const size_t& row, const size_t& col);
 private:
 	Player m_redPlayer;
