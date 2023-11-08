@@ -14,6 +14,7 @@ class Peg {
 		Peg(Color color,Position position);
 		Peg() = default;
 		Peg(const Peg& other);
+		Peg(Peg&& peg) noexcept;
 		Peg& operator=(const Peg& obj);
 		~Peg() = default;
 
@@ -22,7 +23,7 @@ class Peg {
 		const Color& GetColor() const;
 		const Position& GetPosition() const;
 
-		void swap(Peg& peg) noexcept;
+		void swap(Peg& peg);
 
 	private:
 		Color m_color : 1;

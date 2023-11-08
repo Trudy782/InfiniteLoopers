@@ -8,12 +8,14 @@ Peg::Peg(const Peg& other)
 	:m_color{ other.m_color }, m_position{ other.m_position }
 {
 }
+Peg::Peg(Peg&& peg) noexcept //?
+{
+	swap(peg);
+}
 Peg& Peg::operator=(const Peg& obj)
 {
-	if (this != &obj) {
-		m_color = obj.m_color;
-		m_position = obj.m_position;
-	}
+	Peg aux{ obj };
+	swap(aux);
 	return *this;
 }
 void Peg::SetColor(Color color)
@@ -36,7 +38,7 @@ const Peg::Position& Peg::GetPosition() const
 	return m_position;
 }
 
-void Peg::swap(Peg& peg) noexcept
+void Peg::swap(Peg& peg)
 {
 	Color color{ peg.m_color };
 	peg.m_color = m_color;
