@@ -49,4 +49,7 @@ void Peg::swap(Peg& peg)
 	m_position = position;
 }
 
-
+std::ostream& operator<<(std::ostream& os, const Peg& peg)
+{
+	return os << static_cast<int>(peg.m_color);
+}

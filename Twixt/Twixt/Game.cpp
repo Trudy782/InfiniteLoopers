@@ -43,7 +43,9 @@ bool Game::Validation(const Peg& pStart, const Peg& pEnd)
 		}
 	}
 
-	for (auto link : m_redPlayer.GetLink())
+
+	std::vector<Link>listOfLinks=m_redPlayer.GetLink();
+	for (const auto& link : listOfLinks)
 	{
 
 		distance1 = std::abs(xStart - link.GetPegStart().GetPosition().first) + std::abs(yStart - link.GetPegStart().GetPosition().second);
@@ -53,8 +55,9 @@ bool Game::Validation(const Peg& pStart, const Peg& pEnd)
 		if (distance2 == distance3 || distance1 == distance4)
 			return false;
 	}
+	listOfLinks = m_blackPlayer.GetLink();
 
-	for (auto link : m_blackPlayer.GetLink())
+	for (const auto& link : listOfLinks)
 	{
 
 		distance1 = std::abs(xStart - link.GetPegStart().GetPosition().first) + std::abs(yStart - link.GetPegStart().GetPosition().second);

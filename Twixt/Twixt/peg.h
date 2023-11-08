@@ -22,6 +22,7 @@ class Peg {
 		void SetPosition(Position position);
 		const Color& GetColor() const;
 		const Position& GetPosition() const;
+		friend std::ostream& operator<<(std::ostream& os, const Peg& peg);
 
 		void swap(Peg& peg);
 
