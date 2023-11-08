@@ -11,15 +11,15 @@ class Board
 	{
 	public:
 		using Position = std::pair<size_t, size_t>;
-		Board(std::vector<std::optional<Peg>>board, int size);
+		Board(std::vector<std::optional<Peg>>board, size_t size);
 		Board() = default;
 		Board(const Board& other);
 		~Board() = default;
 
 		const std::vector<std::optional<Peg>>& GetBoard() const;
 		void SetBoard(const std::vector<std::optional<Peg>>& board);
-		int GetSize() const;
-		void SetSize(int size);
+		size_t GetSize() const;
+		void SetSize(size_t size);
 
 		Board& operator=(const Board& obj);
 		const std::optional<Peg>& operator[](const Position& index) const;
@@ -29,6 +29,6 @@ class Board
 		bool pegValidation(int& row, int& col);
 	private:
 		std::vector<std::optional<Peg>>m_board; //nu trebuie semantic moves
-		int m_size;
+		size_t m_size;
 	
 };

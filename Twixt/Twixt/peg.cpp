@@ -1,6 +1,6 @@
 #include "peg.h"
 
-Peg::Peg(Color color, std::pair<int, int> position)
+Peg::Peg(Color color, Position position)
 	:m_color{ color }, m_position{ position }
 {
 }
@@ -21,7 +21,7 @@ void Peg::SetColor(Color color)
 	m_color = color;
 }
 
-void Peg::SetPosition(std::pair<int, int> position)
+void Peg::SetPosition(Position position)
 {
 	m_position = position;
 }
@@ -31,7 +31,9 @@ const Color& Peg::GetColor() const
 	return m_color;
 }
 
-const std::pair<int, int>& Peg::GetPosition() const
+const Peg::Position& Peg::GetPosition() const
 {
 	return m_position;
 }
+
+

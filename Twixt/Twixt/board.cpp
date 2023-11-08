@@ -1,6 +1,6 @@
 #include "board.h"
 
-Board::Board(std::vector<std::optional<Peg>>board, int size)
+Board::Board(std::vector<std::optional<Peg>>board, size_t size)
 	:m_board{ board }, m_size{ size }
 {
 }
@@ -20,12 +20,12 @@ void Board::SetBoard(const std::vector<std::optional<Peg>>& board)
 	m_board = board;
 }
 
-int Board::GetSize() const
+size_t Board::GetSize() const
 {
 	return m_size;
 }
 
-void Board::SetSize(int size)
+void Board::SetSize(size_t size)
 {
 	m_size = size;
 }

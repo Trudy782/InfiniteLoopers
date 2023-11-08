@@ -3,7 +3,6 @@
 #include<iostream>
 #include<vector>
 
-//#include "board.h"
 
 enum class Color :uint8_t {
 	Red,
@@ -11,19 +10,23 @@ enum class Color :uint8_t {
 };
 class Peg {
 	public:
-		Peg(Color color,std::pair<int,int> position);
+		using Position = std::pair<int, int>;
+		Peg(Color color,Position position);
 		Peg() = default;
 		Peg(const Peg& other);
 		Peg& operator=(const Peg& obj);
 		~Peg() = default;
 
 		void SetColor(Color color);
-		void SetPosition(std::pair<int, int> position);
+		void SetPosition(Position position);
 		const Color& GetColor() const;
-		const std::pair<int, int>& GetPosition() const;
+		const Position& GetPosition() const;
+
+	
 
 	private:
 		Color m_color : 1;
-		std::pair<int, int>m_position;
+		Position m_position;
 		
 };
+
