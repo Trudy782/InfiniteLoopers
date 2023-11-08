@@ -70,3 +70,35 @@ bool Game::Validation(const Peg& pStart, const Peg& pEnd)
 	}
 	return true;
 }
+bool Game::PegValidation(const size_t& row, const size_t& col)
+{
+	size_t size = m_board.GetSize();
+	if ((row == 0 && col == 0) || (row == 0 && col == size - 1) || (row == size - 1 && col == 0) || (row == size - 1 && col == size - 1))
+	{
+		std::cerr << "Colturile tablei sunt inaccesibile!\n";
+		return false;
+	}
+	if (row < 0 || row > size - 1 || col < 0 || col > size - 1) {
+		return false;
+	}
+	Board::Position index{ row, col };
+	if (m_board[index].has_value()) {
+		return false;
+	}
+	if (m_isRedTurn)
+	{
+		if (col == 0 || col == size - 1)
+		{
+			return false;
+		}
+	}
+	else
+	{
+		if (row == 0 || row == size - 1)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}

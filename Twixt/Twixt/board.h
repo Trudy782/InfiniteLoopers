@@ -27,7 +27,6 @@ class Board
 		friend std::istream& operator>>(std::istream& is, Board& board);
 		friend std::ostream& operator<<(std::ostream& os, const Board& board);
 
-		bool pegValidation(int& row, int& col);
 	private:
 		std::vector<std::optional<Peg>>m_board; //nu trebuie semantic moves
 		size_t m_size;
