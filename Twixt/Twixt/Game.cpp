@@ -106,3 +106,17 @@ bool Game::PegValidation(const size_t& row, const size_t& col)
 
 	return true;
 }
+void Game::move(const size_t& row, const size_t& col)
+{
+	Board::Position position{ row, col };
+	if (PegValidation(row, col)) {
+		Peg p;
+
+		if (m_isRedTurn)
+			p = Peg(Color::Red, position);
+		else
+			p = Peg(Color::Black, position);
+
+		m_board[position] = p;
+	}
+}
