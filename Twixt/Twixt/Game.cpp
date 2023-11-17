@@ -17,10 +17,31 @@ Game::Game()
 	std::cin >> m_board;
 	m_isRedTurn = true;
 	std::cout << m_board;
-	move();
-	std::cout << m_board;
 }
+void Game::StartGame()
+{
+	bool IsGameActiv = true;
+	int nrPegs = m_board.GetSize() * 2 + 2;
+	int option;
+	while (m_redPlayer.GetPeg().size() <= nrPegs && m_blackPlayer.GetPeg().size() <= nrPegs) // de continuat cand avem win conditions 
+	{
+		std::cout << "Press 1 for adding a Peg \n Press 2 for adding a Link \n";
+		std::cin >> option;
+		switch(option)
+		{
+		case 1:
+			MovePeg();
+			break;
+		case 2:
+		default:
+			std::cerr << "Invalid option!\n";
+			break;
+		}
+		std::cout << m_board;
+		ChangePlayer();
 
+	}
+}
 void Game::ChangePlayer()
 {
     m_isRedTurn = !m_isRedTurn;
@@ -108,7 +129,7 @@ bool Game::PegValidation(const size_t& row, const size_t& col)
 
 	return true;
 }
-void Game::move()
+void Game::MovePeg()
 {
 	Board::Position position;
 	position = currentPlayer().GetNextAction();
