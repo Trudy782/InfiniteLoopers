@@ -17,6 +17,8 @@ Game::Game()
 	std::cin >> m_board;
 	m_isRedTurn = true;
 	std::cout << m_board;
+	move();
+	std::cout << m_board;
 }
 
 void Game::ChangePlayer()
@@ -106,9 +108,11 @@ bool Game::PegValidation(const size_t& row, const size_t& col)
 
 	return true;
 }
-void Game::move(const size_t& row, const size_t& col)
+void Game::move()
 {
-	Board::Position position{ row, col };
+	Board::Position position;
+	position = currentPlayer().GetNextAction();
+	auto [row, col] = position;
 	if (PegValidation(row, col)) {
 		Peg p;
 
