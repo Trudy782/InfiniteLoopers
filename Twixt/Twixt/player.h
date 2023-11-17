@@ -25,6 +25,8 @@ class Player {
 		const std::vector<Link>& GetLink() const;
 
 		Board::Position GetNextAction();
+		std::pair<Board::Position, Board::Position> GetNextActionLink();
+
 
 		~Player() = default;
 

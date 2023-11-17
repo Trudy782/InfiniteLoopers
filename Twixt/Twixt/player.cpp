@@ -55,6 +55,24 @@ Board::Position Player::GetNextAction()
 	return { row,column };
 
 }
+std::pair<Board::Position, Board::Position> Player::GetNextActionLink()
+{
+	std::cout << m_name << ", choose the start position of the link.\n";
+	std::cout << "row & column: ";
+	int row;
+	std::cin >> row;
+	int column;
+	std::cin >> column;
+	Board::Position start = { row, column };
+
+	std::cout << m_name << ", choose the end position of the link.\n";
+	std::cout << "row & column: ";
+	std::cin >> row;
+	std::cin >> column;
+	Board::Position end = { row, column };
+
+	return { start, end };
+}
 std::istream& operator>>(std::istream& is, Player& player)
 {
 	is >> player.m_name;
