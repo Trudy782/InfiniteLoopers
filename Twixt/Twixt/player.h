@@ -2,6 +2,7 @@
 
 #include "peg.h"
 #include "link.h"
+#include "board.h"
 #include <iostream>
 #include <vector>
 #include <cstdint>
@@ -22,6 +23,8 @@ class Player {
 		const std::string_view& GetName() const;
 		const std::vector<Peg>& GetPeg() const;
 		const std::vector<Link>& GetLink() const;
+
+		Board::Position GetNextAction();
 
 		~Player() = default;
 

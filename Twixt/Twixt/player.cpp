@@ -42,6 +42,19 @@ const std::vector<Link>& Player::GetLink() const
 {
 	return m_links;
 }
+Board::Position Player::GetNextAction()
+{
+	std::cout << m_name << ", unde vrei sa pozitionezi pilonul?\n";
+	std::cout << "linie si coloana: ";
+
+	int row;
+	std::cin >> row;
+	int column;
+	std::cin >> column;
+
+	return { row,column };
+
+}
 std::istream& operator>>(std::istream& is, Player& player)
 {
 	std::string name;
