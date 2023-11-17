@@ -10,6 +10,13 @@
 class Board
 	{
 	public:
+
+		enum class State
+		{
+			None,
+			Win,
+			Draw
+		};
 		using Position = std::pair<size_t, size_t>;
 		Board(std::vector<std::optional<Peg>>board, size_t size);
 		Board() = default;
@@ -20,6 +27,7 @@ class Board
 		void SetBoard(const std::vector<std::optional<Peg>>& board);
 		size_t GetSize() const;
 		void SetSize(size_t size);
+		void Reset();
 
 		Board& operator=(const Board& obj);
 		const std::optional<Peg>& operator[](const Position& index) const;

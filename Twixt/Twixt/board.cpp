@@ -30,6 +30,11 @@ void Board::SetSize(size_t size)
 	m_size = size;
 }
 
+void Board::Reset()
+{
+	memset(&m_board, 0, sizeof(m_board));
+}
+
 Board& Board::operator=(const Board& obj)
 {
 	if (this == &obj) {
