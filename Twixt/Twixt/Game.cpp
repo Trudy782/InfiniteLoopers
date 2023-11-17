@@ -120,3 +120,11 @@ void Game::move(const size_t& row, const size_t& col)
 		m_board[position] = p;
 	}
 }
+
+Player Game::currentPlayer()
+{
+	if (m_isRedTurn)
+		return m_redPlayer;
+	else
+		return m_blackPlayer;
+}

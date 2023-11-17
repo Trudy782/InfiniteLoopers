@@ -10,6 +10,7 @@ public:
 	bool LinkValidation(const Peg& pStart, const Peg& pEnd);
 	bool PegValidation(const size_t& row, const size_t& col);
 	void move(const size_t& row, const size_t& col);
+	Player currentPlayer();
 private:
 	Player m_redPlayer;
 	Player m_blackPlayer;
