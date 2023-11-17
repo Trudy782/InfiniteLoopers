@@ -42,7 +42,7 @@ const std::vector<Link>& Player::GetLink() const
 {
 	return m_links;
 }
-Board::Position Player::GetNextAction()
+Board::Position Player::GetNextActionPeg()
 {
 	std::cout << m_name << ", unde vrei sa pozitionezi pilonul?\n";
 	std::cout << "linie si coloana: ";
@@ -72,7 +72,7 @@ std::pair<Board::Position, Board::Position> Player::GetNextActionLink()
 	Board::Position end = { row, column };
 
 	return { start, end };
-}
+ }
 std::istream& operator>>(std::istream& is, Player& player)
 {
 	is >> player.m_name;
@@ -97,4 +97,13 @@ std::ostream& operator<<(std::ostream& os, const Player& player)
 		break;
 	}
 	return os;
+}
+
+void Player::AddPeg(const Peg& peg)
+{
+	m_pegs.push_back(peg);
+}
+void Player::AddLink(const Link& link)
+{
+	m_links.push_back(link);
 }

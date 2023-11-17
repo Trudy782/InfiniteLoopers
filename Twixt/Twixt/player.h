@@ -24,8 +24,12 @@ class Player {
 		const std::vector<Peg>& GetPeg() const;
 		const std::vector<Link>& GetLink() const;
 
-		Board::Position GetNextAction();
+		Board::Position GetNextActionPeg();
 		std::pair<Board::Position, Board::Position> GetNextActionLink();
+		void AddPeg(const Peg& peg);
+		void AddLink(const Link& link);
+
+
 
 
 		~Player() = default;
