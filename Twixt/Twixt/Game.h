@@ -13,6 +13,7 @@ private:
     void MovePeg();
 	void MoveLink();
 	Player currentPlayer();
+	void showLinks();
 private:
 	Player m_redPlayer;
 	Player m_blackPlayer;

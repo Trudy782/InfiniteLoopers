@@ -182,3 +182,13 @@ Player Game::currentPlayer()
 	else
 		return m_blackPlayer;
 }
+
+void Game::showLinks()
+{
+	std::vector<Link> links = currentPlayer().GetLink();
+	std::cout << "Lista de link-uri este: \n";
+	for (int i = 0; i < links.size(); i++)
+	{
+		std::cout << "L{" << links[i].GetPegStart().GetPosition().first << "," << links[i].GetPegStart().GetPosition().second << "}, ";
+	}
+}
