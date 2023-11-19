@@ -152,6 +152,29 @@ void Game::MovePeg()
 	}
 }
 
+void Game::MoveLink()
+{
+	std::pair<Board::Position, Board::Position> positions;
+	positions = currentPlayer().GetNextActionLink();
+	auto [rowStart, colStart] = positions.first;
+	auto [rowEnd, colEnd] = positions.second;
+
+	Peg startPeg, endPeg;
+	for (Peg peg : currentPlayer().GetPeg())
+	{
+		if ((peg.GetPosition().first == rowStart) && (peg.GetPosition().second == colStart))
+			startPeg = peg;
+		if ((peg.GetPosition().first == rowEnd) && (peg.GetPosition().second == colEnd))
+			endPeg = peg;
+	}
+	if (LinkValidation(startPeg, endPeg))
+	{
+		Link link(startPeg, endPeg);
+		currentPlayer().AddLink(link);
+	}
+
+}
+
 Player Game::currentPlayer()
 {
 	if (m_isRedTurn)

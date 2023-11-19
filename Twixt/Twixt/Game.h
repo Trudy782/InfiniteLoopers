@@ -11,6 +11,7 @@ private:
 	bool LinkValidation(const Peg& pStart, const Peg& pEnd);
 	bool PegValidation(const size_t& row, const size_t& col);
     void MovePeg();
+	void MoveLink();
 	Player currentPlayer();
 private:
 	Player m_redPlayer;
