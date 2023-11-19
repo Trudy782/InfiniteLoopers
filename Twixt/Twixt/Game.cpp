@@ -100,23 +100,23 @@ bool Game::PegValidation(const size_t& row, const size_t& col)
 	size_t size = m_board.GetSize();
 	if ((row == 0 && col == 0) || (row == 0 && col == size - 1) || (row == size - 1 && col == 0) || (row == size - 1 && col == size - 1))
 	{
-		std::cerr << "Colturile tablei sunt inaccesibile!\n";
+		std::cerr << "The corners of the board are inaccessible!\n";
 		return false;
 	}
 	if (row < 0 || row > size - 1 || col < 0 || col > size - 1) {
-		std::cerr << "Ati depasit perimetrul tablei!\n";
+		std::cerr << "You have exceeded the perimeter of the board!\n";
 		return false;
 	}
 	Board::Position index{ row, col };
 	if (m_board[index].has_value()) {
-		std::cerr << "Locul este ocupat de alta piesa!\n";
+		std::cerr << "The place is occupied by another piece!\n";
 		return false;
 	}
 	if (m_isRedTurn)
 	{
 		if (col == 0 || col == size - 1)
 		{
-			std::cerr << "Nu aveti voie sa puneti piesa in zona inamicului!\n";
+			std::cerr << "You are not allowed to put the piece in the enemy zone!\n";
 			return false;
 		}
 	}
@@ -124,7 +124,7 @@ bool Game::PegValidation(const size_t& row, const size_t& col)
 	{
 		if (row == 0 || row == size - 1)
 		{
-			std::cerr << "Nu aveti voie sa puneti piesa in zona inamicului!\n";
+			std::cerr << "You are not allowed to put the piece in the enemy zone!\n";
 			return false;
 		}
 	}
@@ -171,9 +171,15 @@ void Game::MoveLink()
 	}
 	if (LinkValidation(startPeg, endPeg))
 	{
+		std::cout << "The link is valid!";
+		std::cout << std::endl;
 		Link link(startPeg, endPeg);
 		link.AddAdjacency();
 		currentPlayer().AddLink(link);
+	}
+	else {
+		std::cout << "The link is not valid!";
+		std::cout << std::endl;
 	}
 
 }
@@ -189,7 +195,7 @@ Player Game::currentPlayer()
 void Game::showLinks()
 {
 	std::vector<Link> links = currentPlayer().GetLink();
-	std::cout << "Lista de link-uri este: \n";
+	std::cout << "List of links: \n";
 	for (int i = 0; i < links.size(); i++)
 	{
 		std::cout << "L{" << links[i].GetPegStart().GetPosition().first << "," << links[i].GetPegStart().GetPosition().second << "}, ";

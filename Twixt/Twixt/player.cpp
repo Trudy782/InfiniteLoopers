@@ -4,10 +4,12 @@ Player::Player(Color color, std::string name, std::vector<Peg> pegs, std::vector
 	:m_color{ color }, m_name{ name }, m_pegs{ pegs }, m_links{ links }
 {
 }
+
 Player::Player(const Player& other)
 	:m_color{ other.m_color }, m_name{ other.m_name }, m_pegs{ other.m_pegs }, m_links{ other.m_links }
 {
 }
+
 Player& Player::operator=(const Player& obj)
 {
 	if (this != &obj) {
@@ -22,10 +24,12 @@ void Player::SetColor(Color color)
 {
 	m_color = color;
 }
+
 void Player::SetName(std::string name)
 {
 	m_name = name;
 }
+
 Color Player::GetColor() const
 {
 	return m_color;
@@ -34,18 +38,21 @@ const std::string& Player::GetName() const
 {
 	return m_name;
 }
+
 const std::vector<Peg>& Player::GetPeg() const
 {
 	return m_pegs;
 }
+
 const std::vector<Link>& Player::GetLink() const
 {
 	return m_links;
 }
+
 Board::Position Player::GetNextActionPeg()
 {
-	std::cout << m_name << ", unde vrei sa pozitionezi pilonul?\n";
-	std::cout << "linie si coloana: ";
+	std::cout << m_name << ", where do you want to position the peg?\n";  
+	std::cout << "row && column: ";
 
 	int row;
 	std::cin >> row;
@@ -55,6 +62,7 @@ Board::Position Player::GetNextActionPeg()
 	return { row,column };
 
 }
+
 std::pair<Board::Position, Board::Position> Player::GetNextActionLink()
 {
 	std::cout << m_name << ", choose the start position of the link.\n";
@@ -73,11 +81,13 @@ std::pair<Board::Position, Board::Position> Player::GetNextActionLink()
 
 	return { start, end };
  }
+
 std::istream& operator>>(std::istream& is, Player& player)
 {
 	is >> player.m_name;
 	return is;
 }
+
 
 std::ostream& operator<<(std::ostream& os, const Player& player)
 {
@@ -103,6 +113,7 @@ void Player::AddPeg(const Peg& peg)
 {
 	m_pegs.push_back(peg);
 }
+
 void Player::AddLink(const Link& link)
 {
 	m_links.push_back(link);
