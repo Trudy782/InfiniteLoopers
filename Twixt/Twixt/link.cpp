@@ -38,3 +38,10 @@ void Link::AddAdjacency()
 	m_pegStart.addAdjacentPeg(m_pegEnd);
 	m_pegEnd.addAdjacentPeg(m_pegStart);
 }
+
+
+std::ostream& operator<<(std::ostream& os, const Link& link) {
+	os << "{" << link.GetPegStart().GetPosition().first << "," << link.GetPegStart().GetPosition().second << "} - {"
+		<< link.GetPegEnd().GetPosition().first << "," << link.GetPegEnd().GetPosition().second << "}";
+	return os;
+}

@@ -18,6 +18,7 @@ public:
 	const Peg& GetPegStart() const;
 	const Peg& GetPegEnd() const;
 	void AddAdjacency();
+	friend std::ostream& operator<<(std::ostream& os, const Link& link);
 private:
 	Peg m_pegStart;
 	Peg m_pegEnd;
