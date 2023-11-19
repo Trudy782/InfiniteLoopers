@@ -38,6 +38,11 @@ const Peg::Position& Peg::GetPosition() const
 	return m_position;
 }
 
+const std::vector<Peg> Peg::GetAdjacencyPegs() const
+{
+	return m_adjacencyPegs;
+}
+
 void Peg::swap(Peg& peg)
 {
 	Color color{ peg.m_color };
@@ -47,6 +52,11 @@ void Peg::swap(Peg& peg)
 	Position position{ peg.m_position };
 	peg.m_position = m_position;
 	m_position = position;
+}
+
+void Peg::addAdjacentPeg(const Peg& peg)
+{
+	m_adjacencyPegs.push_back(peg);
 }
 
 std::ostream& operator<<(std::ostream& os, const Peg& peg)

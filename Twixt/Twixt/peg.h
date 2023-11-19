@@ -22,13 +22,16 @@ class Peg {
 		void SetPosition(Position position);
 		const Color& GetColor() const;
 		const Position& GetPosition() const;
+		const std::vector<Peg> GetAdjacencyPegs() const;
 		friend std::ostream& operator<<(std::ostream& os, const Peg& peg);
 
 		void swap(Peg& peg);
+		void addAdjacentPeg(const Peg& peg);
 
 	private:
 		Color m_color : 1;
 		Position m_position;
+		std::vector<Peg>m_adjacencyPegs;
 		
 };
 
