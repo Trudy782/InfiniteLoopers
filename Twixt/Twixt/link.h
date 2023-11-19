@@ -13,12 +13,13 @@ public:
 	Link& operator=(const Link& obj);
 	
 
-	void SetPegStart(Peg pieceStart);
-	void SetPegEnd(Peg pieceEnd);
+	void SetPegStart(Peg pegStart);
+	void SetPegEnd(Peg pegEnd);
 	const Peg& GetPegStart() const;
 	const Peg& GetPegEnd() const;
+	void AddAdjacency();
 private:
-	Peg m_pieceStart;
-	Peg m_pieceEnd;
+	Peg m_pegStart;
+	Peg m_pegEnd;
 
 };

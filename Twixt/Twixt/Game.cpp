@@ -33,6 +33,8 @@ void Game::StartGame()
 			MovePeg();
 			break;
 		case 2:
+			MoveLink();
+			break;
 		default:
 			std::cerr << "Invalid option!\n";
 			break;
@@ -170,6 +172,7 @@ void Game::MoveLink()
 	if (LinkValidation(startPeg, endPeg))
 	{
 		Link link(startPeg, endPeg);
+		link.AddAdjacency();
 		currentPlayer().AddLink(link);
 	}
 
