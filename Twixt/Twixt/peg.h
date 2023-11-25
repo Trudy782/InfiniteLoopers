@@ -16,6 +16,8 @@ public:
 	Peg(const Peg& other);
 	Peg(Peg&& peg) noexcept;
 	Peg& operator=(const Peg& obj);
+	bool operator==(const Peg& obj);
+
 	~Peg() = default;
 
 	void SetColor(Color color);

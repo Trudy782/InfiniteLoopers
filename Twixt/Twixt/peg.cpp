@@ -18,6 +18,10 @@ Peg& Peg::operator=(const Peg& obj)
 	swap(aux);
 	return *this;
 }
+bool Peg::operator==(const Peg& obj)
+{
+	return m_color == obj.m_color && m_position == obj.m_position;
+}
 void Peg::SetColor(Color color)
 {
 	m_color = color;
@@ -67,3 +71,4 @@ std::ostream& operator<<(std::ostream& os, const Peg& peg)
 {
 	return os << static_cast<int>(peg.m_color);
 }
+

@@ -68,6 +68,22 @@ bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 	int xEnd{ pEnd.GetPosition().first };//c
 	int yEnd{ pEnd.GetPosition().second };//d
 
+	std::vector<Peg> pegs = currentPlayer().GetPeg();
+	bool found1 = 0, found2 = 0;
+	for (int i = 0; i < pegs.size(); ++i) {
+		Peg peg = pegs[i];
+		if (peg == pStart)
+			found1 = 1;
+		if (peg == pEnd)
+			found2 = 1;
+		std::cout << peg << " ";
+	}
+	if (!found1 || !found2)
+	{
+		std::cerr << "You cannot place a link on a unexisting peg!\n";
+		return false;
+	}
+
 	int distance1;
 	int distance2;
 	int distance3;
