@@ -13,7 +13,7 @@ private:
     void MovePeg();
 	void MoveLink();
 	Player &currentPlayer();
-	void showLinks();
+	void showLinks(const Player& player);
 private:
 	Player m_redPlayer;
 	Player m_blackPlayer;

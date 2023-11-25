@@ -40,7 +40,7 @@ void Game::StartGame()
 			break;
 		}
 		std::cout << m_board;
-		showLinks();
+		showLinks(currentPlayer());
 		ChangePlayer();
 
 	}
@@ -65,13 +65,12 @@ bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 	{
 		if (std::abs(xStart - xEnd) != 2 || std::abs(yStart - yEnd) != 1)
 		{
-
 			return false;
 		}
 	}
 
 
-	std::vector<Link>listOfLinks=m_redPlayer.GetLink();
+	std::vector<Link>listOfLinks = currentPlayer().GetLink();
 	for (const auto& link : listOfLinks)
 	{
 
@@ -82,18 +81,7 @@ bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 		if (distance2 == distance3 || distance1 == distance4)
 			return false;
 	}
-	listOfLinks = m_blackPlayer.GetLink();
 
-	for (const auto& link : listOfLinks)
-	{
-
-		distance1 = std::abs(xStart - link.GetPegStart().GetPosition().first) + std::abs(yStart - link.GetPegStart().GetPosition().second);
-		distance2 = std::abs(xStart - link.GetPegEnd().GetPosition().first) + std::abs(yStart - link.GetPegEnd().GetPosition().second);
-		distance3 = std::abs(xEnd - link.GetPegStart().GetPosition().first) + std::abs(yEnd - link.GetPegStart().GetPosition().second);
-		distance4 = std::abs(xEnd - link.GetPegEnd().GetPosition().first) + std::abs(yEnd - link.GetPegEnd().GetPosition().second);
-		if (distance2 == distance3 || distance1 == distance4)
-			return false;
-	}
 	return true;
 }
 bool Game::PegValidation(const size_t& row, const size_t& col)
@@ -189,12 +177,17 @@ Player& Game::currentPlayer()
 		return m_blackPlayer;
 }
 
-void Game::showLinks()
-{
-	std::vector<Link> links = currentPlayer().GetLink();
-	std::cout << "List of links: \n";
-	for (int i = 0; i < links.size(); i++)
-	{
-		std::cout << "L{" << links[i].GetPegStart().GetPosition().first << "," << links[i].GetPegStart().GetPosition().second << "}, ";
+void Game::showLinks(const Player& player) {
+	std::vector<Link> links = player.GetLink();
+	std::cout << "The list of links for the player " << player.GetName() << " is: ";
+
+	for (size_t i = 0; i < links.size(); ++i) {
+		const Link& link = links[i];
+		std::cout << "L" << link << "";
+
+		if (i != links.size() - 1) {
+			std::cout << ", ";
+		}
 	}
+	std::cout << std::endl;
 }

@@ -5,7 +5,7 @@ Peg::Peg(Color color, Position position)
 {
 }
 Peg::Peg(const Peg& other)
-	:m_color{ other.m_color }, m_position{ other.m_position }
+	:m_color{ other.m_color }, m_position{ other.m_position }, m_adjacencyPegs{ other.m_adjacencyPegs }
 {
 }
 Peg::Peg(Peg&& peg) noexcept //?
@@ -52,6 +52,10 @@ void Peg::swap(Peg& peg)
 	Position position{ peg.m_position };
 	peg.m_position = m_position;
 	m_position = position;
+
+	std::vector<Peg> adyacency{ peg.m_adjacencyPegs };
+	peg.m_adjacencyPegs = m_adjacencyPegs;
+	m_adjacencyPegs = adyacency;
 }
 
 void Peg::addAdjacentPeg(const Peg& peg)
