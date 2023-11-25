@@ -25,7 +25,11 @@ void Game::StartGame()
 	int option;
 	while (m_redPlayer.GetPeg().size() <= nrPegs && m_blackPlayer.GetPeg().size() <= nrPegs) // de continuat cand avem win conditions 
 	{
-		std::cout << "Press 1 for adding a Peg \n Press 2 for adding a Link \n";
+		if (m_isRedTurn)
+			std::cout << "It's red's turn.\n";
+		else
+			std::cout << "It's black's turn. \n";
+		std::cout << "Press 1 for adding a Peg \nPress 2 for adding a Link \n";
 		std::cin >> option;
 		switch(option)
 		{
@@ -52,6 +56,13 @@ void Game::ChangePlayer()
 
 bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 {
+	if (static_cast<int>(pStart.GetColor()) != static_cast<int>(pEnd.GetColor())
+		|| (m_isRedTurn && static_cast<int>(pEnd.GetColor()) == 1)
+		|| (!m_isRedTurn && static_cast<int>(pEnd.GetColor()) == 0))
+	{
+		std::cerr << "You can place a link ONLY between your pegs!\n";
+		return false;
+	}
 	int xStart{ pStart.GetPosition().first }; //a
 	int yStart{ pStart.GetPosition().second }; // b
 	int xEnd{ pEnd.GetPosition().first };//c
@@ -65,6 +76,7 @@ bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 	{
 		if (std::abs(xStart - xEnd) != 2 || std::abs(yStart - yEnd) != 1)
 		{
+			std::cerr << "You cannot place a link between those two pegs!\n";
 			return false;
 		}
 	}
@@ -79,7 +91,11 @@ bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 		distance3 = std::abs(xEnd - link.GetPegStart().GetPosition().first) + std::abs(yEnd - link.GetPegStart().GetPosition().second);
 		distance4 = std::abs(xEnd - link.GetPegEnd().GetPosition().first) + std::abs(yEnd - link.GetPegEnd().GetPosition().second);
 		if (distance2 == distance3 || distance1 == distance4)
+		{
+			std::cerr << "You cannot place a link above another one!\n";
 			return false;
+
+		}
 	}
 
 	return true;
@@ -164,7 +180,6 @@ void Game::MoveLink()
 				/*startPeg.addAdjacentPeg(endPeg);
 				endPeg.addAdjacentPeg(startPeg);*/
 			}
-			else std::cout << "Link ul nu este valid\n";
 		}
 	}
 }
