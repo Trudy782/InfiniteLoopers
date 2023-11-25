@@ -12,7 +12,7 @@ private:
 	bool PegValidation(const size_t& row, const size_t& col);
     void MovePeg();
 	void MoveLink();
-	Player currentPlayer();
+	Player &currentPlayer();
 	void showLinks();
 private:
 	Player m_redPlayer;

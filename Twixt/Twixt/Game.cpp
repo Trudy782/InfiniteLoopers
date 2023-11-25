@@ -40,6 +40,7 @@ void Game::StartGame()
 			break;
 		}
 		std::cout << m_board;
+		showLinks();
 		ChangePlayer();
 
 	}
@@ -156,35 +157,31 @@ void Game::MovePeg()
 
 void Game::MoveLink()
 {
-	std::pair<Board::Position, Board::Position> positions;
-	positions = currentPlayer().GetNextActionLink();
-	auto [rowStart, colStart] = positions.first;
-	auto [rowEnd, colEnd] = positions.second;
+	Board::Position startCoordinates, endCoordinates;
+	std::pair< Board::Position, Board::Position> get = currentPlayer().GetNextActionLink();
+	startCoordinates = get.first;
+	endCoordinates = get.second;
 
-	Peg startPeg, endPeg;
-	for (Peg peg : currentPlayer().GetPeg())
+	if (m_board[startCoordinates].has_value())
 	{
-		if ((peg.GetPosition().first == rowStart) && (peg.GetPosition().second == colStart))
-			startPeg = peg;
-		if ((peg.GetPosition().first == rowEnd) && (peg.GetPosition().second == colEnd))
-			endPeg = peg;
+		const std::optional<Peg>& start = m_board[startCoordinates];
+		Peg startPeg = start.value();
+		if (m_board[endCoordinates].has_value())
+		{
+			const std::optional<Peg>& end = m_board[endCoordinates];
+			Peg endPeg = end.value();
+			if (LinkValidation(startPeg, endPeg)) {
+				Link link(startPeg, endPeg);
+				currentPlayer().AddLink(link);
+				/*startPeg.addAdjacentPeg(endPeg);
+				endPeg.addAdjacentPeg(startPeg);*/
+			}
+			else std::cout << "Link ul nu este valid\n";
+		}
 	}
-	if (LinkValidation(startPeg, endPeg))
-	{
-		std::cout << "The link is valid!";
-		std::cout << std::endl;
-		Link link(startPeg, endPeg);
-		link.AddAdjacency();
-		currentPlayer().AddLink(link);
-	}
-	else {
-		std::cout << "The link is not valid!";
-		std::cout << std::endl;
-	}
-
 }
 
-Player Game::currentPlayer()
+Player& Game::currentPlayer()
 {
 	if (m_isRedTurn)
 		return m_redPlayer;

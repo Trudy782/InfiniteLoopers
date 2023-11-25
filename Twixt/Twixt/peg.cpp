@@ -38,7 +38,7 @@ const Peg::Position& Peg::GetPosition() const
 	return m_position;
 }
 
-const std::vector<Peg> Peg::GetAdjacencyPegs() const
+const std::vector<Peg>& Peg::GetAdjacencyPegs() const
 {
 	return m_adjacencyPegs;
 }

@@ -22,7 +22,7 @@ class Peg {
 		void SetPosition(Position position);
 		const Color& GetColor() const;
 		const Position& GetPosition() const;
-		const std::vector<Peg> GetAdjacencyPegs() const;
+		const std::vector<Peg>& GetAdjacencyPegs() const;
 		friend std::ostream& operator<<(std::ostream& os, const Peg& peg);
 
 		void swap(Peg& peg);
