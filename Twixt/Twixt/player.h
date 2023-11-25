@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdint>
+#include <stack>
 
 
 class Player {
@@ -29,7 +30,7 @@ class Player {
 		void AddPeg(const Peg& peg);
 		void AddLink(const Link& link);
 
-
+		std::vector<Peg> DFS(Peg p);
 
 
 		~Player() = default;
