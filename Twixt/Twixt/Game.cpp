@@ -141,24 +141,31 @@ bool Game::PegValidation(const size_t& row, const size_t& col)
 }
 void Game::MovePeg()
 {
-	Board::Position position;
-	position = currentPlayer().GetNextActionPeg();
-	auto [row, col] = position;
-	if (PegValidation(row, col)) {
-		Peg p;
+	bool pegValid = false;
 
-		if (m_isRedTurn)
-		{
-			p = Peg(Color::Red, position);
-			m_redPlayer.AddPeg(p);
-		}
-		else
-		{
-			p = Peg(Color::Black, position);
-			m_blackPlayer.AddPeg(p);
+	while (!pegValid)
+	{
+		Board::Position position = currentPlayer().GetNextActionPeg();
+		auto [row, col] = position;
 
+		if (PegValidation(row, col))
+		{
+			Peg p;
+
+			if (m_isRedTurn)
+			{
+				p = Peg(Color::Red, position);
+				m_redPlayer.AddPeg(p);
+			}
+			else
+			{
+				p = Peg(Color::Black, position);
+				m_blackPlayer.AddPeg(p);
+			}
+
+			m_board[position] = p;
+			pegValid = true;
 		}
-		m_board[position] = p;
 	}
 }
 
