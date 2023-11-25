@@ -17,6 +17,7 @@ Game::Game()
 	std::cin >> m_board;
 	m_isRedTurn = true;
 	std::cout << m_board;
+	std::cout << std::endl;
 }
 void Game::StartGame()
 {
@@ -25,6 +26,7 @@ void Game::StartGame()
 	int option;
 	while (m_redPlayer.GetPeg().size() <= nrPegs && m_blackPlayer.GetPeg().size() <= nrPegs) // de continuat cand avem win conditions 
 	{
+
 		if (m_isRedTurn)
 			std::cout << "It's red's turn.\n";
 		else
@@ -67,22 +69,7 @@ bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 	int yStart{ pStart.GetPosition().second }; // b
 	int xEnd{ pEnd.GetPosition().first };//c
 	int yEnd{ pEnd.GetPosition().second };//d
-
-	std::vector<Peg> pegs = currentPlayer().GetPeg();
-	bool found1 = 0, found2 = 0;
-	for (int i = 0; i < pegs.size(); ++i) {
-		Peg peg = pegs[i];
-		if (peg == pStart)
-			found1 = 1;
-		if (peg == pEnd)
-			found2 = 1;
-		std::cout << peg << " ";
-	}
-	if (!found1 || !found2)
-	{
-		std::cerr << "You cannot place a link on a unexisting peg!\n";
-		return false;
-	}
+	
 
 	int distance1;
 	int distance2;
@@ -197,7 +184,12 @@ void Game::MoveLink()
 				endPeg.addAdjacentPeg(startPeg);*/
 			}
 		}
+		else
+			std::cerr << "You cannot place a link on a unexisting peg!\n";
 	}
+	else
+		std::cerr << "You cannot place a link on a unexisting peg!\n";
+
 }
 
 Player& Game::currentPlayer()
@@ -211,6 +203,7 @@ Player& Game::currentPlayer()
 void Game::showLinks(const Player& player) {
 	std::vector<Link> links = player.GetLink();
 	std::cout << "The list of links for the player " << player.GetName() << " is: ";
+	std::cout << std::endl;
 
 	for (size_t i = 0; i < links.size(); ++i) {
 		const Link& link = links[i];
