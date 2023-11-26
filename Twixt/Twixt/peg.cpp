@@ -69,6 +69,5 @@ void Peg::addAdjacentPeg(const Peg& peg)
 
 std::ostream& operator<<(std::ostream& os, const Peg& peg)
 {
-	return os << static_cast<int>(peg.m_color);
+	return os << static_cast<int>(peg.GetColor());
 }
-
