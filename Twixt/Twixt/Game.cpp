@@ -222,3 +222,25 @@ void Game::showLinks(const Player& player) {
 	}
 	std::cout << std::endl;
 }
+
+void Game::WinConditionsRed()
+{
+	std::vector<Peg>listPegs = currentPlayer().GetPeg();
+	for (int i = 0; i < listPegs.size(); i++)
+	{
+		if (listPegs[i].GetPosition().first == 0)
+		{
+			std::vector<Peg> visited = currentPlayer().DFS(listPegs[i]);
+			for (int i = 0; i < visited.size(); i++)
+				if (visited[i].GetPosition().first == m_board.GetSize())
+					std::cout << "End game, "<<currentPlayer().GetName() << " won\n";
+		}
+		if (listPegs[i].GetPosition().first == m_board.GetSize())
+		{
+			std::vector<Peg> visited = currentPlayer().DFS(listPegs[i]);
+			for (int i = 0; i < visited.size(); i++)
+				if (visited[i].GetPosition().first == 0)
+					std::cout << "End game, " << currentPlayer().GetName() << " won\n";
+		}
+	}
+}

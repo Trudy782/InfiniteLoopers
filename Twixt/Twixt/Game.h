@@ -14,6 +14,8 @@ private:
 	void MoveLink();
 	Player &currentPlayer();
 	void showLinks(const Player& player);
+
+	void WinConditionsRed();
 private:
 	Player m_redPlayer;
 	Player m_blackPlayer;
