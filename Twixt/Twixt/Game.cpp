@@ -22,7 +22,7 @@ Game::Game()
 void Game::StartGame()
 {
 	bool IsGameActiv = true;
-	int nrPegs = m_board.GetSize() * 2 + 2;
+	int nrPegs = static_cast<int>(m_board.GetSize()) * 2 + 2;
 	int option;
 	while (m_redPlayer.GetPeg().size() <= nrPegs && m_blackPlayer.GetPeg().size() <= nrPegs) // de continuat cand avem win conditions 
 	{
@@ -33,7 +33,7 @@ void Game::StartGame()
 			std::cout << "It's black's turn. \n";
 		std::cout << "Press 1 for adding a Peg \nPress 2 for adding a Link \n";
 		std::cin >> option;
-		switch(option)
+		switch (option)
 		{
 		case 1:
 			MovePeg();
@@ -53,7 +53,7 @@ void Game::StartGame()
 }
 void Game::ChangePlayer()
 {
-    m_isRedTurn = !m_isRedTurn;
+	m_isRedTurn = !m_isRedTurn;
 }
 
 bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
@@ -65,11 +65,11 @@ bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 		std::cerr << "You can place a link ONLY between your pegs!\n";
 		return false;
 	}
-	int xStart{ pStart.GetPosition().first }; //a
-	int yStart{ pStart.GetPosition().second }; // b
-	int xEnd{ pEnd.GetPosition().first };//c
-	int yEnd{ pEnd.GetPosition().second };//d
-	
+	int xStart{ static_cast<int>(pStart.GetPosition().first) }; //a
+	int yStart{ static_cast<int>(pStart.GetPosition().second) }; // b
+	int xEnd{ static_cast<int>(pEnd.GetPosition().first) };//c
+	int yEnd{ static_cast<int>(pEnd.GetPosition().second) };//d
+
 
 	int distance1;
 	int distance2;
@@ -89,10 +89,10 @@ bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 	for (const auto& link : listOfLinks)
 	{
 
-		distance1 = std::abs(xStart - link.GetPegStart()->GetPosition().first) + std::abs(yStart - link.GetPegStart()->GetPosition().second);
-		distance2 = std::abs(xStart - link.GetPegEnd()->GetPosition().first) + std::abs(yStart - link.GetPegEnd()->GetPosition().second);
-		distance3 = std::abs(xEnd - link.GetPegStart()->GetPosition().first) + std::abs(yEnd - link.GetPegStart()->GetPosition().second);
-		distance4 = std::abs(xEnd - link.GetPegEnd()->GetPosition().first) + std::abs(yEnd - link.GetPegEnd()->GetPosition().second);
+		distance1 = std::abs(xStart - static_cast<int>(link.GetPegStart()->GetPosition().first)) + std::abs(yStart - static_cast<int>(link.GetPegStart()->GetPosition().second));
+		distance2 = std::abs(xStart - static_cast<int>(link.GetPegEnd()->GetPosition().first)) + std::abs(yStart - static_cast<int>(link.GetPegEnd()->GetPosition().second));
+		distance3 = std::abs(xEnd - static_cast<int>(link.GetPegStart()->GetPosition().first)) + std::abs(yEnd - static_cast<int>(link.GetPegStart()->GetPosition().second));
+		distance4 = std::abs(xEnd - static_cast<int>(link.GetPegEnd()->GetPosition().first)) + std::abs(yEnd - static_cast<int>(link.GetPegEnd()->GetPosition().second));
 		if (distance2 == distance3 || distance1 == distance4)
 		{
 			std::cerr << "You cannot place a link above another one!\n";
@@ -233,7 +233,7 @@ void Game::WinConditionsRed()
 			std::vector<Peg> visited = currentPlayer().DFS(listPegs[i]);
 			for (int i = 0; i < visited.size(); i++)
 				if (visited[i].GetPosition().first == m_board.GetSize())
-					std::cout << "End game, "<<currentPlayer().GetName() << " won!\n";
+					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
 		}
 		if (listPegs[i].GetPosition().first == m_board.GetSize())
 		{

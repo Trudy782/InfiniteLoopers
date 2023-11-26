@@ -10,7 +10,7 @@ enum class Color :uint8_t {
 };
 class Peg {
 public:
-	using Position = std::pair<int, int>;
+	using Position = std::pair<size_t,size_t>;
 	Peg(Color color, Position position);
 	Peg() = default;
 	Peg(const Peg& other);
