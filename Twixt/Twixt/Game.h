@@ -16,6 +16,7 @@ private:
 	void showLinks(const Player& player);
 
 	void WinConditionsRed();
+	void WinConditionsBlack();
 private:
 	Player m_redPlayer;
 	Player m_blackPlayer;
