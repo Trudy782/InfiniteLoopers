@@ -1,47 +1,95 @@
 #include "link.h"
 
-Link::Link(const Peg& start, const Peg& end) : m_pegStart{ start }, m_pegEnd{ end }
+Link::Link()
+	:m_pegStart{ nullptr }, m_pegEnd{ nullptr }
 {
-
 }
-Link::Link(const Link& other) : m_pegStart{ other.m_pegStart }, m_pegEnd{ other.m_pegEnd }
+
+Link::Link(const Peg& start, const Peg& end) : m_pegStart{ new Peg(start) }, m_pegEnd{ new Peg(end) }
+{
+}
+Link::~Link()
+{
+	delete m_pegStart;
+	delete m_pegEnd;
+}
+Link::Link(const Link& other) : m_pegStart{ new Peg(*(other.m_pegStart)) }, m_pegEnd{ new Peg(*(other.m_pegEnd)) }
 {
 }
 Link& Link::operator=(const Link& obj)
 {
 	if (this != &obj) {
-		m_pegStart = obj.m_pegStart;
-		m_pegEnd = obj.m_pegEnd;
+		delete m_pegStart;
+		delete m_pegEnd;
+		m_pegStart = new Peg(*(obj.m_pegStart));
+		m_pegEnd = new Peg(*(obj.m_pegEnd));
 	}
 	return *this;
 }
 
-void Link::SetPegStart(Peg pieceStart)
+Link::Link(Link&& other) noexcept
+	: m_pegStart{ other.m_pegStart }, m_pegEnd{ other.m_pegEnd }
 {
-	m_pegStart = pieceStart;
+	other.m_pegStart = nullptr;
+	other.m_pegEnd = nullptr;
 }
-void Link::SetPegEnd(Peg pieceEnd)
+
+Link& Link::operator=(Link&& obj) noexcept
 {
-	m_pegEnd = pieceEnd;
+	if (this != &obj) {
+		delete m_pegStart;
+		delete m_pegEnd;
+		m_pegStart = obj.m_pegStart;
+		m_pegEnd = obj.m_pegEnd;
+		obj.m_pegStart = nullptr;
+		obj.m_pegEnd = nullptr;
+	}
+	return *this;
 }
-const Peg& Link::GetPegStart() const
+
+const Peg* Link::GetPegStart() const
 {
 	return m_pegStart;
 }
-const Peg& Link::GetPegEnd() const
+
+void Link::SetPegStart(const Peg& pegStart)
+{
+	*m_pegStart = pegStart;
+}
+
+const Peg* Link::GetPegEnd() const
 {
 	return m_pegEnd;
 }
 
-void Link::AddAdjacency()
+void Link::SetPegEnd(const Peg& pegEnd)
 {
-	m_pegStart.addAdjacentPeg(m_pegEnd);
-	m_pegEnd.addAdjacentPeg(m_pegStart);
+	*m_pegEnd = pegEnd;
 }
+
+
+
+//void Link::AddAdjacency()
+//{
+//	m_pegStart.addAdjacentPeg(m_pegEnd);
+//	m_pegEnd.addAdjacentPeg(m_pegStart);
+//}
 
 
 std::ostream& operator<<(std::ostream& os, const Link& link) {
-	os << "{" << link.GetPegStart().GetPosition().first << "," << link.GetPegStart().GetPosition().second << "} - {"
-		<< link.GetPegEnd().GetPosition().first << "," << link.GetPegEnd().GetPosition().second << "}";
+	const Peg* start = link.GetPegStart();
+	const Peg* end = link.GetPegEnd();
+
+	if (start && end) {
+		const auto& [startX, startY] = start->GetPosition();
+		const auto& [endX, endY] = end->GetPosition();
+
+		os << std::format("{{{}, {}}} - {{{}, {}}}", startX, startY, endX, endY);
+	}
+	else {
+		os << "Invalid Pegs";
+	}
+
 	return os;
 }
+

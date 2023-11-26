@@ -89,10 +89,10 @@ bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 	for (const auto& link : listOfLinks)
 	{
 
-		distance1 = std::abs(xStart - link.GetPegStart().GetPosition().first) + std::abs(yStart - link.GetPegStart().GetPosition().second);
-		distance2 = std::abs(xStart - link.GetPegEnd().GetPosition().first) + std::abs(yStart - link.GetPegEnd().GetPosition().second);
-		distance3 = std::abs(xEnd - link.GetPegStart().GetPosition().first) + std::abs(yEnd - link.GetPegStart().GetPosition().second);
-		distance4 = std::abs(xEnd - link.GetPegEnd().GetPosition().first) + std::abs(yEnd - link.GetPegEnd().GetPosition().second);
+		distance1 = std::abs(xStart - link.GetPegStart()->GetPosition().first) + std::abs(yStart - link.GetPegStart()->GetPosition().second);
+		distance2 = std::abs(xStart - link.GetPegEnd()->GetPosition().first) + std::abs(yStart - link.GetPegEnd()->GetPosition().second);
+		distance3 = std::abs(xEnd - link.GetPegStart()->GetPosition().first) + std::abs(yEnd - link.GetPegStart()->GetPosition().second);
+		distance4 = std::abs(xEnd - link.GetPegEnd()->GetPosition().first) + std::abs(yEnd - link.GetPegEnd()->GetPosition().second);
 		if (distance2 == distance3 || distance1 == distance4)
 		{
 			std::cerr << "You cannot place a link above another one!\n";

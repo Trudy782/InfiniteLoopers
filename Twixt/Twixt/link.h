@@ -6,21 +6,24 @@
 
 class Link {
 public:
-	Link() = default;
+	Link();
 	Link(const Peg& start, const Peg& end);
-	~Link() = default;
+	~Link();
 	Link(const Link& other);
 	Link& operator=(const Link& obj);
-	
+	Link(Link&& other) noexcept;
+	Link& operator=(Link&& obj) noexcept;
 
-	void SetPegStart(Peg pegStart);
-	void SetPegEnd(Peg pegEnd);
-	const Peg& GetPegStart() const;
-	const Peg& GetPegEnd() const;
+
+	const Peg* GetPegStart() const;
+	void SetPegStart(const Peg& pegStart);
+	const Peg* GetPegEnd() const;
+	void SetPegEnd(const Peg& pegEnd);
+
 	void AddAdjacency();
-	friend std::ostream& operator<<(std::ostream& os, const Link& link);
 private:
-	Peg m_pegStart;
-	Peg m_pegEnd;
+	Peg* m_pegStart;
+	Peg* m_pegEnd;
 
 };
+std::ostream& operator<<(std::ostream& os, const Link& link);
