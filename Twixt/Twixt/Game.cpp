@@ -1,6 +1,8 @@
 #include "Game.h"
 
-Game::Game()
+Game::Game():
+	m_board{},
+	m_isRedTurn{ true }
 {
 	std::string redPlayerName;
 	std::string blackPlayerName;

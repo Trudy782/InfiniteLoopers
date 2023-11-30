@@ -14,6 +14,7 @@ class Player {
 		Player(Color color, std::string name, std::vector<Peg> pegs, std::vector<Link> links);
 		Player() = default;
 		Player(const Player& other) = default;
+		Player(Player&& other) noexcept;
 		Player& operator=(const Player& obj) = default;
 		~Player() = default;
 

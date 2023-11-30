@@ -1,7 +1,12 @@
 #include "player.h"
 
 Player::Player(Color color, std::string name, std::vector<Peg> pegs, std::vector<Link> links)
-	:m_color{ color }, m_name{ name }, m_pegs{ pegs }, m_links{ links }
+	:m_color{ color }, m_name{ name }, m_pegs{ std::move(pegs) }, m_links{ std::move(links)}
+{
+}
+
+Player::Player(Player&& other) noexcept
+	:m_color{other.m_color}, m_name{other.m_name}, m_pegs{std::move(other.m_pegs)}, m_links{std::move(other.m_links)}
 {
 }
 
