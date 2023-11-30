@@ -5,10 +5,10 @@ Board::Board(std::vector<std::optional<Peg>>board, size_t size)
 {
 }
 
-Board::Board(const Board& other)
-	: m_board{ other.m_board }, m_size{ other.m_size }
-{
-}
+//Board::Board(const Board& other)
+//	: m_board{ other.m_board }, m_size{ other.m_size }
+//{
+//}
 
 const std::vector<std::optional<Peg>>& Board::GetBoard() const
 {
@@ -35,15 +35,15 @@ void Board::Reset()
 	memset(&m_board, 0, sizeof(m_board));
 }
 
-Board& Board::operator=(const Board& obj)
-{
-	if (this == &obj) {
-		return *this;
-	}
-	m_board = obj.m_board;
-	m_size = obj.m_size;
-	return *this;
-}
+//Board& Board::operator=(const Board& obj)
+//{
+//	if (this == &obj) {
+//		return *this;
+//	}
+//	m_board = obj.m_board;
+//	m_size = obj.m_size;
+//	return *this;
+//}
 
 const std::optional<Peg>& Board::operator[](const Position& index) const
 {

@@ -18,9 +18,11 @@ class Board
 			Draw
 		};
 		using Position = std::pair<size_t, size_t>;
+
 		Board(std::vector<std::optional<Peg>>board, size_t size);
 		Board() = default;
-		Board(const Board& other);
+		Board(const Board& other) = default;
+		Board& operator=(const Board& obj) = default;
 		~Board() = default;
 
 		const std::vector<std::optional<Peg>>& GetBoard() const;
@@ -29,9 +31,9 @@ class Board
 		void SetSize(size_t size);
 		void Reset();
 
-		Board& operator=(const Board& obj);
 		const std::optional<Peg>& operator[](const Position& index) const;
 		std::optional<Peg>& operator[](const Position& index);
+
 		friend std::istream& operator>>(std::istream& is, Board& board);
 		friend std::ostream& operator<<(std::ostream& os, const Board& board);
 
