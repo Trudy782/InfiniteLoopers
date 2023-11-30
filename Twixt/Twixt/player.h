@@ -13,8 +13,10 @@ class Player {
 	public :
 		Player(Color color, std::string name, std::vector<Peg> pegs, std::vector<Link> links);
 		Player() = default;
-		Player(const Player& other);
-		Player& operator=(const Player& obj);
+		Player(const Player& other) = default;
+		Player& operator=(const Player& obj) = default;
+		~Player() = default;
+
 		friend std::istream& operator>>(std::istream& is, Player& player);
 		friend std::ostream& operator<<(std::ostream& os, const Player& player);
 
@@ -33,7 +35,6 @@ class Player {
 		std::vector<Peg> DFS(Peg p);
 
 
-		~Player() = default;
 
 	private:
 		Color m_color : 1;

@@ -5,21 +5,21 @@ Player::Player(Color color, std::string name, std::vector<Peg> pegs, std::vector
 {
 }
 
-Player::Player(const Player& other)
-	:m_color{ other.m_color }, m_name{ other.m_name }, m_pegs{ other.m_pegs }, m_links{ other.m_links }
-{
-}
+//Player::Player(const Player& other)
+//	:m_color{ other.m_color }, m_name{ other.m_name }, m_pegs{ other.m_pegs }, m_links{ other.m_links }
+//{
+//}
 
-Player& Player::operator=(const Player& obj)
-{
-	if (this != &obj) {
-		m_color = obj.m_color;
-		m_name = obj.m_name;
-		m_pegs = obj.m_pegs;
-		m_links = obj.m_links;
-	}
-	return *this;
-}
+//Player& Player::operator=(const Player& obj)
+//{
+//	if (this != &obj) {
+//		m_color = obj.m_color;
+//		m_name = obj.m_name;
+//		m_pegs = obj.m_pegs;
+//		m_links = obj.m_links;
+//	}
+//	return *this;
+//}
 void Player::SetColor(Color color)
 {
 	m_color = color;
