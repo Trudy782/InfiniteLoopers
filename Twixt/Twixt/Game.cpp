@@ -85,20 +85,28 @@ bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 	}
 
 
-	std::vector<Link>listOfLinks = currentPlayer().GetLink();
-	for (const auto& link : listOfLinks)
+	std::vector<Link>listOfLinks = m_redPlayer.GetLink();
+	for (int i = 0; i < 2; i++)
 	{
-
-		distance1 = std::abs(xStart - static_cast<int>(link.GetPegStart()->GetPosition().first)) + std::abs(yStart - static_cast<int>(link.GetPegStart()->GetPosition().second));
-		distance2 = std::abs(xStart - static_cast<int>(link.GetPegEnd()->GetPosition().first)) + std::abs(yStart - static_cast<int>(link.GetPegEnd()->GetPosition().second));
-		distance3 = std::abs(xEnd - static_cast<int>(link.GetPegStart()->GetPosition().first)) + std::abs(yEnd - static_cast<int>(link.GetPegStart()->GetPosition().second));
-		distance4 = std::abs(xEnd - static_cast<int>(link.GetPegEnd()->GetPosition().first)) + std::abs(yEnd - static_cast<int>(link.GetPegEnd()->GetPosition().second));
-		if (distance2 == distance3 || distance1 == distance4)
+		for (const auto& link : listOfLinks)
 		{
-			std::cerr << "You cannot place a link above another one!\n";
-			return false;
 
+			distance1 = std::abs(xStart - static_cast<int>(link.GetPegStart()->GetPosition().first)) + std::abs(yStart - static_cast<int>(link.GetPegStart()->GetPosition().second));
+			distance2 = std::abs(xStart - static_cast<int>(link.GetPegEnd()->GetPosition().first)) + std::abs(yStart - static_cast<int>(link.GetPegEnd()->GetPosition().second));
+			distance3 = std::abs(xEnd - static_cast<int>(link.GetPegStart()->GetPosition().first)) + std::abs(yEnd - static_cast<int>(link.GetPegStart()->GetPosition().second));
+			distance4 = std::abs(xEnd - static_cast<int>(link.GetPegEnd()->GetPosition().first)) + std::abs(yEnd - static_cast<int>(link.GetPegEnd()->GetPosition().second));
+			if (distance1 + distance2 + distance3 + distance4 <= 8)
+			{
+				if ((distance2 == distance3 && (distance1 + distance4 == 4 || distance1 + distance4 == 6))
+					|| (distance1 == distance4 && distance2 + distance3 == 4))
+				{
+					std::cerr << "You cannot place a link above another one!\n";
+					return false;
+
+				}
+			}
 		}
+		listOfLinks = m_blackPlayer.GetLink();
 	}
 
 	return true;
@@ -171,31 +179,37 @@ void Game::MovePeg()
 
 void Game::MoveLink()
 {
-	Board::Position startCoordinates, endCoordinates;
-	std::pair< Board::Position, Board::Position> get = currentPlayer().GetNextActionLink();
-	startCoordinates = get.first;
-	endCoordinates = get.second;
-
-	if (m_board[startCoordinates].has_value())
+	bool linkValid = false;
+	while (!linkValid)
 	{
-		const std::optional<Peg>& start = m_board[startCoordinates];
-		Peg startPeg = start.value();
-		if (m_board[endCoordinates].has_value())
+		Board::Position startCoordinates, endCoordinates;
+		std::pair< Board::Position, Board::Position> get = currentPlayer().GetNextActionLink();
+		startCoordinates = get.first;
+		endCoordinates = get.second;
+
+		if (m_board[startCoordinates].has_value())
 		{
-			const std::optional<Peg>& end = m_board[endCoordinates];
-			Peg endPeg = end.value();
-			if (LinkValidation(startPeg, endPeg)) {
-				Link link(startPeg, endPeg);
-				currentPlayer().AddLink(link);
-				/*startPeg.addAdjacentPeg(endPeg);
-				endPeg.addAdjacentPeg(startPeg);*/
+			const std::optional<Peg>& start = m_board[startCoordinates];
+			Peg startPeg = start.value();
+			if (m_board[endCoordinates].has_value())
+			{
+				const std::optional<Peg>& end = m_board[endCoordinates];
+				Peg endPeg = end.value();
+				if (LinkValidation(startPeg, endPeg)) {
+					Link link(startPeg, endPeg);
+					currentPlayer().AddLink(link);
+					/*startPeg.addAdjacentPeg(endPeg);
+					endPeg.addAdjacentPeg(startPeg);*/
+					linkValid = true;
+				}
 			}
+			else
+				std::cerr << "You cannot place a link on a unexisting peg!\n";
 		}
 		else
 			std::cerr << "You cannot place a link on a unexisting peg!\n";
 	}
-	else
-		std::cerr << "You cannot place a link on a unexisting peg!\n";
+	
 
 }
 
