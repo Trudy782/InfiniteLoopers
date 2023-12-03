@@ -1,7 +1,12 @@
 #include "board.h"
 
 Board::Board(std::vector<std::optional<Peg>>board, size_t size)
-	:m_board{ board }, m_size{ size }
+	:m_board{ board }, m_size{ size } , m_state{State::None}
+{
+}
+
+Board::Board()
+	:m_state{ State::None }
 {
 }
 
@@ -23,6 +28,16 @@ void Board::SetBoard(const std::vector<std::optional<Peg>>& board)
 size_t Board::GetSize() const
 {
 	return m_size;
+}
+
+Board::State Board::GetState() const
+{
+	return m_state;
+}
+
+void Board::SetState(State state)
+{
+	m_state = state;
 }
 
 void Board::SetSize(size_t size)

@@ -17,7 +17,6 @@ Game::Game():
 	m_blackPlayer = Player{ Color::Black, blackPlayerName, {}, {} };
 	std::cout << "Enter the size of the board: ";
 	std::cin >> m_board;
-	m_isRedTurn = true;
 	std::cout << m_board;
 	std::cout << std::endl;
 }
@@ -26,9 +25,8 @@ void Game::StartGame()
 	bool IsGameActiv = true;
 	int nrPegs = static_cast<int>(m_board.GetSize()) * 2 + 2;
 	int option;
-	while (m_redPlayer.GetPeg().size() <= nrPegs && m_blackPlayer.GetPeg().size() <= nrPegs) // de continuat cand avem win conditions 
+	while (m_redPlayer.GetPeg().size() <= nrPegs || m_blackPlayer.GetPeg().size() <= nrPegs) 
 	{
-
 		if (m_isRedTurn)
 			std::cout << "It's red's turn.\n";
 		else
@@ -47,10 +45,20 @@ void Game::StartGame()
 			std::cerr << "Invalid option!\n";
 			break;
 		}
+		if (WinConditionsBlack() or WinConditionsRed())
+		{
+			m_board.SetState(Board::State::Win);
+			break;
+		}
 		std::cout << m_board;
 		showLinks(currentPlayer());
 		ChangePlayer();
+	}
 
+	if (m_redPlayer.GetPeg().size() == nrPegs && m_blackPlayer.GetPeg().size() == nrPegs && !WinConditionsBlack() && !WinConditionsRed()) //remiza
+	{
+		m_board.SetState(Board::State::Draw);
+		std::cout << "It's a tie!\n";
 	}
 }
 void Game::ChangePlayer()
@@ -253,7 +261,7 @@ void Game::ShowAdjacentPegs(const Peg& peg)
 	std::cout << std::endl;
 }
 
-void Game::WinConditionsRed()
+bool Game::WinConditionsRed()
 {
 	std::vector<Peg>listPegs = currentPlayer().GetPeg();
 	for (int i = 0; i < listPegs.size(); i++)
@@ -263,19 +271,26 @@ void Game::WinConditionsRed()
 			std::vector<Peg> visited = currentPlayer().DFS(listPegs[i]);
 			for (int i = 0; i < visited.size(); i++)
 				if (visited[i].GetPosition().first == m_board.GetSize())
+				{
 					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
+					return true;
+				}
 		}
 		if (listPegs[i].GetPosition().first == m_board.GetSize())
 		{
 			std::vector<Peg> visited = currentPlayer().DFS(listPegs[i]);
 			for (int i = 0; i < visited.size(); i++)
 				if (visited[i].GetPosition().first == 0)
+				{
 					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
+					return true;
+				}
 		}
 	}
+	return false;
 }
 
-void Game::WinConditionsBlack()
+bool Game::WinConditionsBlack()
 {
 	std::vector<Peg>listPegs = currentPlayer().GetPeg();
 	for (int i = 0; i < listPegs.size(); i++)
@@ -285,14 +300,21 @@ void Game::WinConditionsBlack()
 			std::vector<Peg> visited = currentPlayer().DFS(listPegs[i]);
 			for (int i = 0; i < visited.size(); i++)
 				if (visited[i].GetPosition().second == m_board.GetSize())
+				{
 					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
+					return true;
+				}
 		}
 		if (listPegs[i].GetPosition().second == m_board.GetSize())
 		{
 			std::vector<Peg> visited = currentPlayer().DFS(listPegs[i]);
 			for (int i = 0; i < visited.size(); i++)
 				if (visited[i].GetPosition().second == 0)
+				{
 					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
+					return true;
+				}
 		}
 	}
+	return false;
 }

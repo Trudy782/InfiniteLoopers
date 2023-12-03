@@ -20,7 +20,7 @@ class Board
 		using Position = std::pair<size_t, size_t>;
 
 		Board(std::vector<std::optional<Peg>>board, size_t size);
-		Board() = default;
+		Board();
 		Board(const Board& other) = default;
 		Board& operator=(const Board& obj) = default;
 		~Board() = default;
@@ -28,6 +28,8 @@ class Board
 		const std::vector<std::optional<Peg>>& GetBoard() const;
 		void SetBoard(const std::vector<std::optional<Peg>>& board);
 		size_t GetSize() const;
+		State GetState() const;
+		void SetState(State state);
 		void SetSize(size_t size);
 		void Reset();
 
@@ -40,5 +42,5 @@ class Board
 	private:
 		std::vector<std::optional<Peg>>m_board; //nu trebuie semantic moves
 		size_t m_size;
-	
+		State m_state;
 };

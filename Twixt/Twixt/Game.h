@@ -16,8 +16,8 @@ private:
 	void showLinks(const Player& player);
 	void ShowAdjacentPegs(const Peg& peg);
 
-	void WinConditionsRed();
-	void WinConditionsBlack();
+	bool WinConditionsRed();
+	bool WinConditionsBlack();
 private:
 	Player m_redPlayer;
 	Player m_blackPlayer;
