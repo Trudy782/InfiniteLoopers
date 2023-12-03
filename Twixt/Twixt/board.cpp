@@ -43,6 +43,7 @@ void Board::SetState(State state)
 void Board::SetSize(size_t size)
 {
 	m_size = size;
+	m_board.resize(m_size * m_size);
 }
 
 void Board::Reset()
@@ -103,12 +104,6 @@ std::optional<Peg>& Board::operator[](const Position& index)
 }
 
 
-std::istream& operator>>(std::istream& is, Board& board)
-{
-	is >> board.m_size;
-	board.m_board.resize(board.m_size * board.m_size);
-	return is;
-}
 
 std::ostream& operator<<(std::ostream& os, const Board& board)
 {

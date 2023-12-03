@@ -16,7 +16,9 @@ Game::Game():
 	m_redPlayer = Player{ Color::Red, redPlayerName, {}};
 	m_blackPlayer = Player{ Color::Black, blackPlayerName, {}};
 	std::cout << "Enter the size of the board: ";
-	std::cin >> m_board;
+	int size;
+	std::cin >> size;
+	m_board.SetSize(size);
 	std::cout << m_board;
 	std::cout << std::endl;
 }

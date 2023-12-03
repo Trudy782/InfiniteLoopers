@@ -41,7 +41,6 @@ class Board
 		const std::optional<Peg>& operator[](const Position& index) const;
 		std::optional<Peg>& operator[](const Position& index);
 
-		friend std::istream& operator>>(std::istream& is, Board& board);
 		friend std::ostream& operator<<(std::ostream& os, const Board& board);
 
 	private:
