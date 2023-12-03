@@ -65,6 +65,25 @@ void Peg::AddAdjacentPeg(Peg* peg) {
     m_adjacencyPegs.push_back(peg);
 }
 
+std::vector<Peg> Peg::DFS()
+{
+    std::vector<Peg>visited;
+    std::stack<Peg> stack;
+    visited.push_back(*this);
+    std::vector<Peg*> adjacencyList = this->GetAdjacencyPegs();
+    for (int i = 0; i < adjacencyList.size(); i++)
+        stack.push(*adjacencyList[i]);
+    while (!stack.empty())
+    {
+        visited.push_back(stack.top());
+        stack.pop();
+        std::vector<Peg*>adjacencyVisited = visited.back().GetAdjacencyPegs();
+        for (int i = 0; i < adjacencyVisited.size(); i++)
+            stack.push(*adjacencyVisited[i]);
+    }
+    return visited;
+}
+
 std::ostream& operator<<(std::ostream& os, const Peg& peg)
 {
     return os << static_cast<int>(peg.GetColor());

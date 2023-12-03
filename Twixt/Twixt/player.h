@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <cstdint>
-#include <stack>
+
 
 
 class Player {
@@ -30,7 +30,7 @@ class Player {
 		Board::Position GetNextActionPeg();
 		void AddPeg(const Peg& peg);
 
-		std::vector<Peg> DFS(Peg p);
+		
 
 
 

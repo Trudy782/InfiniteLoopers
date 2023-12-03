@@ -273,7 +273,7 @@ bool Game::WinConditionsRed()
 	{
 		if (listPegs[i].GetPosition().first == 0)
 		{
-			std::vector<Peg> visited = currentPlayer().DFS(listPegs[i]);
+			std::vector<Peg> visited = listPegs[i].DFS();
 			for (int i = 0; i < visited.size(); i++)
 				if (visited[i].GetPosition().first == m_board.GetSize())
 				{
@@ -283,7 +283,7 @@ bool Game::WinConditionsRed()
 		}
 		if (listPegs[i].GetPosition().first == m_board.GetSize())
 		{
-			std::vector<Peg> visited = currentPlayer().DFS(listPegs[i]);
+			std::vector<Peg> visited = listPegs[i].DFS();
 			for (int i = 0; i < visited.size(); i++)
 				if (visited[i].GetPosition().first == 0)
 				{
@@ -302,7 +302,7 @@ bool Game::WinConditionsBlack()
 	{
 		if (listPegs[i].GetPosition().second == 0)
 		{
-			std::vector<Peg> visited = currentPlayer().DFS(listPegs[i]);
+			std::vector<Peg> visited = listPegs[i].DFS();
 			for (int i = 0; i < visited.size(); i++)
 				if (visited[i].GetPosition().second == m_board.GetSize())
 				{
@@ -312,7 +312,7 @@ bool Game::WinConditionsBlack()
 		}
 		if (listPegs[i].GetPosition().second == m_board.GetSize())
 		{
-			std::vector<Peg> visited = currentPlayer().DFS(listPegs[i]);
+			std::vector<Peg> visited = listPegs[i].DFS();
 			for (int i = 0; i < visited.size(); i++)
 				if (visited[i].GetPosition().second == 0)
 				{

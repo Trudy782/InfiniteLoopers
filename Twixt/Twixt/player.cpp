@@ -98,21 +98,3 @@ void Player::AddPeg(const Peg& peg)
 }
 
 
-std::vector<Peg> Player::DFS(Peg p)
-{
-	std::vector<Peg>visited;
-	/*std::stack<Peg> stack;
-	visited.push_back(p);
-	std::vector<Peg> adjacencyList = p.GetAdjacencyPegs();
-	for (int i = 0; i < adjacencyList.size(); i++)
-		stack.push(adjacencyList[i]);
-	while (!stack.empty())
-	{
-		visited.push_back(stack.top());
-		stack.pop();
-		std::vector<Peg>adjacencyVisited = visited.back().GetAdjacencyPegs();
-		for (int i = 0; i < adjacencyVisited.size(); i++)
-			stack.push(adjacencyVisited[i]);
-	}*/
-	return visited;
-}
