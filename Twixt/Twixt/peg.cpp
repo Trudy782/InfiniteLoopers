@@ -4,25 +4,9 @@ Peg::Peg(Color color, Position position)
     :m_color{ color }, m_position{ position }
 {
 }
-Peg::Peg(const Peg& other)
-    :m_color{ other.m_color }, m_position{ other.m_position }, m_adjacencyPegs{ other.m_adjacencyPegs }
-{
-}
-Peg::Peg(Peg&& peg) noexcept //?
-{
-    swap(peg);
-}
-Peg& Peg::operator=(const Peg& obj)
-{
-    Peg aux{ obj };
-    swap(aux);
-    return *this;
-}
-Peg& Peg::operator=(Peg&& peg) noexcept
-{
-    swap(peg);
-    return *this;
-}
+
+
+
 bool Peg::operator==(const Peg& obj)
 {
     return m_color == obj.m_color && m_position == obj.m_position;

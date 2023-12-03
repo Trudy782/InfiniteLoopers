@@ -22,8 +22,8 @@ class Board
 
 		Board(std::vector<std::optional<Peg>>board, size_t size, std::vector<Link> links);
 		Board();
-		Board(const Board& other) = default;
-		Board& operator=(const Board& obj) = default;
+		
+		
 		~Board() = default;
 
 		const std::vector<std::optional<Peg>>& GetBoard() const;

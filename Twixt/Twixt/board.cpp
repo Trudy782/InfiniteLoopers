@@ -10,10 +10,6 @@ Board::Board()
 {
 }
 
-//Board::Board(const Board& other)
-//	: m_board{ other.m_board }, m_size{ other.m_size }
-//{
-//}
 
 const std::vector<std::optional<Peg>>& Board::GetBoard() const
 {
