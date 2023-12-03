@@ -101,41 +101,14 @@ bool Game::CheckPositionsPegs(const Peg& pStart, const Peg& pEnd, int xStart, in
 	return true;
 }
 
-bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
+bool Game::CheckIntersectionsLinks(const Peg& pStart, const Peg& pEnd, int xStart, int yStart, int xEnd, int yEnd)
 {
-	if (static_cast<int>(pStart.GetColor()) != static_cast<int>(pEnd.GetColor())
-		|| (m_isRedTurn && static_cast<int>(pEnd.GetColor()) == 1)
-		|| (!m_isRedTurn && static_cast<int>(pEnd.GetColor()) == 0))
-	{
-		std::cerr << "You can place a link ONLY between your pegs!\n";
-		return false;
-	}
-	int xStart{ static_cast<int>(pStart.GetPosition().first) }; //a
-	int yStart{ static_cast<int>(pStart.GetPosition().second) }; // b
-	int xEnd{ static_cast<int>(pEnd.GetPosition().first) };//c
-	int yEnd{ static_cast<int>(pEnd.GetPosition().second) };//d
-
-
-	int distance1;
-	int distance2;
-	int distance3;
-	int distance4;
-	if (std::abs(xStart - xEnd) != 1 || std::abs(yStart - yEnd) != 2)
-	{
-		if (std::abs(xStart - xEnd) != 2 || std::abs(yStart - yEnd) != 1)
-		{
-			std::cerr << "You cannot place a link between those two pegs!\n";
-			return false;
-		}
-	}
-
-
 	std::vector<Link>listOfLinks = m_board.GetLink();
 	for (int i = 0; i < 2; i++)
 	{
 		for (const auto& link : listOfLinks)
 		{
-
+			int distance1, distance2, distance3, distance4;
 			distance1 = std::abs(xStart - static_cast<int>(link.GetPegStart()->GetPosition().first)) + std::abs(yStart - static_cast<int>(link.GetPegStart()->GetPosition().second));
 			distance2 = std::abs(xStart - static_cast<int>(link.GetPegEnd()->GetPosition().first)) + std::abs(yStart - static_cast<int>(link.GetPegEnd()->GetPosition().second));
 			distance3 = std::abs(xEnd - static_cast<int>(link.GetPegStart()->GetPosition().first)) + std::abs(yEnd - static_cast<int>(link.GetPegStart()->GetPosition().second));
@@ -153,9 +126,20 @@ bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 		}
 		listOfLinks = m_board.GetLink();
 	}
-
 	return true;
 }
+
+bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
+{
+
+	int xStart{ static_cast<int>(pStart.GetPosition().first) };
+	int yStart{ static_cast<int>(pStart.GetPosition().second) };
+	int xEnd{ static_cast<int>(pEnd.GetPosition().first) };
+	int yEnd{ static_cast<int>(pEnd.GetPosition().second) };
+
+	return CheckOwnPegs(pStart, pEnd) && CheckPositionsPegs(pStart, pEnd, xStart, yStart, xEnd, yEnd) && CheckIntersectionsLinks(pStart, pEnd, xStart, yStart, xEnd, yEnd);
+}
+
 bool Game::PegValidation(const size_t& row, const size_t& col)
 {
 	size_t size = m_board.GetSize();
