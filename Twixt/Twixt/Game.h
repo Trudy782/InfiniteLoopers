@@ -18,6 +18,9 @@ private:
 
 	bool WinConditionsRed();
 	bool WinConditionsBlack();
+
+	bool CheckOwnPegs(const Peg& pStart, const Peg& pEnd);
+	bool CheckPositionsPegs(const Peg& pStart, const Peg& pEnd, int xStart, int yStart, int xEnd, int yEnd);
 private:
 	Player m_redPlayer;
 	Player m_blackPlayer;

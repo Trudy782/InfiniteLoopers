@@ -76,6 +76,31 @@ void Game::ChangePlayer()
 	m_isRedTurn = !m_isRedTurn;
 }
 
+bool Game::CheckOwnPegs(const Peg& pStart, const Peg& pEnd)
+{
+	if (static_cast<int>(pStart.GetColor()) != static_cast<int>(pEnd.GetColor())
+		|| (m_isRedTurn && static_cast<int>(pEnd.GetColor()) == 1)
+		|| (!m_isRedTurn && static_cast<int>(pEnd.GetColor()) == 0))
+	{
+		std::cerr << "You can place a link ONLY between your pegs!\n";
+		return false;
+	}
+	return true;
+}
+
+bool Game::CheckPositionsPegs(const Peg& pStart, const Peg& pEnd, int xStart, int yStart, int xEnd, int yEnd)
+{
+	if (std::abs(xStart - xEnd) != 1 || std::abs(yStart - yEnd) != 2)
+	{
+		if (std::abs(xStart - xEnd) != 2 || std::abs(yStart - yEnd) != 1)
+		{
+			std::cerr << "You cannot place a link between those two pegs!\n";
+			return false;
+		}
+	}
+	return true;
+}
+
 bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 {
 	if (static_cast<int>(pStart.GetColor()) != static_cast<int>(pEnd.GetColor())
