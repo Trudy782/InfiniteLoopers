@@ -200,8 +200,10 @@ void Game::MoveLink()
 				if (LinkValidation(startPeg, endPeg)) {
 					Link link(startPeg, endPeg);
 					currentPlayer().AddLink(link);
-					/*startPeg.addAdjacentPeg(endPeg);
-					endPeg.addAdjacentPeg(startPeg);*/
+					startPeg.AddAdjacentPeg(&endPeg);
+					endPeg.AddAdjacentPeg(&startPeg);
+					ShowAdjacentPegs(startPeg);
+					ShowAdjacentPegs(endPeg);
 					linkValid = true;
 				}
 			}
@@ -236,6 +238,18 @@ void Game::showLinks(const Player& player) {
 			std::cout << ", ";
 		}
 	}
+	std::cout << std::endl;
+}
+
+void Game::ShowAdjacentPegs(const Peg& peg)
+{
+	const std::vector<Peg*>& adjacentPegsPtr = peg.GetAdjacencyPegs();
+	std::cout << "Adjacent pegs for the selected peg: " << peg.GetPosition().first << " " << peg.GetPosition().second << " are: ";
+
+	for (const auto& adjacentPegPtr : adjacentPegsPtr) {
+		std::cout << adjacentPegPtr->GetPosition().first << " " << adjacentPegPtr->GetPosition().second << ", ";
+	}
+
 	std::cout << std::endl;
 }
 

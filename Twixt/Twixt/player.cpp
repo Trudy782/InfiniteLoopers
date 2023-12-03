@@ -127,7 +127,7 @@ void Player::AddLink(const Link& link)
 std::vector<Peg> Player::DFS(Peg p)
 {
 	std::vector<Peg>visited;
-	std::stack<Peg> stack;
+	/*std::stack<Peg> stack;
 	visited.push_back(p);
 	std::vector<Peg> adjacencyList = p.GetAdjacencyPegs();
 	for (int i = 0; i < adjacencyList.size(); i++)
@@ -139,6 +139,6 @@ std::vector<Peg> Player::DFS(Peg p)
 		std::vector<Peg>adjacencyVisited = visited.back().GetAdjacencyPegs();
 		for (int i = 0; i < adjacencyVisited.size(); i++)
 			stack.push(adjacencyVisited[i]);
-	}
+	}*/
 	return visited;
 }

@@ -47,8 +47,7 @@ const Peg::Position& Peg::GetPosition() const
     return m_position;
 }
 
-const std::vector<Peg>& Peg::GetAdjacencyPegs() const
-{
+const std::vector<Peg*>& Peg::GetAdjacencyPegs() const {
     return m_adjacencyPegs;
 }
 
@@ -62,8 +61,7 @@ void Peg::swap(Peg& peg)
     std::swap(m_adjacencyPegs, peg.m_adjacencyPegs);
 }
 
-void Peg::addAdjacentPeg(const Peg& peg)
-{
+void Peg::AddAdjacentPeg(Peg* peg) {
     m_adjacencyPegs.push_back(peg);
 }
 

@@ -14,6 +14,7 @@ private:
 	void MoveLink();
 	Player &currentPlayer();
 	void showLinks(const Player& player);
+	void ShowAdjacentPegs(const Peg& peg);
 
 	void WinConditionsRed();
 	void WinConditionsBlack();
