@@ -11,7 +11,7 @@
 
 class Player {
 	public :
-		Player(Color color, std::string name, std::vector<Peg> pegs, std::vector<Link> links);
+		Player(Color color, std::string name, std::vector<Peg> pegs);
 		Player() = default;
 		Player(const Player& other) = default;
 		Player(Player&& other) noexcept;
@@ -26,12 +26,9 @@ class Player {
 		Color GetColor() const;
 		const std::string& GetName() const;
 		const std::vector<Peg>& GetPeg() const;
-		const std::vector<Link>& GetLink() const;
 
 		Board::Position GetNextActionPeg();
-		std::pair<Board::Position, Board::Position> GetNextActionLink();
 		void AddPeg(const Peg& peg);
-		void AddLink(const Link& link);
 
 		std::vector<Peg> DFS(Peg p);
 
@@ -41,7 +38,6 @@ class Player {
 		Color m_color : 1;
 		std::string m_name;
 		std::vector<Peg> m_pegs;//nu necesita move semantics
-		std::vector<Link> m_links;
 
 	
 };

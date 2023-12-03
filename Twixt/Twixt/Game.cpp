@@ -13,8 +13,8 @@ Game::Game():
 	std::cout << "Enter the name of the Black Player: ";
 	std::cin >> blackPlayerName;
 
-	m_redPlayer = Player{ Color::Red, redPlayerName, {}, {} };
-	m_blackPlayer = Player{ Color::Black, blackPlayerName, {}, {} };
+	m_redPlayer = Player{ Color::Red, redPlayerName, {}};
+	m_blackPlayer = Player{ Color::Black, blackPlayerName, {}};
 	std::cout << "Enter the size of the board: ";
 	std::cin >> m_board;
 	std::cout << m_board;
@@ -103,7 +103,7 @@ bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 	}
 
 
-	std::vector<Link>listOfLinks = m_redPlayer.GetLink();
+	std::vector<Link>listOfLinks = m_board.GetLink();
 	for (int i = 0; i < 2; i++)
 	{
 		for (const auto& link : listOfLinks)
@@ -124,7 +124,7 @@ bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 				}
 			}
 		}
-		listOfLinks = m_blackPlayer.GetLink();
+		listOfLinks = m_board.GetLink();
 	}
 
 	return true;
@@ -194,7 +194,7 @@ bool Game::MovePeg()
 bool Game::MoveLink()
 {
 	Board::Position startCoordinates, endCoordinates;
-	std::pair< Board::Position, Board::Position> get = currentPlayer().GetNextActionLink();
+	std::pair< Board::Position, Board::Position> get = m_board.GetNextActionLink();
 	startCoordinates = get.first;
 	endCoordinates = get.second;
 
@@ -208,7 +208,7 @@ bool Game::MoveLink()
 			Peg endPeg = end.value();
 			if (LinkValidation(startPeg, endPeg)) {
 				Link link(startPeg, endPeg);
-				currentPlayer().AddLink(link);
+				m_board.AddLink(link);
 				startPeg.AddAdjacentPeg(&endPeg);
 				endPeg.AddAdjacentPeg(&startPeg);
 				ShowAdjacentPegs(startPeg);
@@ -239,8 +239,8 @@ Player& Game::currentPlayer()
 }
 
 void Game::showLinks(const Player& player) {
-	std::vector<Link> links = player.GetLink();
-	std::cout << "The list of links for the player " << player.GetName() << " is: ";
+	std::vector<Link> links = m_board.GetLink();
+	std::cout << "The list of links is: ";
 	std::cout << std::endl;
 
 	for (size_t i = 0; i < links.size(); ++i) {

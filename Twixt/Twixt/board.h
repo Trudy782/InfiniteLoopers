@@ -1,6 +1,7 @@
 #pragma once
 
 #include "peg.h"
+#include "link.h"
 
 #include<cstdint>
 #include<iostream>
@@ -19,7 +20,7 @@ class Board
 		};
 		using Position = std::pair<size_t, size_t>;
 
-		Board(std::vector<std::optional<Peg>>board, size_t size);
+		Board(std::vector<std::optional<Peg>>board, size_t size, std::vector<Link> links);
 		Board();
 		Board(const Board& other) = default;
 		Board& operator=(const Board& obj) = default;
@@ -33,6 +34,10 @@ class Board
 		void SetSize(size_t size);
 		void Reset();
 
+		const std::vector<Link>& GetLink() const;
+		std::pair<Position, Position> GetNextActionLink();
+		void AddLink(const Link& link);
+
 		const std::optional<Peg>& operator[](const Position& index) const;
 		std::optional<Peg>& operator[](const Position& index);
 
@@ -43,4 +48,6 @@ class Board
 		std::vector<std::optional<Peg>>m_board; //nu trebuie semantic moves
 		size_t m_size;
 		State m_state;
+		std::vector<Link> m_links;
+
 };

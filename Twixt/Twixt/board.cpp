@@ -1,7 +1,7 @@
 #include "board.h"
 
-Board::Board(std::vector<std::optional<Peg>>board, size_t size)
-	:m_board{ board }, m_size{ size } , m_state{State::None}
+Board::Board(std::vector<std::optional<Peg>>board, size_t size, std::vector<Link> links)
+	:m_board{ board }, m_size{ size } , m_state{State::None}, m_links{ links }
 {
 }
 
@@ -48,6 +48,37 @@ void Board::SetSize(size_t size)
 void Board::Reset()
 {
 	memset(&m_board, 0, sizeof(m_board));
+}
+
+const std::vector<Link>& Board::GetLink() const
+{
+	return m_links;
+}
+
+std::pair<Board::Position, Board::Position> Board::GetNextActionLink()
+{
+
+	//std::cout << m_name << ", choose the start position of the link.\n";
+	std::cout << "row & column: ";
+	int row;
+	std::cin >> row;
+	int column;
+	std::cin >> column;
+	Board::Position start = { row, column };
+
+	//std::cout << m_name << ", choose the end position of the link.\n";
+	std::cout << "row & column: ";
+	std::cin >> row;
+	std::cin >> column;
+	Board::Position end = { row, column };
+
+	return { start, end };
+}
+
+void Board::AddLink(const Link& link)
+{
+	m_links.push_back(link);
+
 }
 
 //Board& Board::operator=(const Board& obj)

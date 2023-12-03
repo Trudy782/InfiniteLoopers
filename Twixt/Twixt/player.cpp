@@ -1,12 +1,12 @@
 #include "player.h"
 
-Player::Player(Color color, std::string name, std::vector<Peg> pegs, std::vector<Link> links)
-	:m_color{ color }, m_name{ name }, m_pegs{ std::move(pegs) }, m_links{ std::move(links)}
+Player::Player(Color color, std::string name, std::vector<Peg> pegs)
+	:m_color{ color }, m_name{ name }, m_pegs{ std::move(pegs) }
 {
 }
 
 Player::Player(Player&& other) noexcept
-	:m_color{other.m_color}, m_name{other.m_name}, m_pegs{std::move(other.m_pegs)}, m_links{std::move(other.m_links)}
+	:m_color{other.m_color}, m_name{other.m_name}, m_pegs{std::move(other.m_pegs)}
 {
 }
 
@@ -49,10 +49,6 @@ const std::vector<Peg>& Player::GetPeg() const
 	return m_pegs;
 }
 
-const std::vector<Link>& Player::GetLink() const
-{
-	return m_links;
-}
 
 Board::Position Player::GetNextActionPeg()
 {
@@ -68,24 +64,6 @@ Board::Position Player::GetNextActionPeg()
 
 }
 
-std::pair<Board::Position, Board::Position> Player::GetNextActionLink()
-{
-	std::cout << m_name << ", choose the start position of the link.\n";
-	std::cout << "row & column: ";
-	int row;
-	std::cin >> row;
-	int column;
-	std::cin >> column;
-	Board::Position start = { row, column };
-
-	std::cout << m_name << ", choose the end position of the link.\n";
-	std::cout << "row & column: ";
-	std::cin >> row;
-	std::cin >> column;
-	Board::Position end = { row, column };
-
-	return { start, end };
- }
 
 std::istream& operator>>(std::istream& is, Player& player)
 {
@@ -119,10 +97,6 @@ void Player::AddPeg(const Peg& peg)
 	m_pegs.push_back(peg);
 }
 
-void Player::AddLink(const Link& link)
-{
-	m_links.push_back(link);
-}
 
 std::vector<Peg> Player::DFS(Peg p)
 {
