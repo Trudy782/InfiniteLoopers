@@ -10,8 +10,8 @@ private:
 	void ChangePlayer();
 	bool LinkValidation(const Peg& pStart, const Peg& pEnd);
 	bool PegValidation(const size_t& row, const size_t& col);
-    void MovePeg();
-	void MoveLink();
+    bool MovePeg();
+	bool MoveLink();
 	Player &currentPlayer();
 	void showLinks(const Player& player);
 	void ShowAdjacentPegs(const Peg& peg);

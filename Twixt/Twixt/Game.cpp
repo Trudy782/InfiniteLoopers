@@ -27,31 +27,39 @@ void Game::StartGame()
 	int option;
 	while (m_redPlayer.GetPeg().size() <= nrPegs || m_blackPlayer.GetPeg().size() <= nrPegs) 
 	{
+		bool validMove = false;
 		if (m_isRedTurn)
 			std::cout << "It's red's turn.\n";
 		else
 			std::cout << "It's black's turn. \n";
-		std::cout << "Press 1 for adding a Peg \nPress 2 for adding a Link \n";
-		std::cin >> option;
-		switch (option)
+		while (!validMove)
 		{
-		case 1:
-			MovePeg();
-			break;
-		case 2:
-			MoveLink();
-			break;
-		default:
-			std::cerr << "Invalid option!\n";
-			break;
+			std::cout << "Press 1 for adding a Peg \nPress 2 for adding a Link \n";
+			std::cin >> option;
+			switch (option)
+			{
+			case 1:
+				if (MovePeg())
+					validMove = true;
+				break;
+			case 2:
+				if (MoveLink())
+					validMove = true;
+				break;
+
+			default:
+				std::cerr << "Invalid option!\n";
+				break;
+			}
 		}
+		
+		std::cout << m_board;
+		showLinks(currentPlayer());
 		if (WinConditionsBlack() or WinConditionsRed())
 		{
 			m_board.SetState(Board::State::Win);
 			break;
 		}
-		std::cout << m_board;
-		showLinks(currentPlayer());
 		ChangePlayer();
 	}
 
@@ -157,71 +165,68 @@ bool Game::PegValidation(const size_t& row, const size_t& col)
 
 	return true;
 }
-void Game::MovePeg()
+bool Game::MovePeg()
 {
-	bool pegValid = false;
+	Board::Position position = currentPlayer().GetNextActionPeg();
+	auto [row, col] = position;
 
-	while (!pegValid)
+	if (PegValidation(row, col))
 	{
-		Board::Position position = currentPlayer().GetNextActionPeg();
-		auto [row, col] = position;
+		Peg p;
 
-		if (PegValidation(row, col))
+		if (m_isRedTurn)
 		{
-			Peg p;
-
-			if (m_isRedTurn)
-			{
-				p = Peg(Color::Red, position);
-				m_redPlayer.AddPeg(p);
-			}
-			else
-			{
-				p = Peg(Color::Black, position);
-				m_blackPlayer.AddPeg(p);
-			}
-
-			m_board[position] = p;
-			pegValid = true;
-		}
-	}
-}
-
-void Game::MoveLink()
-{
-	bool linkValid = false;
-	while (!linkValid)
-	{
-		Board::Position startCoordinates, endCoordinates;
-		std::pair< Board::Position, Board::Position> get = currentPlayer().GetNextActionLink();
-		startCoordinates = get.first;
-		endCoordinates = get.second;
-
-		if (m_board[startCoordinates].has_value())
-		{
-			const std::optional<Peg>& start = m_board[startCoordinates];
-			Peg startPeg = start.value();
-			if (m_board[endCoordinates].has_value())
-			{
-				const std::optional<Peg>& end = m_board[endCoordinates];
-				Peg endPeg = end.value();
-				if (LinkValidation(startPeg, endPeg)) {
-					Link link(startPeg, endPeg);
-					currentPlayer().AddLink(link);
-					startPeg.AddAdjacentPeg(&endPeg);
-					endPeg.AddAdjacentPeg(&startPeg);
-					ShowAdjacentPegs(startPeg);
-					ShowAdjacentPegs(endPeg);
-					linkValid = true;
-				}
-			}
-			else
-				std::cerr << "You cannot place a link on a unexisting peg!\n";
+			p = Peg(Color::Red, position);
+			m_redPlayer.AddPeg(p);
 		}
 		else
-			std::cerr << "You cannot place a link on a unexisting peg!\n";
+		{
+			p = Peg(Color::Black, position);
+			m_blackPlayer.AddPeg(p);
+		}
+
+		m_board[position] = p;
+		return true;
 	}
-	
+	return false;
+}
+
+bool Game::MoveLink()
+{
+	Board::Position startCoordinates, endCoordinates;
+	std::pair< Board::Position, Board::Position> get = currentPlayer().GetNextActionLink();
+	startCoordinates = get.first;
+	endCoordinates = get.second;
+
+	if (m_board[startCoordinates].has_value())
+	{
+		const std::optional<Peg>& start = m_board[startCoordinates];
+		Peg startPeg = start.value();
+		if (m_board[endCoordinates].has_value())
+		{
+			const std::optional<Peg>& end = m_board[endCoordinates];
+			Peg endPeg = end.value();
+			if (LinkValidation(startPeg, endPeg)) {
+				Link link(startPeg, endPeg);
+				currentPlayer().AddLink(link);
+				startPeg.AddAdjacentPeg(&endPeg);
+				endPeg.AddAdjacentPeg(&startPeg);
+				ShowAdjacentPegs(startPeg);
+				ShowAdjacentPegs(endPeg);
+				return true;
+			}
+		}
+		else
+		{
+			std::cerr << "You cannot place a link on a unexisting peg!\n";
+			return false;
+		}
+	}
+	else
+	{
+		std::cerr << "You cannot place a link on a unexisting peg!\n";
+		return false;
+	}
 
 }
 
