@@ -209,36 +209,34 @@ bool Game::MoveLink()
 	startCoordinates = get.first;
 	endCoordinates = get.second;
 
-	if (m_board[startCoordinates].has_value())
-	{
+	if (m_board[startCoordinates].has_value()) {
 		const std::optional<Peg>& start = m_board[startCoordinates];
-		Peg startPeg = start.value();
-		if (m_board[endCoordinates].has_value())
-		{
+		if (m_board[endCoordinates].has_value()) {
 			const std::optional<Peg>& end = m_board[endCoordinates];
-			Peg endPeg = end.value();
-			if (LinkValidation(startPeg, endPeg)) {
-				Link link(startPeg, endPeg);
-				m_board.AddLink(link);
-				startPeg.AddAdjacentPeg(&endPeg);
-				endPeg.AddAdjacentPeg(&startPeg);
-				ShowAdjacentPegs(startPeg);
-				ShowAdjacentPegs(endPeg);
-				return true;
+
+			if (start.has_value() && end.has_value()) {
+				Peg& startPeg = m_board[startCoordinates].value();
+				Peg& endPeg = m_board[endCoordinates].value();
+
+
+				if (LinkValidation(startPeg, endPeg)) {
+					Link link(startPeg, endPeg);
+					m_board.AddLink(link);
+					startPeg.AddAdjacentPeg(endPeg);
+					endPeg.AddAdjacentPeg(startPeg);
+					return true;
+				}
 			}
 		}
-		else
-		{
-			std::cerr << "You cannot place a link on a unexisting peg!\n";
+		else {
+			std::cerr << "You cannot place a link on a nonexistent peg!\n";
 			return false;
 		}
 	}
-	else
-	{
-		std::cerr << "You cannot place a link on a unexisting peg!\n";
+	else {
+		std::cerr << "You cannot place a link on a nonexistent peg!\n";
 		return false;
 	}
-
 }
 
 Player& Game::currentPlayer()
@@ -279,22 +277,22 @@ void Game::ShowAdjacentPegs(const Peg& peg)
 
 bool Game::WinConditionsRed()
 {
-	std::vector<Peg>listPegs = currentPlayer().GetPeg();
+	std::vector<Peg*>listPegs = currentPlayer().GetPeg();
 	for (int i = 0; i < listPegs.size(); i++)
 	{
-		if (listPegs[i].GetPosition().first == 0)
+		if (listPegs[i]->GetPosition().first == 0)
 		{
-			std::vector<Peg> visited = listPegs[i].DFS();
+			std::vector<Peg> visited = listPegs[i]->DFS();
 			for (int i = 0; i < visited.size(); i++)
-				if (visited[i].GetPosition().first == m_board.GetSize())
+				if (visited[i].GetPosition().first == m_board.GetSize() - 1)
 				{
 					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
 					return true;
 				}
 		}
-		if (listPegs[i].GetPosition().first == m_board.GetSize())
+		if (listPegs[i]->GetPosition().first == m_board.GetSize() - 1)
 		{
-			std::vector<Peg> visited = listPegs[i].DFS();
+			std::vector<Peg> visited = listPegs[i]->DFS();
 			for (int i = 0; i < visited.size(); i++)
 				if (visited[i].GetPosition().first == 0)
 				{
@@ -308,22 +306,22 @@ bool Game::WinConditionsRed()
 
 bool Game::WinConditionsBlack()
 {
-	std::vector<Peg>listPegs = currentPlayer().GetPeg();
+	std::vector<Peg*>listPegs = currentPlayer().GetPeg();
 	for (int i = 0; i < listPegs.size(); i++)
 	{
-		if (listPegs[i].GetPosition().second == 0)
+		if (listPegs[i]->GetPosition().second == 0)
 		{
-			std::vector<Peg> visited = listPegs[i].DFS();
+			std::vector<Peg> visited = listPegs[i]->DFS();
 			for (int i = 0; i < visited.size(); i++)
-				if (visited[i].GetPosition().second == m_board.GetSize())
+				if (visited[i].GetPosition().second == m_board.GetSize() - 1)
 				{
 					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
 					return true;
 				}
 		}
-		if (listPegs[i].GetPosition().second == m_board.GetSize())
+		if (listPegs[i]->GetPosition().second == m_board.GetSize() - 1)
 		{
-			std::vector<Peg> visited = listPegs[i].DFS();
+			std::vector<Peg> visited = listPegs[i]->DFS();
 			for (int i = 0; i < visited.size(); i++)
 				if (visited[i].GetPosition().second == 0)
 				{

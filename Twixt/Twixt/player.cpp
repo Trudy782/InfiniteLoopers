@@ -1,8 +1,9 @@
 #include "player.h"
 
-Player::Player(Color color, std::string name, std::vector<Peg> pegs)
+Player::Player(Color color, std::string name, std::vector<Peg*> pegs)
 	:m_color{ color }, m_name{ name }, m_pegs{ std::move(pegs) }
 {
+
 }
 
 
@@ -26,15 +27,14 @@ const std::string& Player::GetName() const
 	return m_name;
 }
 
-const std::vector<Peg>& Player::GetPeg() const
-{
+const std::vector<Peg*>& Player::GetPeg() const {
 	return m_pegs;
 }
 
 
 Board::Position Player::GetNextActionPeg()
 {
-	std::cout << m_name << ", where do you want to position the peg?\n";  
+	std::cout << m_name << ", where do you want to position the peg?\n";
 	std::cout << "row && column: ";
 
 	int row;
@@ -60,7 +60,7 @@ std::ostream& operator<<(std::ostream& os, const Player& player)
 	{
 	case Color::Red:
 	{
-		os << player.GetName() << " plays with Red"<< "\n";
+		os << player.GetName() << " plays with Red" << "\n";
 		break;
 	}
 	case Color::Black:
@@ -74,7 +74,7 @@ std::ostream& operator<<(std::ostream& os, const Player& player)
 	return os;
 }
 
-void Player::AddPeg(const Peg& peg)
+void Player::AddPeg(Peg* peg)
 {
 	m_pegs.push_back(peg);
 }
