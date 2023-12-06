@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game():
+Game::Game() :
 	m_board{},
 	m_isRedTurn{ true }
 {
@@ -13,8 +13,8 @@ Game::Game():
 	std::cout << "Enter the name of the Black Player: ";
 	std::cin >> blackPlayerName;
 
-	m_redPlayer = Player{ Color::Red, redPlayerName, {}};
-	m_blackPlayer = Player{ Color::Black, blackPlayerName, {}};
+	m_redPlayer = Player{ Color::Red, redPlayerName, {} };
+	m_blackPlayer = Player{ Color::Black, blackPlayerName, {} };
 	std::cout << "Enter the size of the board: ";
 	int size;
 	std::cin >> size;
@@ -27,7 +27,7 @@ void Game::StartGame()
 	bool IsGameActiv = true;
 	int nrPegs = static_cast<int>(m_board.GetSize()) * 2 + 2;
 	int option;
-	while (m_redPlayer.GetPeg().size() <= nrPegs || m_blackPlayer.GetPeg().size() <= nrPegs) 
+	while (m_redPlayer.GetPeg().size() <= nrPegs || m_blackPlayer.GetPeg().size() <= nrPegs)
 	{
 		bool validMove = false;
 		if (m_isRedTurn)
@@ -47,6 +47,7 @@ void Game::StartGame()
 			case 2:
 				if (MoveLink())
 					validMove = true;
+				showAdjacency();
 				break;
 
 			default:
@@ -54,7 +55,7 @@ void Game::StartGame()
 				break;
 			}
 		}
-		
+
 		std::cout << m_board;
 		showLinks(currentPlayer());
 		if (WinConditionsBlack() or WinConditionsRed())
@@ -176,31 +177,34 @@ bool Game::PegValidation(const size_t& row, const size_t& col)
 
 	return true;
 }
-bool Game::MovePeg()
-{
+bool Game::MovePeg() {
 	Board::Position position = currentPlayer().GetNextActionPeg();
 	auto [row, col] = position;
 
-	if (PegValidation(row, col))
-	{
-		Peg p;
+	if (PegValidation(row, col)) {
+		Peg* p = nullptr;
 
-		if (m_isRedTurn)
-		{
-			p = Peg(Color::Red, position);
-			m_redPlayer.AddPeg(p);
+		if (m_isRedTurn) {
+			p = new Peg(Color::Red, position);
 		}
-		else
-		{
-			p = Peg(Color::Black, position);
-			m_blackPlayer.AddPeg(p);
+		else {
+			p = new Peg(Color::Black, position);
 		}
 
-		m_board[position] = p;
+		m_board[position] = *p;
+
+		if (m_isRedTurn) {
+			m_redPlayer.AddPeg(&m_board[position].value());
+		}
+		else {
+			m_blackPlayer.AddPeg(&m_board[position].value());
+		}
+
 		return true;
 	}
 	return false;
 }
+
 
 bool Game::MoveLink()
 {
@@ -263,16 +267,19 @@ void Game::showLinks(const Player& player) {
 	std::cout << std::endl;
 }
 
-void Game::ShowAdjacentPegs(const Peg& peg)
-{
-	const std::vector<Peg*>& adjacentPegsPtr = peg.GetAdjacencyPegs();
-	std::cout << "Adjacent pegs for the selected peg: " << peg.GetPosition().first << " " << peg.GetPosition().second << " are: ";
+void Game::showAdjacency() {
+	const Player& player = currentPlayer();
+	std::vector<Peg*> A = player.GetPeg();
 
-	for (const auto& adjacentPegPtr : adjacentPegsPtr) {
-		std::cout << adjacentPegPtr->GetPosition().first << " " << adjacentPegPtr->GetPosition().second << ", ";
+	for (const auto& pegPtr : A) {
+		std::vector<Peg> ad = pegPtr->GetAdjacencyPegs();
+		std::cout << pegPtr->GetPosition().first << " " << pegPtr->GetPosition().second << " are: ";
+
+		for (const Peg& peg : ad) {
+			std::cout << peg.GetPosition().first << " " << peg.GetPosition().second<<" ";
+		}
+		std::cout << std::endl;
 	}
-
-	std::cout << std::endl;
 }
 
 bool Game::WinConditionsRed()
