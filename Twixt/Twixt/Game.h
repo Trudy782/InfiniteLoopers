@@ -22,6 +22,12 @@ private:
 	bool CheckOwnPegs(const Peg& pStart, const Peg& pEnd);
 	bool CheckPositionsPegs(const Peg& pStart, const Peg& pEnd, int xStart, int yStart, int xEnd, int yEnd);
 	bool CheckIntersectionsLinks(const Peg& pStart, const Peg& pEnd, int xStart, int yStart, int xEnd, int yEnd);
+
+	bool CheckCorners(const size_t& row, const size_t& col, const size_t& size);
+	bool CheckPerimeter(const size_t& row, const size_t& col, const size_t& size);
+	bool IsPlaceOccupied(const size_t& row, const size_t& col);
+	bool CheckEnemyZone(const size_t& row, const size_t& col, const size_t& size);
+
 private:
 	Player m_redPlayer;
 	Player m_blackPlayer;

@@ -141,23 +141,37 @@ bool Game::LinkValidation(const Peg& pStart, const Peg& pEnd)
 	return CheckOwnPegs(pStart, pEnd) && CheckPositionsPegs(pStart, pEnd, xStart, yStart, xEnd, yEnd) && CheckIntersectionsLinks(pStart, pEnd, xStart, yStart, xEnd, yEnd);
 }
 
-bool Game::PegValidation(const size_t& row, const size_t& col)
+bool Game::CheckCorners(const size_t& row, const size_t& col, const size_t& size)
 {
-	size_t size = m_board.GetSize();
 	if ((row == 0 && col == 0) || (row == 0 && col == size - 1) || (row == size - 1 && col == 0) || (row == size - 1 && col == size - 1))
 	{
 		std::cerr << "The corners of the board are inaccessible!\n";
 		return false;
 	}
+	return true;
+}
+
+bool Game::CheckPerimeter(const size_t& row, const size_t& col, const size_t& size)
+{
 	if (row < 0 || row > size - 1 || col < 0 || col > size - 1) {
 		std::cerr << "You have exceeded the perimeter of the board!\n";
 		return false;
 	}
+	return true;
+}
+
+bool Game::IsPlaceOccupied(const size_t& row, const size_t& col)
+{
 	Board::Position index{ row, col };
 	if (m_board[index].has_value()) {
 		std::cerr << "The place is occupied by another piece!\n";
 		return false;
 	}
+	return true;
+}
+
+bool Game::CheckEnemyZone(const size_t& row, const size_t& col, const size_t& size)
+{
 	if (m_isRedTurn)
 	{
 		if (col == 0 || col == size - 1)
@@ -174,9 +188,15 @@ bool Game::PegValidation(const size_t& row, const size_t& col)
 			return false;
 		}
 	}
-
 	return true;
 }
+
+bool Game::PegValidation(const size_t& row, const size_t& col)
+{
+	size_t size = m_board.GetSize();
+	return CheckCorners(row, col, size) && CheckPerimeter(row, col, size) && IsPlaceOccupied(row, col) && CheckEnemyZone(row, col, size);
+}
+
 bool Game::MovePeg() {
 	Board::Position position = currentPlayer().GetNextActionPeg();
 	auto [row, col] = position;
