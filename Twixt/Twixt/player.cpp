@@ -79,4 +79,12 @@ void Player::AddPeg(Peg* peg)
 	m_pegs.push_back(peg);
 }
 
+void Player::RemovePeg(const Peg& peg)
+{
+	auto it = std::find(m_pegs.begin(), m_pegs.end(), &peg);
+	if (it != m_pegs.end()) {
+		m_pegs.erase(it);
+	}
+}
+
 

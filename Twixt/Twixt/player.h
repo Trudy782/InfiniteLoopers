@@ -28,7 +28,7 @@ public:
 
 	Board::Position GetNextActionPeg();
 	void AddPeg(Peg* peg);
-
+	void RemovePeg(const Peg& peg);
 
 
 private:

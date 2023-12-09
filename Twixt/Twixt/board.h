@@ -33,6 +33,7 @@ class Board
 		void SetState(State state);
 		void SetSize(size_t size);
 		void Reset();
+		void RemovePeg(size_t destroyedRow, size_t destroyedCol);
 
 		const std::vector<Link>& GetLink() const;
 		std::pair<Position, Position> GetNextActionLink();

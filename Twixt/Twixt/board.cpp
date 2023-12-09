@@ -48,6 +48,11 @@ void Board::Reset()
 	m_board.clear();
 }
 
+void Board::RemovePeg(size_t row, size_t col)
+{
+	m_board[row * m_size + col] = std::nullopt;
+}
+
 const std::vector<Link>& Board::GetLink() const
 {
 	return m_links;
