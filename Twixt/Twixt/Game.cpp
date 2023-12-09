@@ -160,15 +160,6 @@ bool Game::CheckPerimeter(const size_t& row, const size_t& col, const size_t& si
 	return true;
 }
 
-bool Game::IsPlaceOccupied(const size_t& row, const size_t& col)
-{
-	Board::Position index{ row, col };
-	if (m_board[index].has_value()) {
-		std::cerr << "The place is occupied by another piece!\n";
-		return false;
-	}
-	return true;
-}
 
 bool Game::CheckEnemyZone(const size_t& row, const size_t& col, const size_t& size)
 {
@@ -194,7 +185,7 @@ bool Game::CheckEnemyZone(const size_t& row, const size_t& col, const size_t& si
 bool Game::PegValidation(const size_t& row, const size_t& col)
 {
 	size_t size = m_board.GetSize();
-	return CheckCorners(row, col, size) && CheckPerimeter(row, col, size) && IsPlaceOccupied(row, col) && CheckEnemyZone(row, col, size);
+	return CheckCorners(row, col, size) && CheckPerimeter(row, col, size) && m_board.IsPlaceOccupied(row,col) && CheckEnemyZone(row, col, size);
 }
 
 bool Game::MovePeg() {

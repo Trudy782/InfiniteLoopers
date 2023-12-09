@@ -44,7 +44,8 @@ void Board::SetSize(size_t size)
 
 void Board::Reset()
 {
-	memset(&m_board, 0, sizeof(m_board));
+	//memset(&m_board, 0, sizeof(m_board));
+	m_board.clear();
 }
 
 const std::vector<Link>& Board::GetLink() const
@@ -97,6 +98,16 @@ const std::optional<Peg>& Board::operator[](const Position& index) const
 std::optional<Peg>& Board::operator[](const Position& index)
 {
 	return const_cast<std::optional<Peg>&>(std::as_const(*this)[index]);
+}
+
+bool Board::IsPlaceOccupied(const size_t& row, const size_t& col)
+{
+	if (m_board[row * m_size + col].has_value())
+	{
+		std::cerr << "The place is occupied by another piece!\n";
+		return false;
+	}
+	return true;
 }
 
 

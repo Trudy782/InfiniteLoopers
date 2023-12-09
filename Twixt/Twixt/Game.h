@@ -25,7 +25,6 @@ private:
 
 	bool CheckCorners(const size_t& row, const size_t& col, const size_t& size);
 	bool CheckPerimeter(const size_t& row, const size_t& col, const size_t& size);
-	bool IsPlaceOccupied(const size_t& row, const size_t& col);
 	bool CheckEnemyZone(const size_t& row, const size_t& col, const size_t& size);
 
 private:

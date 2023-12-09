@@ -40,6 +40,8 @@ class Board
 
 		const std::optional<Peg>& operator[](const Position& index) const;
 		std::optional<Peg>& operator[](const Position& index);
+		bool IsPlaceOccupied(const size_t& row, const size_t& col);
+
 
 		friend std::ostream& operator<<(std::ostream& os, const Board& board);
 
