@@ -415,4 +415,5 @@ std::function<void()> Game::PickCard()
 bool Game::PlayCard()
 {
 	//de implementat functiile cartilor speciale
+	return true;
 }
