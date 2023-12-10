@@ -19,6 +19,10 @@ private:
 	void showLinks(const Player& player);
 	void showAdjacency();
 
+	void SwitchColorMenu(bool& validMove);
+	void MainMenu(bool& validMove);
+
+
 	bool WinConditionsRed();
 	bool WinConditionsBlack();
 

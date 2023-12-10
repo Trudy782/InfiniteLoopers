@@ -22,11 +22,69 @@ Game::Game() :
 	std::cout << m_board;
 	std::cout << std::endl;
 }
+
+void Game::SwitchColorMenu(bool& validMove)
+{
+	std::cout << m_redPlayer.GetName() << ", you've placed the first red peg.\n";
+	std::cout << m_blackPlayer.GetName() << ", choose your color:\n";
+	std::cout << "3. Continue with black pegs\n";
+	std::cout << "4. Switch to red pegs\n";
+
+	int colorChoice;
+	std::string aux;
+	std::cin >> colorChoice;
+
+	switch (colorChoice)
+	{
+	case 3:
+		while (!validMove)
+		{
+			if (MovePeg())
+				validMove = true;
+		}
+		break;
+	case 4:
+		aux = m_redPlayer.GetName();
+		m_redPlayer.SetName(m_blackPlayer.GetName());
+		m_blackPlayer.SetName(aux);
+		while (!validMove)
+		{
+			if (MovePeg())
+				validMove = true;
+		}
+		break;
+	default:
+		std::cerr << "Invalid choice.\n";
+		break;
+	}
+}
+
+void Game::MainMenu(bool& validMove)
+{
+	int option;
+	std::cout << "Press 1 for adding a Peg \nPress 2 for adding a Link \n";
+	std::cin >> option;
+	switch (option)
+	{
+	case 1:
+		if (MovePeg())
+			validMove = true;
+		break;
+	case 2:
+		if (MoveLink())
+			validMove = true;
+		showAdjacency();
+		break;
+
+	default:
+		std::cerr << "Invalid option!\n";
+		break;
+	}
+}
 void Game::StartGame()
 {
 	bool IsGameActiv = true;
 	int nrPegs = static_cast<int>(m_board.GetSize()) * 2 + 2;
-	int option;
 	while (m_redPlayer.GetPeg().size() <= nrPegs || m_blackPlayer.GetPeg().size() <= nrPegs)
 	{
 		bool validMove = false;
@@ -36,24 +94,10 @@ void Game::StartGame()
 			std::cout << "It's black's turn. \n";
 		while (!validMove)
 		{
-			std::cout << "Press 1 for adding a Peg \nPress 2 for adding a Link \n";
-			std::cin >> option;
-			switch (option)
-			{
-			case 1:
-				if (MovePeg())
-					validMove = true;
-				break;
-			case 2:
-				if (MoveLink())
-					validMove = true;
-				showAdjacency();
-				break;
-
-			default:
-				std::cerr << "Invalid option!\n";
-				break;
-			}
+			if (m_redPlayer.GetPeg().size() == 1 && m_blackPlayer.GetPeg().size() == 0)
+				SwitchColorMenu(validMove);
+			else
+				MainMenu(validMove);
 		}
 
 		std::cout << m_board;
@@ -234,8 +278,6 @@ bool Game::CheckEnemyZone(const size_t& row, const size_t& col, const size_t& si
 	return true;
 }
 
-
-
 bool Game::PegValidation(const size_t& row, const size_t& col)
 {
 	size_t size = m_board.GetSize();
@@ -269,7 +311,6 @@ bool Game::MovePeg() {
 	}
 	return false;
 }
-
 
 bool Game::MoveLink()
 {
