@@ -20,3 +20,29 @@ Buldozerist& Buldozerist::operator=(const Buldozerist& other)
 	return *this;
 }
 
+Buldozerist::Buldozerist(Buldozerist&& other) noexcept
+	: board(other.board), currentPosition(other.currentPosition)
+{
+}
+
+Buldozerist& Buldozerist::operator=(Buldozerist&& other) noexcept
+{
+	
+		delete board;
+		currentPosition.first = NULL;
+		currentPosition.second = NULL;
+
+		board = other.board;
+		currentPosition = other.currentPosition;
+
+		other.board = nullptr;
+		other.currentPosition.first = NULL;
+		other.currentPosition.second = NULL;
+	
+
+		return *this;
+
+}
+
+
+

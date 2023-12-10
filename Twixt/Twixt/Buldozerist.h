@@ -9,6 +9,8 @@ public:
 	~Buldozerist() = default;
 	Buldozerist(const Buldozerist& other);
 	Buldozerist& operator=(const Buldozerist& other);
+	Buldozerist(Buldozerist&& other) noexcept;
+	Buldozerist& operator=(Buldozerist&& other) noexcept;
 
 private:
 	Board* board;
