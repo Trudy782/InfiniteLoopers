@@ -48,9 +48,13 @@ void Board::Reset()
 	m_board.clear();
 }
 
-void Board::RemovePeg(size_t row, size_t col)
+void Board::RemovePeg(size_t destroyedRow, size_t destroyedCol, Player& player)
 {
-	m_board[row * m_size + col] = std::nullopt;
+	if (m_board[destroyedRow * m_size + destroyedCol].has_value())
+	{
+		player.RemovePeg(m_board[destroyedRow * m_size + destroyedCol].value());
+		m_board[destroyedRow * m_size + destroyedCol] = std::nullopt;
+	}
 }
 
 const std::vector<Link>& Board::GetLink() const

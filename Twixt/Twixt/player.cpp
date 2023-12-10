@@ -32,7 +32,7 @@ const std::vector<Peg*>& Player::GetPeg() const {
 }
 
 
-Board::Position Player::GetNextActionPeg()
+Player::Position Player::GetNextActionPeg()
 {
 	std::cout << m_name << ", where do you want to position the peg?\n";
 	std::cout << "row && column: ";

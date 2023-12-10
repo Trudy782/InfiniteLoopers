@@ -2,6 +2,7 @@
 
 #include "peg.h"
 #include "link.h"
+#include "player.h"
 
 #include<cstdint>
 #include<iostream>
@@ -33,7 +34,7 @@ class Board
 		void SetState(State state);
 		void SetSize(size_t size);
 		void Reset();
-		void RemovePeg(size_t destroyedRow, size_t destroyedCol);
+		void RemovePeg(size_t destroyedRow, size_t destroyedCol, Player& player);
 
 		const std::vector<Link>& GetLink() const;
 		std::pair<Position, Position> GetNextActionLink();

@@ -2,7 +2,6 @@
 
 #include "peg.h"
 #include "link.h"
-#include "board.h"
 #include <iostream>
 #include <vector>
 #include <cstdint>
@@ -11,6 +10,7 @@
 //de adaugat un vector de carti speciale
 class Player {
 public:
+	using Position = std::pair<size_t, size_t>;
 	Player(Color color, std::string name, std::vector<Peg*> pegs);
 	Player() = default;
 	Player(const Player& other) = default;
@@ -26,7 +26,7 @@ public:
 	const std::string& GetName() const;
 	const std::vector<Peg*>& GetPeg() const;
 
-	Board::Position GetNextActionPeg();
+	Position GetNextActionPeg();
 	void AddPeg(Peg* peg);
 	void RemovePeg(const Peg& peg);
 
