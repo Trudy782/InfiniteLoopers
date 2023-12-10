@@ -44,5 +44,25 @@ Buldozerist& Buldozerist::operator=(Buldozerist&& other) noexcept
 
 }
 
+void Buldozerist::setBoard(Board& gameBoard)
+{
+	board = &gameBoard;
+}
+
+Board& Buldozerist::getBoard() const
+{
+	return *board;
+}
+
+void Buldozerist::setCurrentPosition(Board::Position newPosition)
+{
+	currentPosition = newPosition;
+}
+
+Board::Position Buldozerist::getCurrentPosition() const
+{
+	return currentPosition;
+}
+
 
 
