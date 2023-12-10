@@ -14,6 +14,7 @@ public:
 	Card() = default;
 	~Card() = default;
 	std::function<void()> getRandomEffect(const std::unordered_map<std::string, std::function<void()>>& m_effects);
+	const std::unordered_map<std::string, std::function<void()>>&GetEffects() const;
 private:
 	std::unordered_map<std::string, std::function<void()>> m_effects;
 	//void addEffects(Player p);

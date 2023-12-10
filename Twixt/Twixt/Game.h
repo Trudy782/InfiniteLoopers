@@ -1,11 +1,14 @@
 #pragma once
 #include "player.h"
 #include "board.h"
+#include "card.h"
+#include<functional>
 class Game
 {
 public:
 	Game();
 	void StartGame();
+	void StartAdvancedGameMode4();
 private:
 	void ChangePlayer();
 	bool LinkValidation(const Peg& pStart, const Peg& pEnd);
@@ -27,10 +30,14 @@ private:
 	bool CheckPerimeter(const size_t& row, const size_t& col, const size_t& size);
 	bool CheckEnemyZone(const size_t& row, const size_t& col, const size_t& size);
 
+	std::function<void()> PickCard();
+	bool PlayCard();
+
 private:
 	Player m_redPlayer;
 	Player m_blackPlayer;
 	Board m_board;
 	bool m_isRedTurn;
+	Card m_card;
 };
 

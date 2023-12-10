@@ -21,6 +21,11 @@ std::function<void()> Card::getRandomEffect(const std::unordered_map<std::string
     return it->second;
 }
 
+const std::unordered_map<std::string, std::function<void()>>& Card::GetEffects() const
+{
+    return m_effects;
+}
+
 //void Card::addEffects(Player p)
 //{
 //	m_effects["Remove1opponentPillar"] = p.RemovePeg(const Peg & peg);

@@ -8,7 +8,7 @@
 #include <cstdint>
 
 
-
+//de adaugat un vector de carti speciale
 class Player {
 public:
 	Player(Color color, std::string name, std::vector<Peg*> pegs);
