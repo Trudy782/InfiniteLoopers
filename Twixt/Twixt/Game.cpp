@@ -139,7 +139,7 @@ void Game::StartAdvancedGameMode4()
 					validMove = true;
 				break;
 			case 2:
-				if (PickCard())
+				if (PickCard() != "")
 					validMove = true;
 				break;
 			case 3:
@@ -450,11 +450,17 @@ std::string Game::PickCard()
 {
 	std::vector<std::string> effects = m_card.GetEffects();
 	std::string effect = m_card.getRandomEffect(effects);
+	currentPlayer().AddCard(effect);
 	return effect;
 }
 
 bool Game::PlayCard()
 {
-	//de implementat functiile cartilor speciale
+	std::string functionToPlay = currentPlayer().GetCards().front();
+	if (functionToPlay == "Get2Cards")
+	{
+		PickCard();
+		PickCard();
+	}
 	return true;
 }

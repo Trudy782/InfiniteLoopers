@@ -26,7 +26,6 @@ const std::vector<std::string>& Card::GetEffects() const
 void Card::addEffects()
 {
     m_effects.push_back("Get2Cards");
-    m_effects.push_back("Get3Cards");
     m_effects.push_back("Loses2Cards");
     m_effects.push_back("PlayExtraTurn");
     m_effects.push_back("Remove1OpponentPillar");

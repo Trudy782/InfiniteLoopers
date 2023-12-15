@@ -30,11 +30,13 @@ public:
 	void AddPeg(Peg* peg);
 	void RemovePeg(const Peg& peg);
 
+	void AddCard(std::string card);
+	const std::vector<std::string>& GetCards()const;
 
 private:
 	Color m_color : 1;
 	std::string m_name;
 	std::vector<Peg*> m_pegs;//nu necesita move semantics
-
+	std::vector<std::string> m_cards;
 
 };
