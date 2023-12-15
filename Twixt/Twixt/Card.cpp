@@ -31,6 +31,9 @@ void Card::addEffects()
     m_effects.push_back("Remove1OpponentPillar");
     m_effects.push_back("Remove1OpponentLink");
     m_effects.push_back("Place2Pillars");
+    m_effects.push_back("Place2Links");
+    m_effects.push_back("Place2Links");
+    m_effects.push_back("Place2Links");
     m_effects.push_back("MoveBulldozer");       
 }
 

@@ -97,4 +97,9 @@ const std::vector<std::string>& Player::GetCards() const
 	return m_cards;
 }
 
+void Player::EraseCard()
+{
+	m_cards.erase(m_cards.begin());
+}
+
 

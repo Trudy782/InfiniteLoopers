@@ -32,6 +32,7 @@ public:
 
 	void AddCard(std::string card);
 	const std::vector<std::string>& GetCards()const;
+	void EraseCard();
 
 private:
 	Color m_color : 1;

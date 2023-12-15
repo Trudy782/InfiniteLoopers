@@ -143,8 +143,10 @@ void Game::StartAdvancedGameMode4()
 					validMove = true;
 				break;
 			case 3:
-				if(PlayCard())
+				if (PlayCard())
 					validMove = true;
+				else
+					validMove = false;
 				break;
 			default:
 				std::cerr << "Invalid option!\n";
@@ -457,10 +459,31 @@ std::string Game::PickCard()
 bool Game::PlayCard()
 {
 	std::string functionToPlay = currentPlayer().GetCards().front();
+	std::cout << "Hey " << currentPlayer().GetName() << " you chose to play " << functionToPlay << std::endl;
 	if (functionToPlay == "Get2Cards")
 	{
 		PickCard();
 		PickCard();
+		return true;
 	}
-	return true;
+	if (functionToPlay == "Loses2Cards")
+	{
+		currentPlayer().EraseCard();
+		currentPlayer().EraseCard();
+		return true;
+	}
+	if (functionToPlay == "PlayExtraTurn");
+	{
+		return false;
+	}
+	if (functionToPlay == "Place2Pillars")
+	{
+		MovePeg();
+		MovePeg();
+	}
+	if (functionToPlay == "Place2Links")
+	{
+		MoveLink;
+		MoveLink;
+	}
 }
