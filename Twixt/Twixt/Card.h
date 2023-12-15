@@ -1,22 +1,21 @@
 #pragma once
 #include<iostream>
 #include<string>
-#include<unordered_map>
-#include<functional>
 #include<random>
-#include "player.h"
+#include<vector>
+
 
 
 class Card
 {
 public:
-	Card(std::unordered_map<std::string, std::function<void()>> effects);
+	Card(std::vector<std::string> effects);
 	Card() = default;
 	~Card() = default;
-	std::function<void()> getRandomEffect(const std::unordered_map<std::string, std::function<void()>>& m_effects);
-	const std::unordered_map<std::string, std::function<void()>>&GetEffects() const;
+	std::string getRandomEffect(const std::vector<std::string>& m_effects);
+	const std::vector<std::string>&GetEffects() const;
 private:
-	std::unordered_map<std::string, std::function<void()>> m_effects;
-	//void addEffects(Player p);
+	std::vector<std::string> m_effects;
+	void addEffects();
 };
 

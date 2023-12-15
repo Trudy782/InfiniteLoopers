@@ -446,10 +446,10 @@ bool Game::WinConditionsBlack()
 	return false;
 }
 
-std::function<void()> Game::PickCard()
+std::string Game::PickCard()
 {
-	std::unordered_map<std::string, std::function<void()>> effects = m_card.GetEffects();
-	std::function effect = m_card.getRandomEffect(effects);
+	std::vector<std::string> effects = m_card.GetEffects();
+	std::string effect = m_card.getRandomEffect(effects);
 	return effect;
 }
 

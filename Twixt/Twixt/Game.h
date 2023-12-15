@@ -34,8 +34,12 @@ private:
 	bool CheckPerimeter(const size_t& row, const size_t& col, const size_t& size);
 	bool CheckEnemyZone(const size_t& row, const size_t& col, const size_t& size);
 
-	std::function<void()> PickCard();
+
+	//implementari Mode 4
+
+	std::string PickCard();
 	bool PlayCard();
+
 
 private:
 	Player m_redPlayer;
