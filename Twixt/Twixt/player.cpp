@@ -87,6 +87,7 @@ void Player::RemovePeg(const Peg& peg)
 	}
 }
 
+
 void Player::AddCard(std::string card)
 {
 	m_cards.push_back(card);

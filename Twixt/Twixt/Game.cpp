@@ -480,10 +480,24 @@ bool Game::PlayCard()
 	{
 		MovePeg();
 		MovePeg();
+		return true;
 	}
 	if (functionToPlay == "Place2Links")
 	{
 		MoveLink;
 		MoveLink;
+		return true;
+	}
+	if (functionToPlay == "Remove1OpponentPillar") //trebuie date pozitile pegului
+	{
+		Peg peg;
+		currentPlayer().RemovePeg(peg);
+		return true;
+	}
+	if (functionToPlay == "Remove1OpponentLink") //trebuie date pozitile linkului si verificat ca linkul (de sters) sa nu apartina linkurilor playerului curent
+	{
+		Link link;
+		m_board.RemoveLink(link);
+		return true;
 	}
 }
