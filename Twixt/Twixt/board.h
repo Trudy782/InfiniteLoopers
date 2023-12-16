@@ -8,6 +8,15 @@
 #include<iostream>
 #include<vector>
 #include<optional>
+#include <unordered_map>
+
+struct PairHash {
+	size_t operator()(const std::pair<size_t, size_t>& p) const {
+		auto hash1 = std::hash<size_t>{}(p.first);
+		auto hash2 = std::hash<size_t>{}(p.second);
+		return hash1 ^ hash2;
+	}
+};
 
 class Board
 	{
@@ -54,5 +63,5 @@ class Board
 		size_t m_size;
 		State m_state;
 		std::vector<Link> m_links;
-
+		std::unordered_map<Position, std::vector<Link*>, PairHash> m_links_map;
 };

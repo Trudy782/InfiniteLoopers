@@ -86,6 +86,11 @@ void Board::AddLink(const Link& link)
 {
 	m_links.push_back(link);
 
+	const Position& start = link.GetPegStart()->GetPosition();
+	const Position& end = link.GetPegEnd()->GetPosition();
+
+	m_links_map[start].push_back(&m_links.back());
+	m_links_map[end].push_back(&m_links.back());
 }
 
 //Board& Board::operator=(const Board& obj)
