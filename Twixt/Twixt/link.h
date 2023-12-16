@@ -13,14 +13,15 @@ public:
 	Link& operator=(const Link& obj);
 	Link(Link&& other) noexcept;
 	Link& operator=(Link&& obj) noexcept;
+	bool operator==(const Link& other) const;
 
 
 	const Peg* GetPegStart() const;
 	void SetPegStart(const Peg& pegStart);
 	const Peg* GetPegEnd() const;
 	void SetPegEnd(const Peg& pegEnd);
+	void Remove();
 
-	void AddAdjacency();
 private:
 	Peg* m_pegStart;
 	Peg* m_pegEnd;

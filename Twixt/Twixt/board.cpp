@@ -119,13 +119,13 @@ bool Board::IsPlaceOccupied(const size_t& row, const size_t& col)
 	return true;
 }
 
-void Board::RemoveLink(const Link& link)
-{
-	auto it = std::find(m_links.begin(), m_links.end(), &link);
-	if (it != m_links.end()) {
-		m_links.erase(it);
-	}
-}
+//void Board::RemoveLink(const Link& link)
+//{
+//	auto it = std::find(m_links.begin(), m_links.end(), &link);
+//	if (it != m_links.end()) {
+//		m_links.erase(it);
+//	}
+//}
 
 
 

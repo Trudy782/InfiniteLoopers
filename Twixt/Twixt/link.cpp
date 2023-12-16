@@ -47,6 +47,11 @@ Link& Link::operator=(Link&& obj) noexcept
 	return *this;
 }
 
+bool Link::operator==(const Link& other) const
+{
+	return m_pegStart == other.GetPegStart() && m_pegEnd == other.GetPegEnd();
+}
+
 const Peg* Link::GetPegStart() const
 {
 	return m_pegStart;
@@ -65,6 +70,12 @@ const Peg* Link::GetPegEnd() const
 void Link::SetPegEnd(const Peg& pegEnd)
 {
 	*m_pegEnd = pegEnd;
+}
+
+void Link::Remove()
+{
+	m_pegStart = nullptr;
+	m_pegEnd = nullptr;
 }
 
 
