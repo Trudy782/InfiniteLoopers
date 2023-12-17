@@ -48,23 +48,42 @@ void Board::Reset()
 	m_board.clear();
 }
 
+void Board::UpdateAdjacencyList(const Peg* pegToUpdate, const Peg& removedPeg)
+{
+	if (pegToUpdate != nullptr) {
+		auto& adjacencyList = const_cast<std::vector<Peg>&>(pegToUpdate->GetAdjacencyPegs());
+
+		adjacencyList.erase(std::remove(adjacencyList.begin(), adjacencyList.end(), removedPeg), adjacencyList.end());
+	}
+}
+
 void Board::RemovePeg(size_t destroyedRow, size_t destroyedCol, Player& player)
 {
-	if (m_board[destroyedRow * m_size + destroyedCol].has_value())
-	{
-		player.RemovePeg(m_board[destroyedRow * m_size + destroyedCol].value());
+	if (m_board[destroyedRow * m_size + destroyedCol].has_value()) {
+		Peg& removedPeg = m_board[destroyedRow * m_size + destroyedCol].value();
+		player.RemovePeg(removedPeg);
 		m_board[destroyedRow * m_size + destroyedCol] = std::nullopt;
+
+		for (size_t row = 0; row < m_size; ++row) {
+			for (size_t col = 0; col < m_size; ++col) {
+				if (m_board[row * m_size + col].has_value()) {
+					UpdateAdjacencyList(&m_board[row * m_size + col].value(), removedPeg);
+				}
+			}
+		}
+
 		Board::Position position = std::make_pair(destroyedRow, destroyedCol);
 		auto it = m_links_map.find(position);
-		if (it != m_links_map.end())
-		{
-			std::vector<Link*>& links = it->second;
-			for (auto link : links)
-			{
-				if (link != nullptr)
-				{
-					m_links.erase(std::remove(m_links.begin(), m_links.end(), *link), m_links.end());
 
+		if (it != m_links_map.end()) {
+			std::vector<Link*>& links = it->second;
+			for (auto link : links) {
+				if (link != nullptr) {
+					const Peg* startPeg = link->GetPegStart();
+					const Peg* endPeg = link->GetPegEnd();
+					UpdateAdjacencyList(startPeg, removedPeg);
+					UpdateAdjacencyList(endPeg, removedPeg);
+					m_links.erase(std::remove(m_links.begin(), m_links.end(), *link), m_links.end());
 					link->Remove();
 				}
 			}
