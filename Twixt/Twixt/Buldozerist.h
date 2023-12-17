@@ -20,6 +20,8 @@ public:
 
 	void setCurrentPosition(Board::Position newPosition);
 	Board::Position getCurrentPosition() const;
+
+	Board::Position RandomPosition();
 private:
 	Board* board;
 	Board::Position currentPosition;

@@ -64,6 +64,14 @@ Board::Position Buldozerist::getCurrentPosition() const
 	return currentPosition;
 }
 
+Board::Position Buldozerist::RandomPosition()
+{
+	size_t randomIndex1 = random(board->GetSize());
+	size_t randomIndex2 = random(board->GetSize());
+	Board::Position position = std::make_pair(randomIndex1, randomIndex2);
+	return position;
+}
+
 size_t Buldozerist::random(size_t size)
 {
 	std::random_device rd;
