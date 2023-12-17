@@ -64,5 +64,13 @@ Board::Position Buldozerist::getCurrentPosition() const
 	return currentPosition;
 }
 
+size_t Buldozerist::random(size_t size)
+{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<size_t> distribution(0, size - 1);
+	return distribution(gen);
+}
+
 
 

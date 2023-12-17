@@ -1,5 +1,6 @@
 #pragma once
 #include "board.h"
+#include<random>
 
 class Buldozerist
 {
@@ -22,5 +23,7 @@ public:
 private:
 	Board* board;
 	Board::Position currentPosition;
+
+	size_t random(size_t size);
 };
 
