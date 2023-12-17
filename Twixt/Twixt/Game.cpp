@@ -351,6 +351,30 @@ bool Game::MoveLink()
 	}
 }
 
+void Game::MoveBuldozer()
+{
+	if (m_buldozer.ThrowCoin() == 0)
+	{
+		//nu distruge peg
+		Board::Position ramdomPosition;
+		bool valid = false;
+		while (!valid)
+		{
+			Board::Position randomPosition;
+			randomPosition = m_buldozer.RandomPosition();
+			if (!m_board.IsPlaceOccupied(randomPosition.first, ramdomPosition.second))
+			{
+				m_buldozer.setCurrentPosition(randomPosition);
+				valid = true;
+			}
+		}
+	}
+	else
+	{
+		//distruge peg
+	}
+}
+
 Player& Game::currentPlayer()
 {
 	if (m_isRedTurn)

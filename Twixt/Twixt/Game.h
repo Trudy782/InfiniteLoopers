@@ -2,6 +2,7 @@
 #include "player.h"
 #include "board.h"
 #include "card.h"
+#include "Buldozerist.h"
 #include<functional>
 class Game
 {
@@ -15,6 +16,7 @@ private:
 	bool PegValidation(const size_t& row, const size_t& col);
 	bool MovePeg();
 	bool MoveLink();
+	void MoveBuldozer();
 	Player& currentPlayer();
 	void showLinks(const Player& player);
 	void showAdjacency();
@@ -46,6 +48,7 @@ private:
 	Player m_blackPlayer;
 	Board m_board;
 	bool m_isRedTurn;
+	Buldozerist m_buldozer;
 	/*Card m_card;*/
 };
 
