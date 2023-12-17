@@ -54,8 +54,26 @@ void Board::RemovePeg(size_t destroyedRow, size_t destroyedCol, Player& player)
 	{
 		player.RemovePeg(m_board[destroyedRow * m_size + destroyedCol].value());
 		m_board[destroyedRow * m_size + destroyedCol] = std::nullopt;
+		Board::Position position = std::make_pair(destroyedRow, destroyedCol);
+		auto it = m_links_map.find(position);
+		if (it != m_links_map.end())
+		{
+			std::vector<Link*>& links = it->second;
+			for (auto link : links)
+			{
+				if (link != nullptr)
+				{
+					m_links.erase(std::remove(m_links.begin(), m_links.end(), *link), m_links.end());
+
+					link->Remove();
+				}
+			}
+
+			m_links_map.erase(it);
+		}
 	}
 }
+
 
 const std::vector<Link>& Board::GetLink() const
 {

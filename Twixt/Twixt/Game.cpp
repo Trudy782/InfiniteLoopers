@@ -75,6 +75,10 @@ void Game::MainMenu(bool& validMove)
 			validMove = true;
 		showAdjacency();
 		break;
+	case 3:
+		m_board.RemovePeg(2, 3, currentPlayer());
+		validMove = true;
+		break;
 
 	default:
 		std::cerr << "Invalid option!\n";
@@ -102,6 +106,7 @@ void Game::StartGame()
 
 		std::cout << m_board;
 		showLinks(currentPlayer());
+
 		if (WinConditionsBlack() or WinConditionsRed())
 		{
 			m_board.SetState(Board::State::Win);
