@@ -22,6 +22,7 @@ public:
 	Board::Position getCurrentPosition() const;
 
 	Board::Position RandomPosition();
+	bool ThrowCoin();
 private:
 	Board* board;
 	Board::Position currentPosition;

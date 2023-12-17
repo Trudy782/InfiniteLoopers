@@ -72,6 +72,14 @@ Board::Position Buldozerist::RandomPosition()
 	return position;
 }
 
+bool Buldozerist::ThrowCoin()
+{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> distribution(0, 1);
+	return distribution(gen) == 1;
+}
+
 size_t Buldozerist::random(size_t size)
 {
 	std::random_device rd;
