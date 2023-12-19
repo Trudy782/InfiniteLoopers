@@ -121,60 +121,60 @@ void Game::StartGame()
 		std::cout << "It's a tie!\n";
 	}
 }
-//void Game::StartAdvancedGameMode4()
-//{
-//	bool IsGameActiv = true;
-//	int nrPegs = static_cast<int>(m_board.GetSize()) * 2 + 2;
-//	int option;
-//	while (m_redPlayer.GetPeg().size() <= nrPegs || m_blackPlayer.GetPeg().size() <= nrPegs)
-//	{
-//		bool validMove = false;
-//		if (m_isRedTurn)
-//			std::cout << "It's red's turn.\n";
-//		else
-//			std::cout << "It's black's turn. \n";
-//		while (!validMove)
-//		{
-//			std::cout << "Press 1 for adding a Peg \nPress 2 for pick a special Card \nPress 3 for play your special Card";
-//			std::cin >> option;
-//			switch (option)
-//			{
-//			case 1:
-//				if (MovePeg())
-//					validMove = true;
-//				break;
-//			case 2:
-//				if (PickCard() != "")
-//					validMove = true;
-//				break;
-//			case 3:
-//				if (PlayCard())
-//					validMove = true;
-//				else
-//					validMove = false;
-//				break;
-//			default:
-//				std::cerr << "Invalid option!\n";
-//				break;
-//			}
-//		}
-//
-//		std::cout << m_board;
-//		showLinks(currentPlayer());
-//		if (WinConditionsBlack() or WinConditionsRed())
-//		{
-//			m_board.SetState(Board::State::Win);
-//			break;
-//		}
-//		ChangePlayer();
-//	}
-//
-//	if (m_redPlayer.GetPeg().size() == nrPegs && m_blackPlayer.GetPeg().size() == nrPegs && !WinConditionsBlack() && !WinConditionsRed()) //remiza
-//	{
-//		m_board.SetState(Board::State::Draw);
-//		std::cout << "It's a tie!\n";
-//	}
-//}
+void Game::StartAdvancedGameMode4()
+{
+	bool IsGameActiv = true;
+	int nrPegs = static_cast<int>(m_board.GetSize()) * 2 + 2;
+	int option;
+	while (m_redPlayer.GetPeg().size() <= nrPegs || m_blackPlayer.GetPeg().size() <= nrPegs)
+	{
+		bool validMove = false;
+		if (m_isRedTurn)
+			std::cout << "It's red's turn.\n";
+		else
+			std::cout << "It's black's turn. \n";
+		while (!validMove)
+		{
+			std::cout << "Press 1 for adding a Peg \nPress 2 for pick a special Card \nPress 3 for play your special Card";
+			std::cin >> option;
+			switch (option)
+			{
+			case 1:
+				if (MovePeg())
+					validMove = true;
+				break;
+			case 2:
+				if (PickCard() != "")
+					validMove = true;
+				break;
+			case 3:
+				if (PlayCard())
+					validMove = true;
+				else
+					validMove = false;
+				break;
+			default:
+				std::cerr << "Invalid option!\n";
+				break;
+			}
+		}
+
+		std::cout << m_board;
+		showLinks(currentPlayer());
+		if (WinConditionsBlack() or WinConditionsRed())
+		{
+			m_board.SetState(Board::State::Win);
+			break;
+		}
+		ChangePlayer();
+	}
+
+	if (m_redPlayer.GetPeg().size() == nrPegs && m_blackPlayer.GetPeg().size() == nrPegs && !WinConditionsBlack() && !WinConditionsRed()) //remiza
+	{
+		m_board.SetState(Board::State::Draw);
+		std::cout << "It's a tie!\n";
+	}
+}
 void Game::ChangePlayer()
 {
 	m_isRedTurn = !m_isRedTurn;
@@ -477,56 +477,56 @@ bool Game::WinConditionsBlack()
 	return false;
 }
 
-//std::string Game::PickCard()
-//{
-//	std::vector<std::string> effects = m_card.GetEffects();
-//	std::string effect = m_card.getRandomEffect(effects);
-//	currentPlayer().AddCard(effect);
-//	return effect;
-//}
-//
-//bool Game::PlayCard()
-//{
-//	std::string functionToPlay = currentPlayer().GetCards().front();
-//	std::cout << "Hey " << currentPlayer().GetName() << " you chose to play " << functionToPlay << std::endl;
-//	if (functionToPlay == "Get2Cards")
-//	{
-//		PickCard();
-//		PickCard();
-//		return true;
-//	}
-//	if (functionToPlay == "Loses2Cards")
-//	{
-//		currentPlayer().EraseCard();
-//		currentPlayer().EraseCard();
-//		return true;
-//	}
-//	if (functionToPlay == "PlayExtraTurn");
-//	{
-//		return false;
-//	}
-//	if (functionToPlay == "Place2Pillars")
-//	{
-//		MovePeg();
-//		MovePeg();
-//		return true;
-//	}
-//	if (functionToPlay == "Place2Links")
-//	{
-//		MoveLink;
-//		MoveLink;
-//		return true;
-//	}
-//	if (functionToPlay == "Remove1OpponentPillar") //trebuie date pozitile pegului
-//	{
-//		Peg peg;
-//		currentPlayer().RemovePeg(peg);
-//		return true;
-//	}
-//	if (functionToPlay == "Remove1OpponentLink") //trebuie date pozitile linkului si verificat ca linkul (de sters) sa nu apartina linkurilor playerului curent
-//	{
-//		Link link;
-//		m_board.RemoveLink(link);
-//		return true;
-//	}
-//}
+std::string Game::PickCard()
+{
+	std::vector<std::string> effects = m_card.GetEffects();
+	std::string effect = m_card.getRandomEffect(effects);
+	currentPlayer().AddCard(effect);
+	return effect;
+}
+
+bool Game::PlayCard()
+{
+	std::string functionToPlay = currentPlayer().GetCards().front();
+	std::cout << "Hey " << currentPlayer().GetName() << " you chose to play " << functionToPlay << std::endl;
+	if (functionToPlay == "Get2Cards")
+	{
+		PickCard();
+		PickCard();
+		return true;
+	}
+	if (functionToPlay == "Loses2Cards")
+	{
+		currentPlayer().EraseCard();
+		currentPlayer().EraseCard();
+		return true;
+	}
+	if (functionToPlay == "PlayExtraTurn");
+	{
+		return false;
+	}
+	/*if (functionToPlay == "Place2Pillars")
+	{
+		MovePeg();
+		MovePeg();
+		return true;
+	}
+	if (functionToPlay == "Place2Links")
+	{
+		MoveLink;
+		MoveLink;
+		return true;
+	}*/
+	//if (functionToPlay == "Remove1OpponentPillar") //trebuie date pozitile pegului
+	//{
+	//	Peg peg;
+	//	currentPlayer().RemovePeg(peg);
+	//	return true;
+	//}
+	//if (functionToPlay == "Remove1OpponentLink") //trebuie date pozitile linkului si verificat ca linkul (de sters) sa nu apartina linkurilor playerului curent
+	//{
+	//	Link link;
+	//	m_board.RemoveLink(link);
+	//	return true;
+	//}
+}

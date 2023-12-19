@@ -39,8 +39,8 @@ private:
 
 	//implementari Mode 4
 
-	/*std::string PickCard();
-	bool PlayCard();*/
+	std::string PickCard();
+	bool PlayCard();
 
 
 private:
@@ -49,6 +49,6 @@ private:
 	Board m_board;
 	bool m_isRedTurn;
 	Buldozerist m_buldozer;
-	/*Card m_card;*/
+	Card m_card;
 };
 
