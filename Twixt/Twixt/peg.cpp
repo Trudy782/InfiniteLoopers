@@ -49,7 +49,7 @@ void Peg::AddAdjacentPeg(Peg peg) {
     m_adjacencyPegs.push_back(peg);
 }
 
-std::vector<Peg> Peg::DFS()
+std::vector<Peg> Peg::DFS() const
 {
     std::vector<Peg>visited;
     std::stack<Peg> stack;

@@ -26,7 +26,7 @@ public:
     void swap(Peg& peg);
     void AddAdjacentPeg(Peg peg);
 
-    std::vector<Peg> DFS();
+    std::vector<Peg> DFS() const;
 
 private:
     Color m_color : 1;
