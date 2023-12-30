@@ -3,6 +3,7 @@
 #include "board.h"
 #include "card.h"
 #include "Buldozerist.h"
+#include "BoardChecker.h"
 #include<functional>
 class Game
 {
@@ -15,14 +16,14 @@ private:
 	bool LinkValidation(const Peg& pStart, const Peg& pEnd);
 	bool PegValidation(const size_t& row, const size_t& col);
 	bool MovePeg();
-	bool MoveLink();
+	bool MoveLink(bool& castig);
 	void MoveBuldozer();
 	Player& currentPlayer();
 	void showLinks(const Player& player);
 	/*void showAdjacency();*/
 
 	void SwitchColorMenu(bool& validMove);
-	void MainMenu(bool& validMove);
+	void MainMenu(bool& validMove, bool& castig);
 
 
 	/*bool WinConditionsRed();

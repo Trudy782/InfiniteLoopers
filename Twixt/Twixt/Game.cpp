@@ -40,7 +40,10 @@ void Game::SwitchColorMenu(bool& validMove)
 		while (!validMove)
 		{
 			if (MovePeg())
+			{
 				validMove = true;
+				currentPlayer().IncrementNumber();
+			}
 		}
 		break;
 	case 4:
@@ -59,7 +62,7 @@ void Game::SwitchColorMenu(bool& validMove)
 	}
 }
 
-void Game::MainMenu(bool& validMove)
+void Game::MainMenu(bool& validMove, bool& castig)
 {
 	int option;
 	std::cout << "Press 1 for adding a Peg \nPress 2 for adding a Link \n";
@@ -68,10 +71,13 @@ void Game::MainMenu(bool& validMove)
 	{
 	case 1:
 		if (MovePeg())
+		{
 			validMove = true;
+			currentPlayer().IncrementNumber();
+		}
 		break;
 	case 2:
-		if (MoveLink())
+		if (MoveLink(castig))
 			validMove = true;
 		break;
 	case 3:
@@ -89,6 +95,7 @@ void Game::StartGame()
 	bool IsGameActiv = true;
 	int nrPegs = static_cast<int>(m_board.GetSize()) * 2 + 2;
 	int Moves = 0;
+	bool castig = false;
 	while (m_redPlayer.GetNrPegs() <= nrPegs || m_blackPlayer.GetNrPegs() <= nrPegs)
 	{
 		bool validMove = false;
@@ -101,24 +108,24 @@ void Game::StartGame()
 			if (Moves == 1)
 				SwitchColorMenu(validMove);
 			else
-				MainMenu(validMove);
+			{
+				MainMenu(validMove, castig);
+			}
 		}
+
+		Moves++;
 
 		std::cout << m_board;
 		showLinks(currentPlayer());
-
-		/*if (WinConditionsBlack() or WinConditionsRed())
-		{
-			m_board.SetState(Board::State::Win);
+		if (castig == true)
 			break;
-		}*/
 		ChangePlayer();
 	}
 
-	if (m_redPlayer.GetNrPegs() >= nrPegs && m_blackPlayer.GetNrPegs() >= nrPegs) //remiza
+	if (m_redPlayer.GetNrPegs() >= nrPegs && m_blackPlayer.GetNrPegs() >= nrPegs && castig == false) //remiza
 	{
 		m_board.SetState(Board::State::Draw);
-		std::cout << "It's a tie!\n";
+		std::cout << "It's a tie";
 	}
 }
 void Game::StartAdvancedGameMode4()
@@ -169,11 +176,11 @@ void Game::StartAdvancedGameMode4()
 		ChangePlayer();
 	}
 
-	if (m_redPlayer.GetNrPegs() >= nrPegs && m_blackPlayer.GetNrPegs() >= nrPegs) //remiza
-	{
-		m_board.SetState(Board::State::Draw);
-		std::cout << "It's a tie";
-	}
+	//if (m_redPlayer.GetNrPegs() == nrPegs && m_blackPlayer.GetNrPegs() == nrPegs && !WinConditionsBlack() && !WinConditionsRed()) //remiza
+	//{
+	//	m_board.SetState(Board::State::Draw);
+	//	std::cout << "It's a tie!\n";
+	//}
 }
 void Game::ChangePlayer()
 {
@@ -288,7 +295,7 @@ bool Game::CheckEnemyZone(const size_t& row, const size_t& col, const size_t& si
 bool Game::PegValidation(const size_t& row, const size_t& col)
 {
 	size_t size = m_board.GetSize();
-	return CheckCorners(row, col, size) && CheckPerimeter(row, col, size) && m_board.IsPlaceOccupied(row,col) && CheckEnemyZone(row, col, size);
+	return CheckCorners(row, col, size) && CheckPerimeter(row, col, size) && m_board.IsPlaceOccupied(row, col) && CheckEnemyZone(row, col, size);
 }
 
 bool Game::MovePeg() {
@@ -307,12 +314,13 @@ bool Game::MovePeg() {
 
 		m_board[position] = p;
 
+
 		return true;
 	}
 	return false;
 }
 
-bool Game::MoveLink()
+bool Game::MoveLink(bool& castig)
 {
 	Board::Position startCoordinates, endCoordinates;
 	std::pair< Board::Position, Board::Position> get = m_board.GetNextActionLink();
@@ -336,6 +344,14 @@ bool Game::MoveLink()
 					m_board.AddLink(link);
 					startPeg.AddAdjacentPeg(endPeg);
 					endPeg.AddAdjacentPeg(startPeg);
+					auto state{ BoardChecker::Check(m_board,startPeg) };
+					auto state2{ BoardChecker::Check(m_board,endPeg) };
+					if (state == BoardChecker::State::Win || state2 == BoardChecker::State::Win)
+					{
+						std::cout << std::format("We have a winner!\nCongratulations: {}\n",
+							currentPlayer().GetName());
+						castig = true;
+					}
 					return true;
 				}
 			}
