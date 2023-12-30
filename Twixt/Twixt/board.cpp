@@ -57,6 +57,15 @@ void Board::UpdateAdjacencyList(const Peg* pegToUpdate, const Peg& removedPeg)
 	}
 }
 
+void Board::EraseLinkPeg(const size_t& row, const size_t& col) {
+	Peg::Position position_peg = { row, col };
+
+	m_links.erase(std::remove_if(m_links.begin(), m_links.end(),
+		[&](const Link& link) {
+			return link.GetPegStart()->GetPosition() == position_peg || link.GetPegEnd()->GetPosition() == position_peg;
+		}), m_links.end());
+}
+
 void Board::RemovePeg(size_t destroyedRow, size_t destroyedCol)
 {
 	if (m_board[destroyedRow * m_size + destroyedCol].has_value()) {
@@ -71,6 +80,7 @@ void Board::RemovePeg(size_t destroyedRow, size_t destroyedCol)
 			}
 		}
 
+		EraseLinkPeg(destroyedRow, destroyedCol);
 	}
 }
 

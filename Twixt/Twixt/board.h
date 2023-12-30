@@ -57,6 +57,7 @@ class Board
 
 		friend std::ostream& operator<<(std::ostream& os, const Board& board);
 
+		void EraseLinkPeg(const size_t& row, const size_t& col);
 		void RemovePeg(size_t destroyedRow, size_t destroyedCol);
 
 	private:
