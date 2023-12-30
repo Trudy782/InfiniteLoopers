@@ -47,6 +47,7 @@ private:
 
 	void RefferalSystemHint1();
 	void RefferalSystemHint2(int firstPosition, int secondPosition);
+	bool CheckPositionForHint2(int firstPosition, int secondPosition, std::vector<Peg>resultDfs); // de facut 2 modificari la positions
 
 private:
 	Player m_redPlayer;

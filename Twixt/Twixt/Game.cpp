@@ -567,13 +567,27 @@ void Game::RefferalSystemHint2(int firstPosition, int secondPosition)
 			pegs.push_back(m_board.GetPegs()[i]);
 	}
 	std::vector<Peg>resultDfs = pegs[0].DFS();
+	ok = CheckPositionForHint2(firstPosition, secondPosition, resultDfs);
+	for (int i = 0; i < pegs.size() && ok == false; i++)
+	{
+		if (pegs[i].DFS() != resultDfs)
+		{
+			resultDfs = pegs[i].DFS();
+			ok = CheckPositionForHint2(firstPosition, secondPosition, resultDfs);
+		}
+	}
+	
+}
+
+bool Game::CheckPositionForHint2(int firstPosition, int secondPosition, std::vector<Peg> resultDfs)
+{
 	for (int i = 0; i < resultDfs.size(); i++)
 	{
 		if (resultDfs[i].GetPosition().first == firstPosition && resultDfs[i].GetPosition().second == secondPosition)
 		{
 			std::cout << "It is not recommanded to place your peg here because it will be blocked by your enamy\n";
-			ok = true;
-		}		
+			return true;
+		}
 	}
-	//urmeaza de reluat
+	return false;
 }
