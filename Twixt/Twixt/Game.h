@@ -43,6 +43,9 @@ private:
 	std::string PickCard();
 	bool PlayCard();
 
+	//Refferal System
+
+	void RefferalSystemHint1();
 
 private:
 	Player m_redPlayer;

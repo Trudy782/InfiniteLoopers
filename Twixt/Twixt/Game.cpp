@@ -541,3 +541,18 @@ bool Game::PlayCard()
 	//	return true;
 	//}
 }
+
+void Game::RefferalSystemHint1()
+{
+		std::vector<Peg>pegs = m_board.GetPegs();
+		for (int i = 0; i < m_board.GetPegs().size(); i++)
+		{
+			int number = pegs[i].GetAdjacencyPegs().size();
+			if (number == 1 && pegs[i].GetColor() == currentPlayer().GetColor())
+			{
+				std::cout << "Look a hint: " << currentPlayer().GetName()
+					<< " ,you can place your next peg around this peg " << pegs[i].GetPosition().first
+					<< " " << pegs[i].GetPosition().second << "\n";
+			}	
+		}
+}
