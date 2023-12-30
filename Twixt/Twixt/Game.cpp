@@ -545,7 +545,7 @@ bool Game::PlayCard()
 void Game::RefferalSystemHint1()
 {
 		std::vector<Peg>pegs = m_board.GetPegs();
-		for (int i = 0; i < m_board.GetPegs().size(); i++)
+		for (int i = 0; i < pegs.size(); i++)
 		{
 			int number = pegs[i].GetAdjacencyPegs().size();
 			if (number == 1 && pegs[i].GetColor() == currentPlayer().GetColor())
@@ -555,4 +555,25 @@ void Game::RefferalSystemHint1()
 					<< " " << pegs[i].GetPosition().second << "\n";
 			}	
 		}
+}
+
+void Game::RefferalSystemHint2(int firstPosition, int secondPosition)
+{
+	bool ok = false;
+	std::vector<Peg>pegs;
+	for (int i = 0; i < m_board.GetPegs().size(); i++)
+	{
+		if (m_board.GetPegs()[i].GetColor() == currentPlayer().GetColor())
+			pegs.push_back(m_board.GetPegs()[i]);
+	}
+	std::vector<Peg>resultDfs = pegs[0].DFS();
+	for (int i = 0; i < resultDfs.size(); i++)
+	{
+		if (resultDfs[i].GetPosition().first == firstPosition && resultDfs[i].GetPosition().second == secondPosition)
+		{
+			std::cout << "It is not recommanded to place your peg here because it will be blocked by your enamy\n";
+			ok = true;
+		}		
+	}
+	//urmeaza de reluat
 }

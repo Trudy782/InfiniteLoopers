@@ -46,6 +46,7 @@ private:
 	//Refferal System
 
 	void RefferalSystemHint1();
+	void RefferalSystemHint2(int firstPosition, int secondPosition);
 
 private:
 	Player m_redPlayer;
