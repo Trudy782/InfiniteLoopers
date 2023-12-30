@@ -13,8 +13,8 @@ Game::Game() :
 	std::cout << "Enter the name of the Black Player: ";
 	std::cin >> blackPlayerName;
 
-	m_redPlayer = Player{ Color::Red, redPlayerName, {} };
-	m_blackPlayer = Player{ Color::Black, blackPlayerName, {} };
+	m_redPlayer = Player{ Color::Red, redPlayerName };
+	m_blackPlayer = Player{ Color::Black, blackPlayerName };
 	std::cout << "Enter the size of the board: ";
 	int size;
 	std::cin >> size;
@@ -73,7 +73,6 @@ void Game::MainMenu(bool& validMove)
 	case 2:
 		if (MoveLink())
 			validMove = true;
-		showAdjacency();
 		break;
 	case 3:
 		//m_board.RemovePeg(2, 3, currentPlayer());
@@ -89,7 +88,8 @@ void Game::StartGame()
 {
 	bool IsGameActiv = true;
 	int nrPegs = static_cast<int>(m_board.GetSize()) * 2 + 2;
-	while (m_redPlayer.GetPeg().size() <= nrPegs || m_blackPlayer.GetPeg().size() <= nrPegs)
+	int Moves = 0;
+	while (m_redPlayer.GetNrPegs() <= nrPegs || m_blackPlayer.GetNrPegs() <= nrPegs)
 	{
 		bool validMove = false;
 		if (m_isRedTurn)
@@ -98,7 +98,7 @@ void Game::StartGame()
 			std::cout << "It's black's turn. \n";
 		while (!validMove)
 		{
-			if (m_redPlayer.GetPeg().size() == 1 && m_blackPlayer.GetPeg().size() == 0)
+			if (Moves == 1)
 				SwitchColorMenu(validMove);
 			else
 				MainMenu(validMove);
@@ -107,15 +107,15 @@ void Game::StartGame()
 		std::cout << m_board;
 		showLinks(currentPlayer());
 
-		if (WinConditionsBlack() or WinConditionsRed())
+		/*if (WinConditionsBlack() or WinConditionsRed())
 		{
 			m_board.SetState(Board::State::Win);
 			break;
-		}
+		}*/
 		ChangePlayer();
 	}
 
-	if (m_redPlayer.GetPeg().size() == nrPegs && m_blackPlayer.GetPeg().size() == nrPegs && !WinConditionsBlack() && !WinConditionsRed()) //remiza
+	if (m_redPlayer.GetNrPegs() >= nrPegs && m_blackPlayer.GetNrPegs() >= nrPegs) //remiza
 	{
 		m_board.SetState(Board::State::Draw);
 		std::cout << "It's a tie!\n";
@@ -126,7 +126,7 @@ void Game::StartAdvancedGameMode4()
 	bool IsGameActiv = true;
 	int nrPegs = static_cast<int>(m_board.GetSize()) * 2 + 2;
 	int option;
-	while (m_redPlayer.GetPeg().size() <= nrPegs || m_blackPlayer.GetPeg().size() <= nrPegs)
+	while (m_redPlayer.GetNrPegs() <= nrPegs || m_blackPlayer.GetNrPegs() <= nrPegs)
 	{
 		bool validMove = false;
 		if (m_isRedTurn)
@@ -161,18 +161,18 @@ void Game::StartAdvancedGameMode4()
 
 		std::cout << m_board;
 		showLinks(currentPlayer());
-		if (WinConditionsBlack() or WinConditionsRed())
+		/*if (WinConditionsBlack() or WinConditionsRed())
 		{
 			m_board.SetState(Board::State::Win);
 			break;
-		}
+		}*/
 		ChangePlayer();
 	}
 
-	if (m_redPlayer.GetPeg().size() == nrPegs && m_blackPlayer.GetPeg().size() == nrPegs && !WinConditionsBlack() && !WinConditionsRed()) //remiza
+	if (m_redPlayer.GetNrPegs() >= nrPegs && m_blackPlayer.GetNrPegs() >= nrPegs) //remiza
 	{
 		m_board.SetState(Board::State::Draw);
-		std::cout << "It's a tie!\n";
+		std::cout << "It's a tie";
 	}
 }
 void Game::ChangePlayer()
@@ -296,23 +296,16 @@ bool Game::MovePeg() {
 	auto [row, col] = position;
 
 	if (PegValidation(row, col)) {
-		Peg* p = nullptr;
+		Peg p;
 
 		if (m_isRedTurn) {
-			p = new Peg(Color::Red, position);
+			p = Peg{ Color::Red, position };
 		}
 		else {
-			p = new Peg(Color::Black, position);
+			p = Peg{ Color::Black, position };
 		}
 
-		m_board[position] = *p;
-
-		if (m_isRedTurn) {
-			m_redPlayer.AddPeg(&m_board[position].value());
-		}
-		else {
-			m_blackPlayer.AddPeg(&m_board[position].value());
-		}
+		m_board[position] = p;
 
 		return true;
 	}
@@ -406,78 +399,78 @@ void Game::showLinks(const Player& player) {
 	std::cout << std::endl;
 }
 
-void Game::showAdjacency() {
-	const Player& player = currentPlayer();
-	std::vector<Peg*> A = player.GetPeg();
+//void Game::showAdjacency() {
+//	const Player& player = currentPlayer();
+//	std::vector<Peg*> A = player.GetPeg();
+//
+//	for (const auto& pegPtr : A) {
+//		std::vector<Peg> ad = pegPtr->GetAdjacencyPegs();
+//		std::cout << pegPtr->GetPosition().first << " " << pegPtr->GetPosition().second << " are: ";
+//
+//		for (const Peg& peg : ad) {
+//			std::cout << peg.GetPosition().first << " " << peg.GetPosition().second<<" ";
+//		}
+//		std::cout << std::endl;
+//	}
+//}
 
-	for (const auto& pegPtr : A) {
-		std::vector<Peg> ad = pegPtr->GetAdjacencyPegs();
-		std::cout << pegPtr->GetPosition().first << " " << pegPtr->GetPosition().second << " are: ";
-
-		for (const Peg& peg : ad) {
-			std::cout << peg.GetPosition().first << " " << peg.GetPosition().second<<" ";
-		}
-		std::cout << std::endl;
-	}
-}
-
-bool Game::WinConditionsRed()
-{
-	std::vector<Peg*>listPegs = currentPlayer().GetPeg();
-	for (int i = 0; i < listPegs.size(); i++)
-	{
-		if (listPegs[i]->GetPosition().first == 0)
-		{
-			std::vector<Peg> visited = listPegs[i]->DFS();
-			for (int i = 0; i < visited.size(); i++)
-				if (visited[i].GetPosition().first == m_board.GetSize() - 1)
-				{
-					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
-					return true;
-				}
-		}
-		if (listPegs[i]->GetPosition().first == m_board.GetSize() - 1)
-		{
-			std::vector<Peg> visited = listPegs[i]->DFS();
-			for (int i = 0; i < visited.size(); i++)
-				if (visited[i].GetPosition().first == 0)
-				{
-					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
-					return true;
-				}
-		}
-	}
-	return false;
-}
-
-bool Game::WinConditionsBlack()
-{
-	std::vector<Peg*>listPegs = currentPlayer().GetPeg();
-	for (int i = 0; i < listPegs.size(); i++)
-	{
-		if (listPegs[i]->GetPosition().second == 0)
-		{
-			std::vector<Peg> visited = listPegs[i]->DFS();
-			for (int i = 0; i < visited.size(); i++)
-				if (visited[i].GetPosition().second == m_board.GetSize() - 1)
-				{
-					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
-					return true;
-				}
-		}
-		if (listPegs[i]->GetPosition().second == m_board.GetSize() - 1)
-		{
-			std::vector<Peg> visited = listPegs[i]->DFS();
-			for (int i = 0; i < visited.size(); i++)
-				if (visited[i].GetPosition().second == 0)
-				{
-					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
-					return true;
-				}
-		}
-	}
-	return false;
-}
+//bool Game::WinConditionsRed()
+//{
+//	std::vector<Peg*>listPegs = currentPlayer().GetPeg();
+//	for (int i = 0; i < listPegs.size(); i++)
+//	{
+//		if (listPegs[i]->GetPosition().first == 0)
+//		{
+//			std::vector<Peg> visited = listPegs[i]->DFS();
+//			for (int i = 0; i < visited.size(); i++)
+//				if (visited[i].GetPosition().first == m_board.GetSize() - 1)
+//				{
+//					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
+//					return true;
+//				}
+//		}
+//		if (listPegs[i]->GetPosition().first == m_board.GetSize() - 1)
+//		{
+//			std::vector<Peg> visited = listPegs[i]->DFS();
+//			for (int i = 0; i < visited.size(); i++)
+//				if (visited[i].GetPosition().first == 0)
+//				{
+//					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
+//					return true;
+//				}
+//		}
+//	}
+//	return false;
+//}
+//
+//bool Game::WinConditionsBlack()
+//{
+//	std::vector<Peg*>listPegs = currentPlayer().GetPeg();
+//	for (int i = 0; i < listPegs.size(); i++)
+//	{
+//		if (listPegs[i]->GetPosition().second == 0)
+//		{
+//			std::vector<Peg> visited = listPegs[i]->DFS();
+//			for (int i = 0; i < visited.size(); i++)
+//				if (visited[i].GetPosition().second == m_board.GetSize() - 1)
+//				{
+//					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
+//					return true;
+//				}
+//		}
+//		if (listPegs[i]->GetPosition().second == m_board.GetSize() - 1)
+//		{
+//			std::vector<Peg> visited = listPegs[i]->DFS();
+//			for (int i = 0; i < visited.size(); i++)
+//				if (visited[i].GetPosition().second == 0)
+//				{
+//					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
+//					return true;
+//				}
+//		}
+//	}
+//	return false;
+//}
 
 std::string Game::PickCard()
 {

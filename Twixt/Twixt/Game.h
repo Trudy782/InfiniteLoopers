@@ -19,14 +19,14 @@ private:
 	void MoveBuldozer();
 	Player& currentPlayer();
 	void showLinks(const Player& player);
-	void showAdjacency();
+	/*void showAdjacency();*/
 
 	void SwitchColorMenu(bool& validMove);
 	void MainMenu(bool& validMove);
 
 
-	bool WinConditionsRed();
-	bool WinConditionsBlack();
+	/*bool WinConditionsRed();
+	bool WinConditionsBlack();*/
 
 	bool CheckOwnPegs(const Peg& pStart, const Peg& pEnd);
 	bool CheckPositionsPegs(const Peg& pStart, const Peg& pEnd, int xStart, int yStart, int xEnd, int yEnd);

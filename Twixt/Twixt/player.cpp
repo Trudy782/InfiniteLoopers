@@ -1,7 +1,7 @@
 #include "player.h"
 
-Player::Player(Color color, std::string name, std::vector<Peg*> pegs)
-	:m_color{ color }, m_name{ name }, m_pegs{ std::move(pegs) }
+Player::Player(Color color, std::string name)
+	:m_color{ color }, m_name{ name }, m_nr_pegs{ 0 }
 {
 
 }
@@ -27,9 +27,16 @@ const std::string& Player::GetName() const
 	return m_name;
 }
 
-const std::vector<Peg*>& Player::GetPeg() const {
-	return m_pegs;
+void Player::SetNrPegs(int pegs)
+{
+	m_nr_pegs = pegs;
 }
+
+int Player::GetNrPegs() const
+{
+	return m_nr_pegs;
+}
+
 
 
 Player::Position Player::GetNextActionPeg()
@@ -74,19 +81,6 @@ std::ostream& operator<<(std::ostream& os, const Player& player)
 	return os;
 }
 
-void Player::AddPeg(Peg* peg)
-{
-	m_pegs.push_back(peg);
-}
-
-void Player::RemovePeg(const Peg& peg)
-{
-	auto it = std::find(m_pegs.begin(), m_pegs.end(), &peg);
-	if (it != m_pegs.end()) {
-		m_pegs.erase(it);
-	}
-}
-
 
 void Player::AddCard(std::string card)
 {
@@ -97,6 +91,13 @@ const std::vector<std::string>& Player::GetCards() const
 {
 	return m_cards;
 }
+
+void Player::IncrementNumber()
+{
+	m_nr_pegs++;
+}
+
+
 
 void Player::EraseCard()
 {
