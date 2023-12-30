@@ -57,7 +57,7 @@ class Board
 
 		friend std::ostream& operator<<(std::ostream& os, const Board& board);
 
-		/*void RemoveLink(const Link& link);*/
+		void RemovePeg(size_t destroyedRow, size_t destroyedCol);
 
 	private:
 		std::vector<std::optional<Peg>>m_board; //nu trebuie semantic moves
