@@ -47,8 +47,10 @@ class Board
 		/*void RemovePeg(size_t destroyedRow, size_t destroyedCol, Player& player);*/
 
 		const std::vector<Link>& GetLink() const;
+		const std::vector<Peg>& GetPegs() const;
 		std::pair<Position, Position> GetNextActionLink();
 		void AddLink(const Link& link);
+		void AddPeg(const Peg& peg);
 
 		const std::optional<Peg>& operator[](const Position& index) const;
 		std::optional<Peg>& operator[](const Position& index);
@@ -66,4 +68,5 @@ class Board
 		State m_state;
 		std::vector<Link> m_links;
 		std::unordered_map<Position, std::vector<Link*>, PairHash> m_links_map;
+		std::vector<Peg> m_pegs;
 };

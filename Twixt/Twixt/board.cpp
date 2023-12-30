@@ -90,6 +90,11 @@ const std::vector<Link>& Board::GetLink() const
 	return m_links;
 }
 
+const std::vector<Peg>& Board::GetPegs() const
+{
+	return m_pegs;
+}
+
 std::pair<Board::Position, Board::Position> Board::GetNextActionLink()
 {
 
@@ -119,6 +124,12 @@ void Board::AddLink(const Link& link)
 
 	m_links_map[start].push_back(&m_links.back());
 	m_links_map[end].push_back(&m_links.back());
+}
+
+void Board::AddPeg(const Peg& peg)
+{
+	m_pegs.push_back(peg);
+	const Position& positionPeg = peg.GetPosition();
 }
 
 //Board& Board::operator=(const Board& obj)
