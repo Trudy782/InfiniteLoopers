@@ -76,7 +76,7 @@ void Game::MainMenu(bool& validMove)
 		showAdjacency();
 		break;
 	case 3:
-		m_board.RemovePeg(2, 3, currentPlayer());
+		//m_board.RemovePeg(2, 3, currentPlayer());
 		validMove = true;
 		break;
 
@@ -337,7 +337,9 @@ bool Game::MoveLink()
 
 
 				if (LinkValidation(startPeg, endPeg)) {
-					Link link(startPeg, endPeg);
+					std::shared_ptr<Peg> start = std::make_shared<Peg>(startPeg);
+					std::shared_ptr<Peg> end = std::make_shared<Peg>(endPeg);
+					Link link{ start, end };
 					m_board.AddLink(link);
 					startPeg.AddAdjacentPeg(endPeg);
 					endPeg.AddAdjacentPeg(startPeg);

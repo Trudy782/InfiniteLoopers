@@ -44,7 +44,7 @@ class Board
 		void SetSize(size_t size);
 		void Reset();
 		void UpdateAdjacencyList(const Peg* pegToUpdate, const Peg& removedPeg);
-		void RemovePeg(size_t destroyedRow, size_t destroyedCol, Player& player);
+		/*void RemovePeg(size_t destroyedRow, size_t destroyedCol, Player& player);*/
 
 		const std::vector<Link>& GetLink() const;
 		std::pair<Position, Position> GetNextActionLink();
