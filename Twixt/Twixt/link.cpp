@@ -28,6 +28,11 @@ void Link::SetPegEnd(std::shared_ptr<Peg> pegEnd)
     m_pegEnd = std::move(pegEnd);
 }
 
+bool Link::operator==(const Link& other) const
+{
+    return m_pegStart == other.GetPegStart() && m_pegEnd == other.GetPegEnd();
+}
+
 
 
 

@@ -512,7 +512,7 @@ bool Game::PlayCard()
 		currentPlayer().EraseCard();
 		return true;
 	}
-	if (functionToPlay == "PlayExtraTurn");
+	if (functionToPlay == "PlayExtraTurn")
 	{
 		return false;
 	}

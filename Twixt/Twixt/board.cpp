@@ -1,4 +1,5 @@
 #include "board.h"
+#include <ranges>
 
 Board::Board(std::vector<std::optional<Peg>>board, size_t size, std::vector<Link> links)
 	:m_board{ board }, m_size{ size } , m_state{State::None}, m_links{ links }
@@ -124,6 +125,15 @@ void Board::AddLink(const Link& link)
 
 	m_links_map[start].push_back(&m_links.back());
 	m_links_map[end].push_back(&m_links.back());
+}
+
+void Board::RemoveLink(const Link& link)
+{
+	auto it = std::ranges::find(m_links, link);
+	if (it != m_links.end()) {
+		m_links.erase(it);
+	}
+
 }
 
 void Board::AddPeg(const Peg& peg)

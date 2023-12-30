@@ -9,6 +9,7 @@
 #include<vector>
 #include<optional>
 #include <unordered_map>
+#include <ranges>
 
 struct PairHash {
 	size_t operator()(const std::pair<size_t, size_t>& p) const {
@@ -50,6 +51,7 @@ class Board
 		const std::vector<Peg>& GetPegs() const;
 		std::pair<Position, Position> GetNextActionLink();
 		void AddLink(const Link& link);
+		void RemoveLink(const Link& link);
 		void AddPeg(const Peg& peg);
 
 		const std::optional<Peg>& operator[](const Position& index) const;
