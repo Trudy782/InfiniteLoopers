@@ -65,7 +65,7 @@ void Game::SwitchColorMenu(bool& validMove)
 void Game::MainMenu(bool& validMove, bool& castig)
 {
 	int option;
-	std::cout << "Press 1 for adding a Peg \nPress 2 for adding a Link \n";
+	std::cout << "Press 1 for adding a Peg \nPress 2 for adding a Link \nPress 111 if you need a hint for place your next peg\nPress 222 if you need a hint for checking position of your next peg\n";
 	std::cin >> option;
 	switch (option)
 	{
@@ -84,7 +84,15 @@ void Game::MainMenu(bool& validMove, bool& castig)
 		//m_board.RemovePeg(2, 3, currentPlayer());
 		validMove = true;
 		break;
-
+	case 111:
+		RefferalSystemHint1();
+		break;
+	case 222:
+		size_t positionFirst, positionSecond;
+		std::cout << "Choose positions for your next peg\n";
+		std::cin >> positionFirst >> positionSecond;
+		RefferalSystemHint2(positionFirst, positionSecond);
+		break;
 	default:
 		std::cerr << "Invalid option!\n";
 		break;
@@ -557,7 +565,7 @@ void Game::RefferalSystemHint1()
 		}
 }
 
-void Game::RefferalSystemHint2(int firstPosition, int secondPosition)
+void Game::RefferalSystemHint2(size_t firstPosition, size_t secondPosition)
 {
 	bool ok = false;
 	std::vector<Peg>pegs;
@@ -579,11 +587,16 @@ void Game::RefferalSystemHint2(int firstPosition, int secondPosition)
 	
 }
 
-bool Game::CheckPositionForHint2(int firstPosition, int secondPosition, std::vector<Peg> resultDfs)
+bool Game::CheckPositionForHint2(size_t firstPosition, size_t secondPosition, std::vector<Peg> resultDfs)
 {
 	for (int i = 0; i < resultDfs.size(); i++)
 	{
-		if (resultDfs[i].GetPosition().first == firstPosition && resultDfs[i].GetPosition().second == secondPosition)
+		if (std::abs(static_cast<int>(resultDfs[i].GetPosition().first) - static_cast<int>(firstPosition)) == 1 && std::abs(static_cast<int>(resultDfs[i].GetPosition().second) - static_cast<int>(secondPosition)) == 2)
+		{
+			std::cout << "It is not recommanded to place your peg here because it will be blocked by your enamy\n";
+			return true;
+		}
+		else if (std::abs(static_cast<int>(resultDfs[i].GetPosition().first) - static_cast<int>(firstPosition)) == 2 && std::abs(static_cast<int>(resultDfs[i].GetPosition().second) - static_cast<int>(secondPosition)) == 1)
 		{
 			std::cout << "It is not recommanded to place your peg here because it will be blocked by your enamy\n";
 			return true;
