@@ -45,9 +45,9 @@ private:
 
 	//Refferal System
 
-	void RefferalSystemHint1();
+	/*void RefferalSystemHint1();
 	void RefferalSystemHint2(size_t firstPosition, size_t secondPosition);
-	bool CheckPositionForHint2(size_t firstPosition, size_t secondPosition, std::vector<Peg>resultDfs); 
+	bool CheckPositionForHint2(size_t firstPosition, size_t secondPosition, std::vector<Peg>resultDfs); */
 
 private:
 	Player m_redPlayer;

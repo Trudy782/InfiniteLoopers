@@ -85,13 +85,13 @@ void Game::MainMenu(bool& validMove, bool& castig)
 		validMove = true;
 		break;
 	case 111:
-		RefferalSystemHint1();
+		/*RefferalSystemHint1();*/
 		break;
 	case 222:
 		size_t positionFirst, positionSecond;
 		std::cout << "Choose positions for your next peg\n";
 		std::cin >> positionFirst >> positionSecond;
-		RefferalSystemHint2(positionFirst, positionSecond);
+		/*RefferalSystemHint2(positionFirst, positionSecond);*/
 		break;
 	default:
 		std::cerr << "Invalid option!\n";
@@ -550,57 +550,57 @@ bool Game::PlayCard()
 	//}
 }
 
-void Game::RefferalSystemHint1()
-{
-		std::vector<Peg>pegs = m_board.GetPegs();
-		for (int i = 0; i < pegs.size(); i++)
-		{
-			int number = pegs[i].GetAdjacencyPegs().size();
-			if (number == 1 && pegs[i].GetColor() == currentPlayer().GetColor())
-			{
-				std::cout << "Look a hint: " << currentPlayer().GetName()
-					<< " ,you can place your next peg around this peg " << pegs[i].GetPosition().first
-					<< " " << pegs[i].GetPosition().second << "\n";
-			}	
-		}
-}
-
-void Game::RefferalSystemHint2(size_t firstPosition, size_t secondPosition)
-{
-	bool ok = false;
-	std::vector<Peg>pegs;
-	for (int i = 0; i < m_board.GetPegs().size(); i++)
-	{
-		if (m_board.GetPegs()[i].GetColor() == currentPlayer().GetColor())
-			pegs.push_back(m_board.GetPegs()[i]);
-	}
-	std::vector<Peg>resultDfs = pegs[0].DFS();
-	ok = CheckPositionForHint2(firstPosition, secondPosition, resultDfs);
-	for (int i = 0; i < pegs.size() && ok == false; i++)
-	{
-		if (pegs[i].DFS() != resultDfs)
-		{
-			resultDfs = pegs[i].DFS();
-			ok = CheckPositionForHint2(firstPosition, secondPosition, resultDfs);
-		}
-	}
-	
-}
-
-bool Game::CheckPositionForHint2(size_t firstPosition, size_t secondPosition, std::vector<Peg> resultDfs)
-{
-	for (int i = 0; i < resultDfs.size(); i++)
-	{
-		if (std::abs(static_cast<int>(resultDfs[i].GetPosition().first) - static_cast<int>(firstPosition)) == 1 && std::abs(static_cast<int>(resultDfs[i].GetPosition().second) - static_cast<int>(secondPosition)) == 2)
-		{
-			std::cout << "It is not recommanded to place your peg here because it will be blocked by your enamy\n";
-			return true;
-		}
-		else if (std::abs(static_cast<int>(resultDfs[i].GetPosition().first) - static_cast<int>(firstPosition)) == 2 && std::abs(static_cast<int>(resultDfs[i].GetPosition().second) - static_cast<int>(secondPosition)) == 1)
-		{
-			std::cout << "It is not recommanded to place your peg here because it will be blocked by your enamy\n";
-			return true;
-		}
-	}
-	return false;
-}
+//void Game::RefferalSystemHint1()
+//{
+//		std::vector<Peg>pegs = m_board.GetPegs();
+//		for (int i = 0; i < pegs.size(); i++)
+//		{
+//			int number = pegs[i].GetAdjacencyPegs().size();
+//			if (number == 1 && pegs[i].GetColor() == currentPlayer().GetColor())
+//			{
+//				std::cout << "Look a hint: " << currentPlayer().GetName()
+//					<< " ,you can place your next peg around this peg " << pegs[i].GetPosition().first
+//					<< " " << pegs[i].GetPosition().second << "\n";
+//			}	
+//		}
+//}
+//
+//void Game::RefferalSystemHint2(size_t firstPosition, size_t secondPosition)
+//{
+//	bool ok = false;
+//	std::vector<Peg>pegs;
+//	for (int i = 0; i < m_board.GetPegs().size(); i++)
+//	{
+//		if (m_board.GetPegs()[i].GetColor() == currentPlayer().GetColor())
+//			pegs.push_back(m_board.GetPegs()[i]);
+//	}
+//	std::vector<Peg>resultDfs = pegs[0].DFS();
+//	ok = CheckPositionForHint2(firstPosition, secondPosition, resultDfs);
+//	for (int i = 0; i < pegs.size() && ok == false; i++)
+//	{
+//		if (pegs[i].DFS() != resultDfs)
+//		{
+//			resultDfs = pegs[i].DFS();
+//			ok = CheckPositionForHint2(firstPosition, secondPosition, resultDfs);
+//		}
+//	}
+//	
+//}
+//
+//bool Game::CheckPositionForHint2(size_t firstPosition, size_t secondPosition, std::vector<Peg> resultDfs)
+//{
+//	for (int i = 0; i < resultDfs.size(); i++)
+//	{
+//		if (std::abs(static_cast<int>(resultDfs[i].GetPosition().first) - static_cast<int>(firstPosition)) == 1 && std::abs(static_cast<int>(resultDfs[i].GetPosition().second) - static_cast<int>(secondPosition)) == 2)
+//		{
+//			std::cout << "It is not recommanded to place your peg here because it will be blocked by your enamy\n";
+//			return true;
+//		}
+//		else if (std::abs(static_cast<int>(resultDfs[i].GetPosition().first) - static_cast<int>(firstPosition)) == 2 && std::abs(static_cast<int>(resultDfs[i].GetPosition().second) - static_cast<int>(secondPosition)) == 1)
+//		{
+//			std::cout << "It is not recommanded to place your peg here because it will be blocked by your enamy\n";
+//			return true;
+//		}
+//	}
+//	return false;
+//}

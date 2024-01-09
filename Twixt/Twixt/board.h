@@ -63,6 +63,7 @@ class Board
 
 		void EraseLinkPeg(const size_t& row, const size_t& col);
 		void RemovePeg(size_t destroyedRow, size_t destroyedCol);
+		void RemoveLink(size_t destroyedRow1, size_t destroyedCol1, size_t destroyedRow2, size_t destroyedCol2);
 
 	private:
 		std::vector<std::optional<Peg>>m_board; //nu trebuie semantic moves
