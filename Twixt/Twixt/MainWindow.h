@@ -14,6 +14,10 @@ public:
     ~MainWindow();
     void StartGameClicked();
     void SetupConnections();
+    void ResetSizeLineEdit();
+    void ResetRedNameLineEdit();
+    void ResetBlackNameLineEdit();
+    bool CheckData(const QString& size, const QString& redName, const QString& blackName);
 
 
 private:
