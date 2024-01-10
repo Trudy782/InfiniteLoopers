@@ -7,8 +7,8 @@
 
 int main(int argc, char *argv[])
 {
-    /*Game g;
-    g.StartGame();*/
+    //Game g;
+    
 
     QApplication a(argc, argv);
     MainWindow w;

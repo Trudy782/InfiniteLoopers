@@ -1,7 +1,8 @@
 #include "MainWindow.h"
-#include "Game.h";
+#include <QDebug>
 
-MainWindow::MainWindow(QWidget *parent)
+
+MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
@@ -24,6 +25,9 @@ void MainWindow::StartGameClicked()
     QString redName = ui.txtRedName->text();
     QString blackName = ui.txtBlackName->text();
 
+    g.Initialize(size.toInt(), redName.toStdString(), blackName.toStdString());
+    
+    //qDebug() << size.toInt() << " " << redName.toStdString() << " " << blackName.toStdString();
     //ascund elemtele ca sa trec la urm pagina
     ui.txtBoardSize->setEnabled(false);
     ui.txtRedName->setEnabled(false);

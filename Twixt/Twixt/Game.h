@@ -9,6 +9,8 @@ class Game
 {
 public:
 	Game();
+	void Initialize(int size, const std::string& redPlayerName, const std::string& blackPlayerName);
+
 	void StartGame();
 	void StartAdvancedGameMode4();
 private:
