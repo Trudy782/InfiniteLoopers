@@ -7,6 +7,14 @@ MainWindow::MainWindow(QWidget* parent)
 {
     ui.setupUi(this);
 
+    // Initializarea QStackedWidget
+    stackedWidget = new QStackedWidget(this);
+    // Adaugarea paginilor la QStackedWidget
+    stackedWidget->addWidget(ui.page1);
+    stackedWidget->addWidget(ui.page2);
+    // Adaugarea QStackedWidget la layout-ul ferestrei principale
+    setCentralWidget(stackedWidget);
+
     SetupConnections();
 }
 
@@ -115,6 +123,9 @@ void MainWindow::StartGameClicked()
     ui.lblRedName->setEnabled(false);
     ui.lblBlackName->setEnabled(false);
     ui.btnStartGame->setEnabled(false);
+
+    stackedWidget->setCurrentIndex(1);
+
 }
 
 
