@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget* parent)
 {
     ui.setupUi(this);
 
+    
+
     // Initializarea QStackedWidget
     stackedWidget = new QStackedWidget(this);
     // Adaugarea paginilor la QStackedWidget
@@ -111,7 +113,9 @@ void MainWindow::StartGameClicked()
 
     g.Initialize(size.toInt(), redName.toStdString(), blackName.toStdString());
     
-    //qDebug() << size.toInt() << " " << redName.toStdString() << " " << blackName.toStdString();
+    qDebug() << size.toInt() << " " << redName.toStdString() << " " << blackName.toStdString();
+
+ 
     
     ui.txtBoardSize->setStyleSheet("");
 
@@ -123,8 +127,14 @@ void MainWindow::StartGameClicked()
     ui.lblRedName->setEnabled(false);
     ui.lblBlackName->setEnabled(false);
     ui.btnStartGame->setEnabled(false);
+    
+    clickableTable = new ClickableTable(size.toInt(), size.toInt(), this);
+    QVBoxLayout* layout = new QVBoxLayout(ui.page2);
+    layout->addWidget(clickableTable);
 
     stackedWidget->setCurrentIndex(1);
+    
+    
 
 }
 

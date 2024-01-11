@@ -2,6 +2,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include "Game.h"
+#include "ClickableTable.h"
 
 #include "ui_MainWindow.h"
 
@@ -25,6 +26,6 @@ public:
 private:
     Ui::MainWindowClass ui;
     QStackedWidget* stackedWidget;
-
     Game g;
+    ClickableTable* clickableTable;
 };
