@@ -3,6 +3,7 @@
 #include<iostream>
 #include<vector>
 #include <stack>
+#include <set>
 
 
 enum class Color :uint8_t {
@@ -26,7 +27,7 @@ public:
     void swap(Peg& peg);
     void AddAdjacentPeg(Peg peg);
 
-    std::vector<Peg> DFS() const;
+    std::set<Peg> DFS() const;
 
 private:
     Color m_color : 1;

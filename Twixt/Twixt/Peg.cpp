@@ -49,24 +49,34 @@ void Peg::AddAdjacentPeg(Peg peg) {
     m_adjacencyPegs.push_back(peg);
 }
 
-std::vector<Peg> Peg::DFS() const
+std::set<Peg> Peg::DFS() const
 {
-    std::vector<Peg>visited;
+    std::set<Peg> visited;
     std::stack<Peg> stack;
-    visited.push_back(*this);
-    std::vector<Peg> adjacencyList = this->GetAdjacencyPegs();
-    for (int i = 0; i < adjacencyList.size(); i++)
-        stack.push(adjacencyList[i]);
+
+    Peg current = *this;
+    stack.push(current);
+
     while (!stack.empty())
     {
-        visited.push_back(stack.top());
+        current = stack.top();
         stack.pop();
-        std::vector<Peg>adjacencyVisited = visited.back().GetAdjacencyPegs();
-        for (int i = 0; i < adjacencyVisited.size(); i++)
-            stack.push(adjacencyVisited[i]);
+
+        visited.emplace(current);
+        std::vector<Peg> adjacencyList = current.GetAdjacencyPegs();
+
+        for (const auto& peg : adjacencyList)
+        {
+            if (!visited.contains(peg))
+            {
+                stack.push(peg);
+            }
+        }
     }
+
     return visited;
 }
+
 
 std::ostream& operator<<(std::ostream& os, const Peg& peg)
 {
