@@ -294,3 +294,38 @@ std::ostream& operator<<(std::ostream& os, const Board& board)
 
 	return os;
 }
+
+std::istream& operator>>(std::istream& is, Board& board)
+{
+	//citim size
+	size_t size;
+	is >> size;
+	board.SetSize(size);
+	std::vector<std::optional<Peg>> boardData(size * size);
+	for (size_t row = 0; row < size; ++row) {
+		for (size_t col = 0; col < size; ++col) {
+			char color;
+			is >> color;
+			if (color == '0')
+			{
+				Peg::Position pegPosition{ row,col };
+				boardData[row * size + col] = Peg{ Color::Red, pegPosition };
+			}
+			else if (color == '1')
+			{
+				Peg::Position pegPosition{ row,col };
+				boardData[row * size + col] = Peg{ Color::Black, pegPosition };
+			}
+			else if (color == '2')
+			{
+				Peg::Position pegPosition{ row,col };
+				Buldozerist buldozerist = Buldozerist{ Color::Yellow, pegPosition };
+				boardData[row * size + col] = buldozerist;
+				board.SetBuldozerist(buldozerist);
+			}
+		}
+	}
+	board.SetBoard(boardData);
+
+	return is;
+}
