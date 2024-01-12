@@ -184,6 +184,45 @@ Board::Position Board::RandomPeg()
 	return position;
 }
 
+void Board::MoveBuldozer()
+{
+	bool coin = m_buldozerist.ThrowCoin();
+	std::cout << coin << "\n";
+	if (coin == 0)
+	{
+		//nu distruge peg
+		bool valid = false;
+		while (!valid)
+		{
+			Peg::Position randomPosition;
+			randomPosition = RandomEmptyPosition();
+			auto [row, col] = randomPosition;
+
+			if (!Occupied(row, col))
+			{
+				m_buldozerist.SetPosition(randomPosition);
+				m_board[row * m_size + col] = m_buldozerist;
+				valid = true;
+			}
+		}
+	}
+	else
+	{
+		//distruge peg
+		CreateFilteredBoard();
+		std::vector<Peg> filtered = m_pegs;
+
+		Peg::Position randomPosition;
+		randomPosition = RandomPeg();
+		std::cout << randomPosition.first << " " << randomPosition.second;
+		auto [destroyed_row, destroyed_col] = randomPosition;
+		RemovePeg(destroyed_row, destroyed_col);
+		m_buldozerist.SetPosition(randomPosition);
+
+		m_board[destroyed_row * m_size + destroyed_col] = m_buldozerist;
+	}
+}
+
 //Board& Board::operator=(const Board& obj)
 //{
 //	if (this == &obj) {
