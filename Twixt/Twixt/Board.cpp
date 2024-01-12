@@ -175,6 +175,15 @@ Board::Position Board::RandomEmptyPosition()
 	return position;
 }
 
+Board::Position Board::RandomPeg()
+{
+	size_t randomIndexPeg = m_buldozerist.random(m_pegs.size());
+	Peg randomPeg = m_pegs[randomIndexPeg];
+
+	Board::Position position = randomPeg.GetPosition();
+	return position;
+}
+
 //Board& Board::operator=(const Board& obj)
 //{
 //	if (this == &obj) {

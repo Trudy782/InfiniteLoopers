@@ -51,6 +51,7 @@ public:
 	bool Occupied(const size_t& row, const size_t& col);
 
 	Position RandomEmptyPosition();
+	Board::Position RandomPeg();
 
 	const std::optional<Peg>& operator[](const Position& index) const;
 	std::optional<Peg>& operator[](const Position& index);
