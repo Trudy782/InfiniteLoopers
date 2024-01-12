@@ -17,6 +17,7 @@ public:
     Peg() = default;
 
     bool operator==(const Peg& obj);
+    bool operator<(const Peg& rhs) const noexcept;
 
     void SetColor(Color color);
     void SetPosition(Position position);
@@ -26,7 +27,7 @@ public:
 
     void swap(Peg& peg);
     void AddAdjacentPeg(Peg peg);
-
+    
     std::set<Peg> DFS() const;
 
 private:

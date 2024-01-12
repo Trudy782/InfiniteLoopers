@@ -11,6 +11,10 @@ bool Peg::operator==(const Peg& obj)
 {
     return m_color == obj.m_color && m_position == obj.m_position;
 }
+bool Peg::operator<(const Peg& rhs) const noexcept
+{
+    return this->m_position < rhs.m_position;
+}
 void Peg::SetColor(Color color)
 {
     m_color = color;
