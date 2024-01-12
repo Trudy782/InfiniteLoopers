@@ -1,6 +1,6 @@
 #pragma once
 
-#include "peg.h";
+#include "Peg.h";
 #include<iostream>
 
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "peg.h"
-#include "link.h"
+#include "Peg.h"
+#include "Link.h"
 #include <iostream>
 #include <vector>
 #include <cstdint>

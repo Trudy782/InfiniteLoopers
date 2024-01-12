@@ -30,9 +30,31 @@ void Game::SaveGame()
 	out << m_isRedTurn << "\n";
 }
 
+void Game::NewGame()
+{
+	std::string redPlayerName;
+	std::string blackPlayerName;
+
+	std::cout << "Enter the name of the Red Player: ";
+	std::cin >> redPlayerName;
+
+	std::cout << "Enter the name of the Black Player: ";
+	std::cin >> blackPlayerName;
+
+	m_redPlayer.SetName(redPlayerName);
+	m_blackPlayer.SetName(blackPlayerName);
+
+	std::cout << "Enter the size of the board: ";
+	int size;
+	std::cin >> size;
+
+	m_board.SetSize(size);
+	std::cout << m_board;
+	std::cout << std::endl;
+}
+
 void Game::RestoreLinks(std::vector<std::string> link_strings)
 {
-	std::cout << "size" << link_strings.size();
 	for (const std::string& link_string : link_strings)
 	{
 		std::regex pattern("\\{(-?\\d+),(-?\\d+)\\}-\\{(-?\\d+),(-?\\d+)\\}");

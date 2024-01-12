@@ -1,7 +1,7 @@
 #pragma once
-#include "player.h"
-#include "board.h"
-#include "card.h"
+#include "Player.h"
+#include "Board.h"
+#include "Card.h"
 #include "Buldozerist.h"
 #include "BoardChecker.h"
 #include<functional>
@@ -14,6 +14,7 @@ public:
 	void Initialize(int size, const std::string& redPlayerName, const std::string& blackPlayerName);
 
 	void SaveGame();
+	void NewGame();
 	void RestoreLinks(std::vector<std::string> link_strings);
 
 	void StartGame();

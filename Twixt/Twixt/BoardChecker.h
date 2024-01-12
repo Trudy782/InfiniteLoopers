@@ -1,6 +1,6 @@
 #pragma once
-#include "board.h";
-#include "peg.h";
+#include "Board.h";
+#include "Peg.h";
 class BoardChecker
 {
 public:
