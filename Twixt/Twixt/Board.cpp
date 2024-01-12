@@ -223,6 +223,13 @@ void Board::MoveBuldozer()
 	}
 }
 
+void Board::UpdateBuldozer()
+{
+	m_buldozerist.SetColor(Color::Yellow);
+	auto [row, col] = m_buldozerist.GetPosition();
+	m_board[row * m_size + col] = std::nullopt;
+}
+
 //Board& Board::operator=(const Board& obj)
 //{
 //	if (this == &obj) {

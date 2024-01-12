@@ -53,6 +53,7 @@ public:
 	Position RandomEmptyPosition();
 	Board::Position RandomPeg();
 	void MoveBuldozer();
+	void UpdateBuldozer();
 
 	const std::optional<Peg>& operator[](const Position& index) const;
 	std::optional<Peg>& operator[](const Position& index);
