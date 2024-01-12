@@ -15,6 +15,7 @@ public:
 
 	void SaveGame();
 	void NewGame();
+	void RestoreGame();
 	void RestoreLinks(std::vector<std::string> link_strings);
 
 	void StartGame();

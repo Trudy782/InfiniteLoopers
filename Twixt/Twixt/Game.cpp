@@ -53,6 +53,26 @@ void Game::NewGame()
 	std::cout << std::endl;
 }
 
+void Game::RestoreGame()
+{
+	std::ifstream in("save.txt");
+	in >> m_board;
+	std::cout << "SIZE IS:" << m_board.GetSize();
+	std::string string;
+	size_t size;
+	in >> size;
+	std::vector<std::string> links;
+	for (int i = 0; i < size; i++)
+	{
+		in >> string;
+		links.push_back(string);
+	}
+	RestoreLinks(links);
+	bool turn;
+	in >> turn;
+	m_isRedTurn = turn;
+}
+
 void Game::RestoreLinks(std::vector<std::string> link_strings)
 {
 	for (const std::string& link_string : link_strings)
