@@ -30,6 +30,40 @@ void Game::SaveGame()
 	out << m_isRedTurn << "\n";
 }
 
+void Game::RestoreLinks(std::vector<std::string> link_strings)
+{
+	std::cout << "size" << link_strings.size();
+	for (const std::string& link_string : link_strings)
+	{
+		std::regex pattern("\\{(-?\\d+),(-?\\d+)\\}-\\{(-?\\d+),(-?\\d+)\\}");
+
+		std::smatch matches;
+		if (std::regex_search(link_string, matches, pattern)) {
+
+			size_t x1 = std::stoi(matches[1].str());
+			size_t y1 = std::stoi(matches[2].str());
+			size_t x2 = std::stoi(matches[3].str());
+			size_t y2 = std::stoi(matches[4].str());
+
+			Board::Position startCoordinates, endCoordinates;
+			startCoordinates = { x1,y1 };
+			endCoordinates = { x2,y2 };
+
+			Peg& startPeg = m_board[startCoordinates].value();
+			Peg& endPeg = m_board[endCoordinates].value();
+
+
+			std::shared_ptr<Peg> start = std::make_shared<Peg>(startPeg);
+			std::shared_ptr<Peg> end = std::make_shared<Peg>(endPeg);
+			Link link{ start, end };
+			m_board.AddLink(link);
+		}
+		else {
+			std::cout << "No match found.\n";
+		}
+	}
+}
+
 
 void Game::SwitchColorMenu(bool& validMove)
 {

@@ -6,6 +6,7 @@
 #include "BoardChecker.h"
 #include<functional>
 #include <fstream>
+#include <regex>
 class Game
 {
 public:
@@ -13,6 +14,7 @@ public:
 	void Initialize(int size, const std::string& redPlayerName, const std::string& blackPlayerName);
 
 	void SaveGame();
+	void RestoreLinks(std::vector<std::string> link_strings);
 
 	void StartGame();
 	void StartAdvancedGameMode4();
