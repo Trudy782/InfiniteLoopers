@@ -1,32 +1,19 @@
 #pragma once
-#include "board.h"
+#include "Peg.h"
 #include<random>
 
-class Buldozerist
+class Buldozerist : public Peg
 {
 public:
-	Buldozerist(Board& gameBoard);
+	Buldozerist(Color color, Position position);
 	Buldozerist() = default;
 	~Buldozerist() = default;
 
 	Buldozerist(const Buldozerist& other);
-	Buldozerist& operator=(const Buldozerist& other);
-
-	Buldozerist(Buldozerist&& other) noexcept;
-	Buldozerist& operator=(Buldozerist&& other) noexcept;
-
-	void setBoard(Board& gameBoard);
-	Board& getBoard() const;
-
-	void setCurrentPosition(Board::Position newPosition);
-	Board::Position getCurrentPosition() const;
-
-	Board::Position RandomPosition();
-	bool ThrowCoin();
-private:
-	Board* board;
-	Board::Position currentPosition;
 
 	size_t random(size_t size);
+
+	bool ThrowCoin();
+
 };
 

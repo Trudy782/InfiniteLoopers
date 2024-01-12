@@ -369,29 +369,6 @@ bool Game::MoveLink(bool& castig)
 	}
 }
 
-void Game::MoveBuldozer()
-{
-	if (m_buldozer.ThrowCoin() == 0)
-	{
-		//nu distruge peg
-		Board::Position ramdomPosition;
-		bool valid = false;
-		while (!valid)
-		{
-			Board::Position randomPosition;
-			randomPosition = m_buldozer.RandomPosition();
-			if (!m_board.IsPlaceOccupied(randomPosition.first, ramdomPosition.second))
-			{
-				m_buldozer.setCurrentPosition(randomPosition);
-				valid = true;
-			}
-		}
-	}
-	else
-	{
-		//distruge peg
-	}
-}
 
 Player& Game::currentPlayer()
 {
@@ -417,78 +394,6 @@ void Game::showLinks(const Player& player) {
 	std::cout << std::endl;
 }
 
-//void Game::showAdjacency() {
-//	const Player& player = currentPlayer();
-//	std::vector<Peg*> A = player.GetPeg();
-//
-//	for (const auto& pegPtr : A) {
-//		std::vector<Peg> ad = pegPtr->GetAdjacencyPegs();
-//		std::cout << pegPtr->GetPosition().first << " " << pegPtr->GetPosition().second << " are: ";
-//
-//		for (const Peg& peg : ad) {
-//			std::cout << peg.GetPosition().first << " " << peg.GetPosition().second<<" ";
-//		}
-//		std::cout << std::endl;
-//	}
-//}
-
-//bool Game::WinConditionsRed()
-//{
-//	std::vector<Peg*>listPegs = currentPlayer().GetPeg();
-//	for (int i = 0; i < listPegs.size(); i++)
-//	{
-//		if (listPegs[i]->GetPosition().first == 0)
-//		{
-//			std::vector<Peg> visited = listPegs[i]->DFS();
-//			for (int i = 0; i < visited.size(); i++)
-//				if (visited[i].GetPosition().first == m_board.GetSize() - 1)
-//				{
-//					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
-//					return true;
-//				}
-//		}
-//		if (listPegs[i]->GetPosition().first == m_board.GetSize() - 1)
-//		{
-//			std::vector<Peg> visited = listPegs[i]->DFS();
-//			for (int i = 0; i < visited.size(); i++)
-//				if (visited[i].GetPosition().first == 0)
-//				{
-//					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
-//					return true;
-//				}
-//		}
-//	}
-//	return false;
-//}
-//
-//bool Game::WinConditionsBlack()
-//{
-//	std::vector<Peg*>listPegs = currentPlayer().GetPeg();
-//	for (int i = 0; i < listPegs.size(); i++)
-//	{
-//		if (listPegs[i]->GetPosition().second == 0)
-//		{
-//			std::vector<Peg> visited = listPegs[i]->DFS();
-//			for (int i = 0; i < visited.size(); i++)
-//				if (visited[i].GetPosition().second == m_board.GetSize() - 1)
-//				{
-//					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
-//					return true;
-//				}
-//		}
-//		if (listPegs[i]->GetPosition().second == m_board.GetSize() - 1)
-//		{
-//			std::vector<Peg> visited = listPegs[i]->DFS();
-//			for (int i = 0; i < visited.size(); i++)
-//				if (visited[i].GetPosition().second == 0)
-//				{
-//					std::cout << "End game, " << currentPlayer().GetName() << " won!\n";
-//					return true;
-//				}
-//		}
-//	}
-//	return false;
-//}
 
 std::string Game::PickCard()
 {

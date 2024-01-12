@@ -19,17 +19,12 @@ private:
 	bool PegValidation(const size_t& row, const size_t& col);
 	bool MovePeg();
 	bool MoveLink(bool& castig);
-	void MoveBuldozer();
 	Player& currentPlayer();
 	void showLinks(const Player& player);
-	/*void showAdjacency();*/
 
 	void SwitchColorMenu(bool& validMove);
 	void MainMenu(bool& validMove, bool& castig);
 
-
-	/*bool WinConditionsRed();
-	bool WinConditionsBlack();*/
 
 	bool CheckOwnPegs(const Peg& pStart, const Peg& pEnd);
 	bool CheckPositionsPegs(const Peg& pStart, const Peg& pEnd, int xStart, int yStart, int xEnd, int yEnd);

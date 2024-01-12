@@ -1,76 +1,12 @@
 #include "Buldozerist.h"
 
-Buldozerist::Buldozerist(Board& gameBoard) : board{ &gameBoard }
+Buldozerist::Buldozerist(Color color, Position position) : Peg{ color,position }
 {
 }
 
 Buldozerist::Buldozerist(const Buldozerist& other)
-	: board(other.board), currentPosition(other.currentPosition) {}
+	: Peg{ other } {}
 
-Buldozerist& Buldozerist::operator=(const Buldozerist& other)
-{
-	if (this != &other)
-	{
-		delete board;
-
-		board = other.board;
-		currentPosition = other.currentPosition;
-	}
-
-	return *this;
-}
-
-Buldozerist::Buldozerist(Buldozerist&& other) noexcept
-	: board(other.board), currentPosition(other.currentPosition)
-{
-}
-
-Buldozerist& Buldozerist::operator=(Buldozerist&& other) noexcept
-{
-
-	delete board;
-	currentPosition.first = NULL;
-	currentPosition.second = NULL;
-
-	board = other.board;
-	currentPosition = other.currentPosition;
-
-	other.board = nullptr;
-	other.currentPosition.first = NULL;
-	other.currentPosition.second = NULL;
-
-
-	return *this;
-
-}
-
-void Buldozerist::setBoard(Board& gameBoard)
-{
-	board = &gameBoard;
-}
-
-Board& Buldozerist::getBoard() const
-{
-	return *board;
-}
-
-void Buldozerist::setCurrentPosition(Board::Position newPosition)
-{
-	currentPosition = newPosition;
-}
-
-Board::Position Buldozerist::getCurrentPosition() const
-{
-	return currentPosition;
-}
-
-Board::Position Buldozerist::RandomPosition()
-{
-	size_t randomIndex1 = random(board->GetSize());
-	size_t randomIndex2 = random(board->GetSize());
-	Board::Position position = std::make_pair(randomIndex1, randomIndex2);
-	return position;
-}
 
 bool Buldozerist::ThrowCoin()
 {
@@ -78,6 +14,7 @@ bool Buldozerist::ThrowCoin()
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<int> distribution(0, 1);
 	return distribution(gen) == 1;
+	return 0;
 }
 
 size_t Buldozerist::random(size_t size)
