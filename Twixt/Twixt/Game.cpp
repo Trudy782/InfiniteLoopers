@@ -16,6 +16,20 @@ void Game::Initialize(int size, const std::string& redPlayerName, const std::str
 
 }
 
+void Game::SaveGame()
+{
+	std::ofstream out("save.txt");
+	out << m_board.GetSize() << "\n";
+	out << m_board;
+	std::vector<Link> links = m_board.GetLink();
+	out << links.size();
+	for (int i = 0; i < links.size(); i++)
+		out << links[i] << " ";
+	m_board.Reset();
+	out << "\n";
+	out << m_isRedTurn << "\n";
+}
+
 
 void Game::SwitchColorMenu(bool& validMove)
 {

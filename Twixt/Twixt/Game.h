@@ -5,11 +5,14 @@
 #include "Buldozerist.h"
 #include "BoardChecker.h"
 #include<functional>
+#include <fstream>
 class Game
 {
 public:
 	Game();
 	void Initialize(int size, const std::string& redPlayerName, const std::string& blackPlayerName);
+
+	void SaveGame();
 
 	void StartGame();
 	void StartAdvancedGameMode4();

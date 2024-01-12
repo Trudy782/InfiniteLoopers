@@ -22,6 +22,11 @@ void Board::SetBoard(const std::vector<std::optional<Peg>>& board)
 	m_board = board;
 }
 
+void Board::SetBuldozerist(Buldozerist B)
+{
+	m_buldozerist = B;
+}
+
 size_t Board::GetSize() const
 {
 	return m_size;

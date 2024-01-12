@@ -33,6 +33,7 @@ public:
 
 	const std::vector<std::optional<Peg>>& GetBoard() const;
 	void SetBoard(const std::vector<std::optional<Peg>>& board);
+	void SetBuldozerist(Buldozerist B);
 	size_t GetSize() const;
 	State GetState() const;
 	void SetState(State state);
