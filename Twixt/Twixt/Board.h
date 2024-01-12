@@ -1,8 +1,9 @@
 #pragma once
 
-#include "peg.h"
-#include "link.h"
-#include "player.h"
+#include "Peg.h"
+#include "Link.h"
+#include "Player.h"
+#include "Buldozerist.h"
 
 #include<cstdint>
 #include<iostream>
@@ -11,13 +12,6 @@
 #include <unordered_map>
 #include <ranges>
 
-struct PairHash {
-	size_t operator()(const std::pair<size_t, size_t>& p) const {
-		auto hash1 = std::hash<size_t>{}(p.first);
-		auto hash2 = std::hash<size_t>{}(p.second);
-		return hash1 ^ hash2;
-	}
-};
 
 class Board
 {
@@ -53,6 +47,8 @@ public:
 	void AddLink(const Link& link);
 	void RemoveLink(const Link& link);
 	void AddPeg(const Peg& peg);
+	void CreateFilteredBoard();
+	bool Occupied(const size_t& row, const size_t& col);
 
 	const std::optional<Peg>& operator[](const Position& index) const;
 	std::optional<Peg>& operator[](const Position& index);
@@ -70,6 +66,6 @@ private:
 	size_t m_size;
 	State m_state;
 	std::vector<Link> m_links;
-	std::unordered_map<Position, std::vector<Link*>, PairHash> m_links_map;
 	std::vector<Peg> m_pegs;
+	Buldozerist m_buldozerist;
 };

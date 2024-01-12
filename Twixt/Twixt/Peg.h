@@ -8,7 +8,8 @@
 
 enum class Color :uint8_t {
     Red,
-    Black
+    Black,
+    Yellow
 };
 class Peg {
 public:

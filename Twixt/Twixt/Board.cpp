@@ -133,9 +133,6 @@ void Board::AddLink(const Link& link)
 
 	const Position& start = link.GetPegStart()->GetPosition();
 	const Position& end = link.GetPegEnd()->GetPosition();
-
-	m_links_map[start].push_back(&m_links.back());
-	m_links_map[end].push_back(&m_links.back());
 }
 
 void Board::RemoveLink(const Link& link)
@@ -149,8 +146,25 @@ void Board::RemoveLink(const Link& link)
 
 void Board::AddPeg(const Peg& peg)
 {
-	m_pegs.push_back(peg);
 	const Position& positionPeg = peg.GetPosition();
+}
+
+void Board::CreateFilteredBoard()
+{
+	std::vector<std::optional<Peg>> filtered_board;
+	std::copy_if(m_board.begin(), m_board.end(), std::back_inserter(filtered_board), [](const auto& elem) {
+		return elem.has_value();
+		});
+	std::ranges::transform(filtered_board, std::back_inserter(m_pegs), [](const auto& elem) {
+		return elem.value();
+		});
+}
+
+bool Board::Occupied(const size_t& row, const size_t& col)
+{
+	if (m_board[row * m_size + col].has_value())
+		return true;
+	return false;
 }
 
 //Board& Board::operator=(const Board& obj)

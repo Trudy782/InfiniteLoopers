@@ -51,7 +51,6 @@ private:
 	Player m_blackPlayer;
 	Board m_board;
 	bool m_isRedTurn;
-	Buldozerist m_buldozer;
 	Card m_card;
 };
 
