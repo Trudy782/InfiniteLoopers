@@ -50,6 +50,8 @@ public:
 	void CreateFilteredBoard();
 	bool Occupied(const size_t& row, const size_t& col);
 
+	Position RandomEmptyPosition();
+
 	const std::optional<Peg>& operator[](const Position& index) const;
 	std::optional<Peg>& operator[](const Position& index);
 	bool IsPlaceOccupied(const size_t& row, const size_t& col);

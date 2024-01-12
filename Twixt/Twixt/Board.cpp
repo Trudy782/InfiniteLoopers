@@ -167,6 +167,14 @@ bool Board::Occupied(const size_t& row, const size_t& col)
 	return false;
 }
 
+Board::Position Board::RandomEmptyPosition()
+{
+	size_t randomIndex1 = m_buldozerist.random(m_size);
+	size_t randomIndex2 = m_buldozerist.random(m_size);
+	Board::Position position = std::make_pair(randomIndex1, randomIndex2);
+	return position;
+}
+
 //Board& Board::operator=(const Board& obj)
 //{
 //	if (this == &obj) {
