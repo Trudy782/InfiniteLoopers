@@ -107,174 +107,174 @@ void Game::RestoreLinks(std::vector<std::string> link_strings)
 }
 
 
-void Game::SwitchColorMenu(bool& validMove)
-{
-	std::cout << m_redPlayer.GetName() << ", you've placed the first red peg.\n";
-	std::cout << m_blackPlayer.GetName() << ", choose your color:\n";
-	std::cout << "3. Continue with black pegs\n";
-	std::cout << "4. Switch to red pegs\n";
+//void Game::SwitchColorMenu(bool& validMove)
+//{
+//	std::cout << m_redPlayer.GetName() << ", you've placed the first red peg.\n";
+//	std::cout << m_blackPlayer.GetName() << ", choose your color:\n";
+//	std::cout << "3. Continue with black pegs\n";
+//	std::cout << "4. Switch to red pegs\n";
+//
+//	int colorChoice;
+//	std::string aux;
+//	std::cin >> colorChoice;
+//
+//	switch (colorChoice)
+//	{
+//	case 3:
+//		while (!validMove)
+//		{
+//			if (MovePeg())
+//			{
+//				validMove = true;
+//				currentPlayer().IncrementNumber();
+//			}
+//		}
+//		break;
+//	case 4:
+//		aux = m_redPlayer.GetName();
+//		m_redPlayer.SetName(m_blackPlayer.GetName());
+//		m_blackPlayer.SetName(aux);
+//		while (!validMove)
+//		{
+//			if (MovePeg())
+//				validMove = true;
+//		}
+//		break;
+//	default:
+//		std::cerr << "Invalid choice.\n";
+//		break;
+//	}
+//}
 
-	int colorChoice;
-	std::string aux;
-	std::cin >> colorChoice;
-
-	switch (colorChoice)
-	{
-	case 3:
-		while (!validMove)
-		{
-			if (MovePeg())
-			{
-				validMove = true;
-				currentPlayer().IncrementNumber();
-			}
-		}
-		break;
-	case 4:
-		aux = m_redPlayer.GetName();
-		m_redPlayer.SetName(m_blackPlayer.GetName());
-		m_blackPlayer.SetName(aux);
-		while (!validMove)
-		{
-			if (MovePeg())
-				validMove = true;
-		}
-		break;
-	default:
-		std::cerr << "Invalid choice.\n";
-		break;
-	}
-}
-
-void Game::MainMenu(bool& validMove, bool& castig)
-{
-	int option;
-	std::cout << "Press 1 for adding a Peg \nPress 2 for adding a Link \nPress 111 if you need a hint for place your next peg\nPress 222 if you need a hint for checking position of your next peg\n";
-	std::cin >> option;
-	switch (option)
-	{
-	case 1:
-		if (MovePeg())
-		{
-			validMove = true;
-			currentPlayer().IncrementNumber();
-		}
-		break;
-	case 2:
-		if (MoveLink(castig))
-			validMove = true;
-		break;
-	case 3:
-		//m_board.RemovePeg(2, 3, currentPlayer());
-		validMove = true;
-		break;
-	case 111:
-		/*RefferalSystemHint1();*/
-		break;
-	case 222:
-		size_t positionFirst, positionSecond;
-		std::cout << "Choose positions for your next peg\n";
-		std::cin >> positionFirst >> positionSecond;
-		/*RefferalSystemHint2(positionFirst, positionSecond);*/
-		break;
-	default:
-		std::cerr << "Invalid option!\n";
-		break;
-	}
-}
-void Game::StartGame()
-{
-	bool IsGameActiv = true;
-	int nrPegs = static_cast<int>(m_board.GetSize()) * 2 + 2;
-	int Moves = 0;
-	bool castig = false;
-	while (m_redPlayer.GetNrPegs() <= nrPegs || m_blackPlayer.GetNrPegs() <= nrPegs)
-	{
-		bool validMove = false;
-		if (m_isRedTurn)
-			std::cout << "It's red's turn.\n";
-		else
-			std::cout << "It's black's turn. \n";
-		while (!validMove)
-		{
-			if (Moves == 1)
-				SwitchColorMenu(validMove);
-			else
-			{
-				MainMenu(validMove, castig);
-			}
-		}
-
-		Moves++;
-
-		std::cout << m_board;
-		showLinks(currentPlayer());
-		if (castig == true)
-			break;
-		ChangePlayer();
-	}
-
-	if (m_redPlayer.GetNrPegs() >= nrPegs && m_blackPlayer.GetNrPegs() >= nrPegs && castig == false) //remiza
-	{
-		m_board.SetState(Board::State::Draw);
-		std::cout << "It's a tie";
-	}
-}
-void Game::StartAdvancedGameMode4()
-{
-	m_card.addEffects();
-	bool IsGameActiv = true;
-	int nrPegs = static_cast<int>(m_board.GetSize()) * 2 + 2;
-	int option;
-	while (m_redPlayer.GetNrPegs() <= nrPegs || m_blackPlayer.GetNrPegs() <= nrPegs)
-	{
-		bool validMove = false;
-		if (m_isRedTurn)
-			std::cout << "It's red's turn.\n";
-		else
-			std::cout << "It's black's turn. \n";
-		while (!validMove)
-		{
-			std::cout << "Press 1 for adding a Peg \nPress 2 for pick a special Card \nPress 3 for play your special Card";
-			std::cin >> option;
-			switch (option)
-			{
-			case 1:
-				if (MovePeg())
-					validMove = true;
-				break;
-			case 2:
-				if (PickCard() != "")
-					validMove = true;
-				break;
-			case 3:
-				if (PlayCard())
-					validMove = true;
-				else
-					validMove = false;
-				break;
-			default:
-				std::cerr << "Invalid option!\n";
-				break;
-			}
-		}
-
-		std::cout << m_board;
-		showLinks(currentPlayer());
-		/*if (WinConditionsBlack() or WinConditionsRed())
-		{
-			m_board.SetState(Board::State::Win);
-			break;
-		}*/
-		ChangePlayer();
-	}
-
-	//if (m_redPlayer.GetNrPegs() == nrPegs && m_blackPlayer.GetNrPegs() == nrPegs && !WinConditionsBlack() && !WinConditionsRed()) //remiza
-	//{
-	//	m_board.SetState(Board::State::Draw);
-	//	std::cout << "It's a tie!\n";
-	//}
-}
+//void Game::MainMenu(bool& validMove, bool& castig)
+//{
+//	int option;
+//	std::cout << "Press 1 for adding a Peg \nPress 2 for adding a Link \nPress 111 if you need a hint for place your next peg\nPress 222 if you need a hint for checking position of your next peg\n";
+//	std::cin >> option;
+//	switch (option)
+//	{
+//	case 1:
+//		if (MovePeg())
+//		{
+//			validMove = true;
+//			currentPlayer().IncrementNumber();
+//		}
+//		break;
+//	case 2:
+//		if (MoveLink(castig))
+//			validMove = true;
+//		break;
+//	case 3:
+//		//m_board.RemovePeg(2, 3, currentPlayer());
+//		validMove = true;
+//		break;
+//	case 111:
+//		/*RefferalSystemHint1();*/
+//		break;
+//	case 222:
+//		size_t positionFirst, positionSecond;
+//		std::cout << "Choose positions for your next peg\n";
+//		std::cin >> positionFirst >> positionSecond;
+//		/*RefferalSystemHint2(positionFirst, positionSecond);*/
+//		break;
+//	default:
+//		std::cerr << "Invalid option!\n";
+//		break;
+//	}
+//}
+//void Game::StartGame()
+//{
+//	bool IsGameActiv = true;
+//	int nrPegs = static_cast<int>(m_board.GetSize()) * 2 + 2;
+//	int Moves = 0;
+//	bool castig = false;
+//	while (m_redPlayer.GetNrPegs() <= nrPegs || m_blackPlayer.GetNrPegs() <= nrPegs)
+//	{
+//		bool validMove = false;
+//		/*if (m_isRedTurn)
+//			std::cout << "It's red's turn.\n";
+//		else
+//			std::cout << "It's black's turn. \n";*/
+//		while (!validMove)
+//		{
+//			/*if (Moves == 1)
+//				SwitchColorMenu(validMove);
+//			else
+//			{*/
+//				MainMenu(validMove, castig);
+//			//}
+//		}
+//
+//		Moves++;
+//
+//		std::cout << m_board;
+//		showLinks(currentPlayer());
+//		if (castig == true)
+//			break;
+//		ChangePlayer();
+//	}
+//
+//	if (m_redPlayer.GetNrPegs() >= nrPegs && m_blackPlayer.GetNrPegs() >= nrPegs && castig == false) //remiza
+//	{
+//		m_board.SetState(Board::State::Draw);
+//		std::cout << "It's a tie";
+//	}
+//}
+//void Game::StartAdvancedGameMode4()
+//{
+//	m_card.addEffects();
+//	bool IsGameActiv = true;
+//	int nrPegs = static_cast<int>(m_board.GetSize()) * 2 + 2;
+//	int option;
+//	while (m_redPlayer.GetNrPegs() <= nrPegs || m_blackPlayer.GetNrPegs() <= nrPegs)
+//	{
+//		bool validMove = false;
+//		if (m_isRedTurn)
+//			std::cout << "It's red's turn.\n";
+//		else
+//			std::cout << "It's black's turn. \n";
+//		while (!validMove)
+//		{
+//			std::cout << "Press 1 for adding a Peg \nPress 2 for pick a special Card \nPress 3 for play your special Card";
+//			std::cin >> option;
+//			switch (option)
+//			{
+//			case 1:
+//				if (MovePeg())
+//					validMove = true;
+//				break;
+//			case 2:
+//				if (PickCard() != "")
+//					validMove = true;
+//				break;
+//			case 3:
+//				if (PlayCard())
+//					validMove = true;
+//				else
+//					validMove = false;
+//				break;
+//			default:
+//				std::cerr << "Invalid option!\n";
+//				break;
+//			}
+//		}
+//
+//		std::cout << m_board;
+//		showLinks(currentPlayer());
+//		/*if (WinConditionsBlack() or WinConditionsRed())
+//		{
+//			m_board.SetState(Board::State::Win);
+//			break;
+//		}*/
+//		ChangePlayer();
+//	}
+//
+//	//if (m_redPlayer.GetNrPegs() == nrPegs && m_blackPlayer.GetNrPegs() == nrPegs && !WinConditionsBlack() && !WinConditionsRed()) //remiza
+//	//{
+//	//	m_board.SetState(Board::State::Draw);
+//	//	std::cout << "It's a tie!\n";
+//	//}
+//}
 void Game::ChangePlayer()
 {
 	m_isRedTurn = !m_isRedTurn;
@@ -385,15 +385,19 @@ bool Game::CheckEnemyZone(const size_t& row, const size_t& col, const size_t& si
 	return true;
 }
 
+bool Game::GetIsRedTurn() const
+{
+	return m_isRedTurn;
+}
+
 bool Game::PegValidation(const size_t& row, const size_t& col)
 {
 	size_t size = m_board.GetSize();
 	return CheckCorners(row, col, size) && CheckPerimeter(row, col, size) && m_board.IsPlaceOccupied(row, col) && CheckEnemyZone(row, col, size);
 }
 
-bool Game::MovePeg() {
-	Board::Position position = currentPlayer().GetNextActionPeg();
-	auto [row, col] = position;
+bool Game::MovePeg(const size_t row, const size_t col) {
+	Board::Position position = { row,col };
 
 	if (PegValidation(row, col)) {
 		Peg p;
@@ -495,88 +499,88 @@ std::string Game::PickCard()
 	return effect;
 }
 
-bool Game::PlayCard()
-{
-	if (currentPlayer().GetCards().empty())
-	{
-		std::cout << "You don't have any cards\n";
-		return false;
-	}
-	std::string functionToPlay = currentPlayer().GetCards().front();
-	currentPlayer().EraseCard();
-	std::cout << "Hey " << currentPlayer().GetName() << " you chose to play " << functionToPlay << std::endl;
-	if (functionToPlay == "Get2Cards")
-	{
-		PickCard();
-		PickCard();
-		return true;
-	}
-	else if (functionToPlay == "Loses2Cards")
-	{
-		currentPlayer().EraseCard();
-		currentPlayer().EraseCard();
-		return true;
-	}
-	else if (functionToPlay == "PlayExtraTurn")
-	{
-		return false;
-	}
-	else if (functionToPlay == "Place2Pillars")
-	{
-		MovePeg();
-		MovePeg();
-		return true;
-	}
-	else if (functionToPlay == "Place2Links")
-	{
-		std::cout << "If you don't have enaugh pillars to plase a link, please press 0 and choose another option\n";
-		std::cout << "Or press 1 and continue with this Card\n";
-		int digit;
-		std::cin >> digit;
-		if (digit == 0)
-			return false;
-		bool castig = false;
-		MoveLink(castig);
-		MoveLink(castig);
-		return true;
-	}
-	else if (functionToPlay == "Remove1OpponentPillar")
-	{
-		std::cout << "If your opponent don't have any pegs, please press 0 and choose another option\n";
-		std::cout << "Or press 1 and continue with this Card\n";
-		int digit;
-		std::cin >> digit;
-		if (digit == 0)
-			return false;
-		std::cout << "Which peg do you want to remove?\n";
-		size_t destroyedRow, destroyedCol;
-		std::cin >> destroyedRow >> destroyedCol;
-		m_board.RemovePeg(destroyedRow, destroyedCol);
-		return true;
-	}
-	else if (functionToPlay == "Remove1OpponentLink")
-	{
-		std::cout << "If your opponent don't have any links, please press 0 and choose another option\n";
-		std::cout << "Or press 1 and continue with this Card\n";
-		int digit;
-		std::cin >> digit;
-		if (digit == 0)
-			return false;
-		std::cout << "Which link do you want to remove?\n";
-		size_t destroyedRow1, destroyedCol1, destroyedRow2, destroyedCol2;
-		std::cout << "Peg start:\n";
-		std::cin >> destroyedRow1 >> destroyedCol1;
-		std::cout << "Peg end:\n";
-		std::cin >> destroyedRow2 >> destroyedCol2;
-		m_board.RemoveLink(destroyedRow1, destroyedCol1, destroyedRow2, destroyedCol2);
-		return true;
-	}
-	else if (functionToPlay == "MoveBulldozer")
-	{
-		m_board.MoveBuldozer();
-		return true;
-	}
-}
+//bool Game::PlayCard()
+//{
+//	if (currentPlayer().GetCards().empty())
+//	{
+//		std::cout << "You don't have any cards\n";
+//		return false;
+//	}
+//	std::string functionToPlay = currentPlayer().GetCards().front();
+//	currentPlayer().EraseCard();
+//	std::cout << "Hey " << currentPlayer().GetName() << " you chose to play " << functionToPlay << std::endl;
+//	if (functionToPlay == "Get2Cards")
+//	{
+//		PickCard();
+//		PickCard();
+//		return true;
+//	}
+//	else if (functionToPlay == "Loses2Cards")
+//	{
+//		currentPlayer().EraseCard();
+//		currentPlayer().EraseCard();
+//		return true;
+//	}
+//	else if (functionToPlay == "PlayExtraTurn")
+//	{
+//		return false;
+//	}
+//	else if (functionToPlay == "Place2Pillars")
+//	{
+//		MovePeg();
+//		MovePeg();
+//		return true;
+//	}
+//	else if (functionToPlay == "Place2Links")
+//	{
+//		std::cout << "If you don't have enaugh pillars to plase a link, please press 0 and choose another option\n";
+//		std::cout << "Or press 1 and continue with this Card\n";
+//		int digit;
+//		std::cin >> digit;
+//		if (digit == 0)
+//			return false;
+//		bool castig = false;
+//		MoveLink(castig);
+//		MoveLink(castig);
+//		return true;
+//	}
+//	else if (functionToPlay == "Remove1OpponentPillar")
+//	{
+//		std::cout << "If your opponent don't have any pegs, please press 0 and choose another option\n";
+//		std::cout << "Or press 1 and continue with this Card\n";
+//		int digit;
+//		std::cin >> digit;
+//		if (digit == 0)
+//			return false;
+//		std::cout << "Which peg do you want to remove?\n";
+//		size_t destroyedRow, destroyedCol;
+//		std::cin >> destroyedRow >> destroyedCol;
+//		m_board.RemovePeg(destroyedRow, destroyedCol);
+//		return true;
+//	}
+//	else if (functionToPlay == "Remove1OpponentLink")
+//	{
+//		std::cout << "If your opponent don't have any links, please press 0 and choose another option\n";
+//		std::cout << "Or press 1 and continue with this Card\n";
+//		int digit;
+//		std::cin >> digit;
+//		if (digit == 0)
+//			return false;
+//		std::cout << "Which link do you want to remove?\n";
+//		size_t destroyedRow1, destroyedCol1, destroyedRow2, destroyedCol2;
+//		std::cout << "Peg start:\n";
+//		std::cin >> destroyedRow1 >> destroyedCol1;
+//		std::cout << "Peg end:\n";
+//		std::cin >> destroyedRow2 >> destroyedCol2;
+//		m_board.RemoveLink(destroyedRow1, destroyedCol1, destroyedRow2, destroyedCol2);
+//		return true;
+//	}
+//	else if (functionToPlay == "MoveBulldozer")
+//	{
+//		m_board.MoveBuldozer();
+//		return true;
+//	}
+//}
 
 //void Game::RefferalSystemHint1()
 //{

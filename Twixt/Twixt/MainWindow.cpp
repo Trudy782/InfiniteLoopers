@@ -53,6 +53,29 @@ void MainWindow::ResetBlackNameLineEdit()
 
 }
 
+void MainWindow::NextRound()
+{
+    g.ChangePlayer();
+
+}
+
+void MainWindow::handleCellClicked(size_t row, size_t col)
+{
+    // Aici po?i implementa ac?iunile specifice jocului Twixt în func?ie de pozi?ia celulei (row, col)
+    
+    QPushButton* clickedButton = qobject_cast<QPushButton*>(clickableTable->gridLayout->itemAtPosition(row, col)->widget());
+
+    // Seteaz? stilul butonului pentru a-l colora în ro?u
+    if (clickedButton && g.MovePeg(row, col))
+    {
+        if(g.GetIsRedTurn())
+            clickedButton->setStyleSheet("background-color: red;");
+        else
+            clickedButton->setStyleSheet("background-color: black;");
+
+    }
+}
+
 bool MainWindow::CheckData(const QString& size, const QString& redName, const QString& blackName)
 {
     if (size.isEmpty() || size.toInt() < 0) {
@@ -128,9 +151,22 @@ void MainWindow::StartGameClicked()
     ui.lblBlackName->setEnabled(false);
     ui.btnStartGame->setEnabled(false);
     
+    // Creeaz? ?i afi?eaz? ClickableTable
     clickableTable = new ClickableTable(size.toInt(), size.toInt(), this);
+    // Conecteaz? semnalul cellClicked la slotul handleCellClicked
+    connect(clickableTable, &ClickableTable::cellClicked, this, &MainWindow::handleCellClicked);
     QVBoxLayout* layout = new QVBoxLayout(ui.page2);
     layout->addWidget(clickableTable);
+
+    btnNextRound = new QPushButton(this);
+    btnNextRound->setText("Next Round"); // Seteaz? textul butonului, dac? este necesar
+    // Adaug? un spa?iu extensibil în partea de jos pentru a muta butonul în col?ul dreapta jos
+    //layout->addStretch();
+    layout->addWidget(btnNextRound);
+    // Seteaz? alinierea layout-ului la dreapta jos
+    layout->setAlignment(Qt::AlignBottom | Qt::AlignRight);
+    connect(btnNextRound, &QPushButton::clicked, this, &MainWindow::NextRound);
+
 
     stackedWidget->setCurrentIndex(1);
     

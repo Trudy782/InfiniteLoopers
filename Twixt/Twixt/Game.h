@@ -20,11 +20,10 @@ public:
 
 	void StartGame();
 	void StartAdvancedGameMode4();
-private:
 	void ChangePlayer();
 	bool LinkValidation(const Peg& pStart, const Peg& pEnd);
 	bool PegValidation(const size_t& row, const size_t& col);
-	bool MovePeg();
+	bool MovePeg(const size_t row, const size_t col);
 	bool MoveLink(bool& castig);
 	Player& currentPlayer();
 	void showLinks(const Player& player);
@@ -40,6 +39,9 @@ private:
 	bool CheckCorners(const size_t& row, const size_t& col, const size_t& size);
 	bool CheckPerimeter(const size_t& row, const size_t& col, const size_t& size);
 	bool CheckEnemyZone(const size_t& row, const size_t& col, const size_t& size);
+
+	bool GetIsRedTurn() const;
+
 
 
 	//implementari Mode 4

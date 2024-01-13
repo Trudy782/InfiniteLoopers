@@ -1,31 +1,33 @@
-#include <QApplication>
-#include <QTableWidget>
-#include <QTableWidgetItem>
-#include <QGraphicsView>
-#include <QGraphicsScene>
-#include <QGraphicsRectItem>
-#include <QBrush>
+#include <QWidget>
+#include <QGridLayout>
+#include <QPushButton>
+#include <QTimer>
+#include <QMap>
+#//include "RoundButton.cpp";
 
-class ClickableTable : public QTableWidget {
+class ClickableTable : public QWidget
+{
     Q_OBJECT
 
 public:
-    ClickableTable(int rows, int columns, QWidget* parent = nullptr);
-    void setRowCount(int rows) {
-        QTableWidget::setRowCount(rows);
-    }
-
-    void setColumnCount(int columns) {
-        QTableWidget::setColumnCount(columns);
-    }
+    explicit ClickableTable(size_t rows, size_t cols, QWidget* parent = nullptr);
+    void initializeTable();
+    QGridLayout* gridLayout;
 
 signals:
-    void cellClicked(int row, int column);
+    void cellClicked(size_t row, size_t col);
 
 private slots:
-    void onCellClicked(int row, int column);
+    void handleCellClick();
+    void handleDoubleClick();
+
 
 private:
-    void setupTable();
-    
+    int numRows;
+    int numCols;
+    int doubleClickInterval = 300;  // Intervalul în milisecunde între dou? click-uri pentru a le considera dublu click
+    //QTimer* doubleClickTimer;
+    QMap<QPushButton*, QTimer*> buttonToTimerMap;
+
+
 };

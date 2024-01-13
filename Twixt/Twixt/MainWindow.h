@@ -19,13 +19,18 @@ public:
     void ResetSizeLineEdit();
     void ResetRedNameLineEdit();
     void ResetBlackNameLineEdit();
+    void NextRound();
 
     bool CheckData(const QString& size, const QString& redName, const QString& blackName);
 
+
+private slots:
+    void handleCellClicked(size_t row, size_t col);
 
 private:
     Ui::MainWindowClass ui;
     QStackedWidget* stackedWidget;
     Game g;
     ClickableTable* clickableTable;
+    QPushButton* btnNextRound;
 };
