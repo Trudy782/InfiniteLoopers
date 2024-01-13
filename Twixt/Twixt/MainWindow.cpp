@@ -66,12 +66,13 @@ void MainWindow::handleCellClicked(size_t row, size_t col)
     QPushButton* clickedButton = qobject_cast<QPushButton*>(clickableTable->gridLayout->itemAtPosition(row, col)->widget());
 
     // Seteaz? stilul butonului pentru a-l colora în ro?u
-    if (clickedButton && g.MovePeg(row, col))
+    if (g.MovePeg(row, col))
     {
-        if(g.GetIsRedTurn())
-            clickedButton->setStyleSheet("background-color: red;");
+        if (g.GetIsRedTurn())
+            clickedButton->setStyleSheet("background-color: red; border-radius: 20px;");
         else
-            clickedButton->setStyleSheet("background-color: black;");
+            clickedButton->setStyleSheet("background-color: black; border-radius: 20px;");
+        clickedButton->setFixedSize(QSize(40, 40));
 
     }
 }

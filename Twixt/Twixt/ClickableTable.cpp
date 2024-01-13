@@ -61,12 +61,23 @@ ClickableTable::ClickableTable(size_t rows, size_t cols, QWidget* parent)
 
 void ClickableTable::initializeTable()
 {
+    
     for (int row = 0; row < numRows; ++row)
     {
         for (int col = 0; col < numCols; ++col)
         {
             QPushButton* button = new QPushButton(this);
-           // button->setStyleSheet("QPushButton { border-radius: 15px; }");
+           
+            // Seteaz? un stil personalizat
+            QString style = "QPushButton {"
+                "  border-radius: 20px; "
+                "  border: 2px solid lightgrey;"  // Contur gri deschis
+                "  background-color: transparent;" // Fundal transparent
+                
+                "}";
+            button->setStyleSheet(style);
+
+            button->setFixedSize(QSize(40, 40)); 
 
             button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -74,13 +85,13 @@ void ClickableTable::initializeTable()
             connect(button, &QPushButton::clicked, this, &ClickableTable::handleCellClick);
 
             // Ini?ializeaz? ?i configureaz? un timer pentru fiecare buton
-            QTimer* doubleClickTimer = new QTimer(this);
+           /* QTimer* doubleClickTimer = new QTimer(this);
             doubleClickTimer->setSingleShot(true);
-            connect(doubleClickTimer, &QTimer::timeout, this, &ClickableTable::handleDoubleClick);
+            connect(doubleClickTimer, &QTimer::timeout, this, &ClickableTable::handleDoubleClick);*/
 
             // Asociaz? fiecare timer cu butonul corespunz?tor
 
-            buttonToTimerMap[button] = doubleClickTimer;
+            //buttonToTimerMap[button] = doubleClickTimer;
 
 
             this->gridLayout->addWidget(button, row, col);
@@ -90,8 +101,8 @@ void ClickableTable::initializeTable()
         }
     }
     // Seteaz? dimensiunile butoanelor ?i/sau layout-ului în func?ie de nevoile tale
-    this->gridLayout->setSpacing(5); // spa?iu între butoane
-    this->gridLayout->setContentsMargins(10, 10, 10, 50); // margini exterioare ale layout-ului
+    //this->gridLayout->setSpacing(20); // spa?iu între butoane
+    this->gridLayout->setContentsMargins(30, 30, 30, 50); // margini exterioare ale layout-ului
 }
 
 
@@ -100,26 +111,35 @@ void ClickableTable::handleCellClick()
 {
     QPushButton* clickedButton = qobject_cast<QPushButton*>(sender());
 
+    //if (clickedButton)
+    //{
+    //    QTimer* doubleClickTimer = buttonToTimerMap.value(clickedButton);
+    //    size_t row = clickedButton->property("row").toInt();
+    //    size_t col = clickedButton->property("col").toInt();
+    //    if (doubleClickTimer->isActive())
+    //    {
+    //        // Este un dublu click
+    //        qDebug() << "Double click!" << row << " " << col << "\n";
+
+    //        doubleClickTimer->stop();
+    //    }
+    //    else
+    //    {
+    //        // Este un click simplu, a?a c? începe timer-ul pentru a a?tepta un posibil dublu click
+    //        doubleClickTimer->start(doubleClickInterval);
+    //        //qDebug() << "Single click" << row << " " << col << "/n";
+    //        emit cellClicked(row, col);
+
+    //    }
+    //}
+
     if (clickedButton)
     {
-        QTimer* doubleClickTimer = buttonToTimerMap.value(clickedButton);
+  
         size_t row = clickedButton->property("row").toInt();
         size_t col = clickedButton->property("col").toInt();
-        if (doubleClickTimer->isActive())
-        {
-            // Este un dublu click
-            qDebug() << "Double click!" << row << " " << col << "\n";
+        emit cellClicked(row, col);
 
-            doubleClickTimer->stop();
-        }
-        else
-        {
-            // Este un click simplu, a?a c? începe timer-ul pentru a a?tepta un posibil dublu click
-            doubleClickTimer->start(doubleClickInterval);
-            //qDebug() << "Single click" << row << " " << col << "/n";
-            emit cellClicked(row, col);
-
-        }
     }
 }
 
