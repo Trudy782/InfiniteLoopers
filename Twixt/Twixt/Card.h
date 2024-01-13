@@ -14,8 +14,8 @@ public:
 	~Card() = default;
 	std::string getRandomEffect(const std::vector<std::string>& m_effects);
 	const std::vector<std::string>& GetEffects() const;
+	void addEffects();
 private:
 	std::vector<std::string> m_effects;
-	void addEffects();
 };
 

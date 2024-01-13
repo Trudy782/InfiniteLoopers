@@ -101,7 +101,8 @@ void Player::IncrementNumber()
 
 void Player::EraseCard()
 {
-	m_cards.erase(m_cards.begin());
+	if (!m_cards.empty())
+		m_cards.erase(m_cards.begin());
 }
 
 

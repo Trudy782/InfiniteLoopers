@@ -222,6 +222,7 @@ void Game::StartGame()
 }
 void Game::StartAdvancedGameMode4()
 {
+	m_card.addEffects();
 	bool IsGameActiv = true;
 	int nrPegs = static_cast<int>(m_board.GetSize()) * 2 + 2;
 	int option;
@@ -490,12 +491,19 @@ std::string Game::PickCard()
 	std::vector<std::string> effects = m_card.GetEffects();
 	std::string effect = m_card.getRandomEffect(effects);
 	currentPlayer().AddCard(effect);
+	std::cout << "You add succesfuly in your deck a card\n";
 	return effect;
 }
 
 bool Game::PlayCard()
 {
+	if (currentPlayer().GetCards().empty())
+	{
+		std::cout << "You don't have any cards\n";
+		return false;
+	}
 	std::string functionToPlay = currentPlayer().GetCards().front();
+	currentPlayer().EraseCard();
 	std::cout << "Hey " << currentPlayer().GetName() << " you chose to play " << functionToPlay << std::endl;
 	if (functionToPlay == "Get2Cards")
 	{
@@ -503,40 +511,71 @@ bool Game::PlayCard()
 		PickCard();
 		return true;
 	}
-	if (functionToPlay == "Loses2Cards")
+	else if (functionToPlay == "Loses2Cards")
 	{
 		currentPlayer().EraseCard();
 		currentPlayer().EraseCard();
 		return true;
 	}
-	if (functionToPlay == "PlayExtraTurn")
+	else if (functionToPlay == "PlayExtraTurn")
 	{
 		return false;
 	}
-	/*if (functionToPlay == "Place2Pillars")
+	else if (functionToPlay == "Place2Pillars")
 	{
 		MovePeg();
 		MovePeg();
 		return true;
 	}
-	if (functionToPlay == "Place2Links")
+	else if (functionToPlay == "Place2Links")
 	{
-		MoveLink;
-		MoveLink;
+		std::cout << "If you don't have enaugh pillars to plase a link, please press 0 and choose another option\n";
+		std::cout << "Or press 1 and continue with this Card\n";
+		int digit;
+		std::cin >> digit;
+		if (digit == 0)
+			return false;
+		bool castig = false;
+		MoveLink(castig);
+		MoveLink(castig);
 		return true;
-	}*/
-	//if (functionToPlay == "Remove1OpponentPillar") //trebuie date pozitile pegului
-	//{
-	//	Peg peg;
-	//	currentPlayer().RemovePeg(peg);
-	//	return true;
-	//}
-	//if (functionToPlay == "Remove1OpponentLink") //trebuie date pozitile linkului si verificat ca linkul (de sters) sa nu apartina linkurilor playerului curent
-	//{
-	//	Link link;
-	//	m_board.RemoveLink(link);
-	//	return true;
-	//}
+	}
+	else if (functionToPlay == "Remove1OpponentPillar")
+	{
+		std::cout << "If your opponent don't have any pegs, please press 0 and choose another option\n";
+		std::cout << "Or press 1 and continue with this Card\n";
+		int digit;
+		std::cin >> digit;
+		if (digit == 0)
+			return false;
+		std::cout << "Which peg do you want to remove?\n";
+		size_t destroyedRow, destroyedCol;
+		std::cin >> destroyedRow >> destroyedCol;
+		m_board.RemovePeg(destroyedRow, destroyedCol);
+		return true;
+	}
+	else if (functionToPlay == "Remove1OpponentLink")
+	{
+		std::cout << "If your opponent don't have any links, please press 0 and choose another option\n";
+		std::cout << "Or press 1 and continue with this Card\n";
+		int digit;
+		std::cin >> digit;
+		if (digit == 0)
+			return false;
+		std::cout << "Which link do you want to remove?\n";
+		size_t destroyedRow1, destroyedCol1, destroyedRow2, destroyedCol2;
+		std::cout << "Peg start:\n";
+		std::cin >> destroyedRow1 >> destroyedCol1;
+		std::cout << "Peg end:\n";
+		std::cin >> destroyedRow2 >> destroyedCol2;
+		m_board.RemoveLink(destroyedRow1, destroyedCol1, destroyedRow2, destroyedCol2);
+		return true;
+	}
+	else if (functionToPlay == "MoveBulldozer")
+	{
+		m_board.MoveBuldozer();
+		return true;
+	}
 }
 
 //void Game::RefferalSystemHint1()
