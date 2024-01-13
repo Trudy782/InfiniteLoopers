@@ -1,4 +1,10 @@
+#include <QApplication>
 #include <QTableWidget>
+#include <QTableWidgetItem>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QGraphicsRectItem>
+#include <QBrush>
 
 class ClickableTable : public QTableWidget {
     Q_OBJECT
