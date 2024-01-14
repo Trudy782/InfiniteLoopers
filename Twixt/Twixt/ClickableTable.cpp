@@ -133,4 +133,25 @@ void ClickableTable::handleDoubleClick()
 
 }
 
+size_t ClickableTable::getNumColumns()
+{
+    return numCols;
+}
 
+size_t ClickableTable::getNumRows()
+{
+    return numRows;
+}
+
+QPointF ClickableTable::getCellCoordinates(size_t row, size_t col)
+{
+    // Calculeaz? dimensiunile celulei
+    size_t dim_cell_h = (size().height() - 80) / numRows;
+    size_t dim_cell_w = (size().width() - 60) / numCols;
+
+    // Calculeaz? coordonatele pixelilor pentru celula specificat?
+    qreal xCoordinate = col * dim_cell_w + 60 + dim_cell_w / 2 - dim_cell_w / 4; // 60 este offset-ul de la marginea stâng?
+    qreal yCoordinate = row * dim_cell_h + 80; // 80 este offset-ul de sus
+
+    return QPointF(xCoordinate, yCoordinate);
+}
