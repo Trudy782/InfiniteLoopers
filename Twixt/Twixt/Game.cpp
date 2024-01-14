@@ -396,25 +396,21 @@ bool Game::PegValidation(const size_t& row, const size_t& col)
 	return CheckCorners(row, col, size) && CheckPerimeter(row, col, size) && m_board.IsPlaceOccupied(row, col) && CheckEnemyZone(row, col, size);
 }
 
-bool Game::MovePeg(const size_t row, const size_t col) {
+void Game::MovePeg(const size_t row, const size_t col) {
 	Board::Position position = { row,col };
 
-	if (PegValidation(row, col)) {
-		Peg p;
+	Peg p;
 
-		if (m_isRedTurn) {
-			p = Peg{ Color::Red, position };
-		}
-		else {
-			p = Peg{ Color::Black, position };
-		}
-
-		m_board[position] = p;
-
-
-		return true;
+	if (m_isRedTurn) {
+		p = Peg{ Color::Red, position };
 	}
-	return false;
+	else {
+		p = Peg{ Color::Black, position };
+	}
+
+	m_board[position] = p;
+
+	
 }
 
 bool Game::MoveLink(bool& castig, const size_t row1, const size_t col1, const size_t row2, const size_t col2)

@@ -9,15 +9,11 @@ MainWindow::MainWindow(QWidget* parent)
 {
     ui.setupUi(this);
 
-
-
-    // Initializarea QStackedWidget
     stackedWidget = new QStackedWidget(this);
-    // Adaugarea paginilor la QStackedWidget
     stackedWidget->addWidget(ui.page1);
     stackedWidget->addWidget(ui.page2);
-    // Adaugarea QStackedWidget la layout-ul ferestrei principale
     setCentralWidget(stackedWidget);
+
     startPoint = QPointF(0, 0);
     endPoint = QPointF(0, 0);
     SetupConnections();
@@ -63,23 +59,35 @@ void MainWindow::ResetBlackNameLineEdit()
 
 void MainWindow::NextRound()
 {
-    g.ChangePlayer();
+    if (justOnePeg == true)
+        g.ChangePlayer();
+    justOnePeg = false;
+    QString redName = ui.txtRedName->text();
+    QString blackName = ui.txtBlackName->text();
 
+    if (g.GetIsRedTurn())
+    {
+        playerNameRound->setText(redName + "'s turn");
+        playerNameRound->setStyleSheet("color: red");
+    }
+    else
+    {
+        playerNameRound->setText(blackName + "'s turn");
+        playerNameRound->setStyleSheet("color: black");
+    }
 }
 
-void MainWindow::drawLine(const QPointF& startPoint, const QPointF& endPoint)
-{
-    // Creeaz? un obiect QPainter asociat cu fereastra principal?
-    QPainter painter(this);
 
-    // Seteaz? culoarea ?i grosimea liniei
-    painter.setPen(QPen(Qt::black, 2));
-
-    // Deseneaz? linia între cele dou? puncte
-    painter.drawLine(startPoint, endPoint);
-
-
-}
+//void MainWindow::drawLine(const QPointF& startPoint, const QPointF& endPoint)
+//{
+//    QPainter painter(this);
+//    
+//    painter.setPen(QPen(Qt::black, 2));
+//
+//    painter.drawLine(startPoint, endPoint);
+//
+//
+//}
 
 void MainWindow::paintEvent(QPaintEvent* event)
 {
@@ -87,9 +95,9 @@ void MainWindow::paintEvent(QPaintEvent* event)
     // Apeleaz? func?ia pentru a desena o linie
 
     QPainter painter(this);
+    
+    painter.setPen(QPen(Qt::darkGray, 2));
 
-    // Seteaz? culoarea ?i grosimea liniei
-    painter.setPen(QPen(Qt::black, 2));
 
     // Deseneaz? liniile stocate în list?
     for (const QLineF& line : drawnLines)
@@ -100,18 +108,24 @@ void MainWindow::paintEvent(QPaintEvent* event)
 
 void MainWindow::handleCellClicked(size_t row, size_t col)
 {
-    // Aici po?i implementa ac?iunile specifice jocului Twixt în func?ie de pozi?ia celulei (row, col)
 
     QPushButton* clickedButton = qobject_cast<QPushButton*>(clickableTable->gridLayout->itemAtPosition(row, col)->widget());
 
-    // Seteaz? stilul butonului pentru a-l colora în ro?u
-    if (g.MovePeg(row, col))
+    if (g.PegValidation(row,col) && justOnePeg==false)
     {
+        g.MovePeg(row, col);
         if (g.GetIsRedTurn())
+        {
             clickedButton->setStyleSheet("background-color: red; border-radius: 20px;");
+
+        }
         else
+        {
             clickedButton->setStyleSheet("background-color: black; border-radius: 20px;");
+
+        }
         clickedButton->setFixedSize(QSize(40, 40));
+        justOnePeg = true;
 
     }
 }
@@ -211,11 +225,6 @@ void MainWindow::StartGameClicked()
 
     g.Initialize(size.toInt(), redName.toStdString(), blackName.toStdString());
 
-    qDebug() << size.toInt() << " " << redName.toStdString() << " " << blackName.toStdString();
-
-
-
-    ui.txtBoardSize->setStyleSheet("");
 
     //ascund elemtele ca sa trec la urm pagina
     ui.txtBoardSize->setEnabled(false);
@@ -235,19 +244,19 @@ void MainWindow::StartGameClicked()
     QVBoxLayout* layout = new QVBoxLayout(ui.page2);
     layout->addWidget(clickableTable);
 
+    playerNameRound = new QLabel(redName + "'s turn");
+    playerNameRound->setStyleSheet("color: red");
+
+    playerNameRound->setAlignment(Qt::AlignBottom);
+    layout->addWidget(playerNameRound);
+    
     btnNextRound = new QPushButton(this);
-    btnNextRound->setText("Next Round"); // Seteaz? textul butonului, dac? este necesar
-    // Adaug? un spa?iu extensibil în partea de jos pentru a muta butonul în col?ul dreapta jos
-    //layout->addStretch();
+    btnNextRound->setText("Next Round");
     layout->addWidget(btnNextRound);
-    // Seteaz? alinierea layout-ului la dreapta jos
     layout->setAlignment(Qt::AlignBottom | Qt::AlignRight);
     connect(btnNextRound, &QPushButton::clicked, this, &MainWindow::NextRound);
 
-
     stackedWidget->setCurrentIndex(1);
-
-
 
 }
 

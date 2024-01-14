@@ -23,7 +23,7 @@ public:
 	void ChangePlayer();
 	bool LinkValidation(const Peg& pStart, const Peg& pEnd);
 	bool PegValidation(const size_t& row, const size_t& col);
-	bool MovePeg(const size_t row, const size_t col);
+	void MovePeg(const size_t row, const size_t col);
 	bool MoveLink(bool& castig, const size_t row1, const size_t col1, const size_t row2, const size_t col2);
 	Player& currentPlayer();
 	void showLinks(const Player& player);
