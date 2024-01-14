@@ -113,9 +113,9 @@ void MainWindow::paintEvent(QPaintEvent* event)
     painter.setPen(QPen(Qt::red, 2));
 
 
-    
-    QPointF startPoint2(pereche.first.x(), pereche.first.y() - offsetY);
-    QPointF endPoint2(pereche.second.x(), pereche.second.y() - offsetY);
+    qreal offsetY2 = 15;
+    QPointF startPoint2(pereche.first.x(), pereche.first.y() - offsetY2);
+    QPointF endPoint2(pereche.second.x(), pereche.second.y() - offsetY2);
 
 
     painter.drawLine(startPoint2, endPoint2);
@@ -124,9 +124,9 @@ void MainWindow::paintEvent(QPaintEvent* event)
     painter.setPen(QPen(Qt::black, 2));
 
 
-   
-    QPointF startPoint3(pereche.first.x() + offsetY, pereche.first.y());
-    QPointF endPoint3(pereche.second.x() + offsetY, pereche.second.y());
+    qreal offsetY3 = 15;
+    QPointF startPoint3(pereche.first.x(), pereche.first.y() + offsetY3);
+    QPointF endPoint3(pereche.second.x(), pereche.second.y() + offsetY3);
 
 
     painter.drawLine(startPoint3, endPoint3);
@@ -135,9 +135,9 @@ void MainWindow::paintEvent(QPaintEvent* event)
     painter.setPen(QPen(Qt::black, 2));
 
 
-    
-    QPointF startPoint4(pereche.first.x() - offsetY, pereche.first.y());
-    QPointF endPoint4(pereche.second.x() - offsetY, pereche.second.y());
+    qreal offsetY4 = 15;
+    QPointF startPoint4(pereche.first.x(), pereche.first.y() - offsetY4);
+    QPointF endPoint4(pereche.second.x(), pereche.second.y() - offsetY4);
 
 
     painter.drawLine(startPoint4, endPoint4);
