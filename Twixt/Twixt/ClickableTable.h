@@ -19,11 +19,6 @@ public:
     void initializeTable();
     QGridLayout* gridLayout;
 
-    size_t getNumColumns();
-    size_t getNumRows();
-
-    QPointF getCellCoordinates(size_t row, size_t col);
-
 signals:
     void cellClicked(size_t row, size_t col);
     void cellDoubleClicked(size_t startRow, size_t startCol, size_t endRow, size_t endCol, size_t startRowTable, size_t startColTable, size_t endRowTable, size_t endColTable);

@@ -24,11 +24,6 @@ public:
     void ResetBlackNameLineEdit();
     void NextRound();
 
-    std::pair<QPointF, QPointF> GetButtonCoordinatesOnFirstRow();
-    std::pair<QPointF, QPointF> GetButtonCoordinatesOnSecondRow();
-    std::pair<QPointF, QPointF> GetButtonCoordinatesOnFirstColumn();
-    std::pair<QPointF, QPointF> GetButtonCoordinatesOnSecondColumn();
-
    // void drawLine(const QPointF& startPoint, const QPointF& endPoint);
     void paintEvent(QPaintEvent* event);
 
