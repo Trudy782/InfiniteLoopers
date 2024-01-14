@@ -27,6 +27,7 @@ public:
 	bool MoveLink(bool& castig, const size_t row1, const size_t col1, const size_t row2, const size_t col2);
 	Player& currentPlayer();
 	void showLinks(const Player& player);
+	bool LinkConfiguration(const size_t row1, const size_t col1, const size_t row2, const size_t col2);
 
 	void SwitchColorMenu(bool& validMove);
 	void MainMenu(bool& validMove, bool& castig);

@@ -90,15 +90,31 @@ void Board::RemovePeg(size_t destroyedRow, size_t destroyedCol)
 	}
 }
 
-void Board::RemoveLink(size_t destroyedRow1, size_t destroyedCol1, size_t destroyedRow2, size_t destroyedCol2)
+bool Board::RemoveLink(size_t destroyedRow1, size_t destroyedCol1, size_t destroyedRow2, size_t destroyedCol2)
 {
 	Peg::Position position_peg1 = { destroyedRow1, destroyedCol1 };
 	Peg::Position position_peg2 = { destroyedRow2, destroyedCol2 };
 
-	m_links.erase(std::remove_if(m_links.begin(), m_links.end(),
+	auto it = std::remove_if(m_links.begin(), m_links.end(),
 		[&](const Link& link) {
 			return link.GetPegStart()->GetPosition() == position_peg1 && link.GetPegEnd()->GetPosition() == position_peg2;
-		}), m_links.end());
+		});
+
+	if (it != m_links.end()) {
+		// Ob?inem ??ru?ii implica?i în link
+		const Peg& peg1 = *(*it).GetPegStart();
+		const Peg& peg2 = *(*it).GetPegEnd();
+
+		// Actualiz?m listele de adiacen?? ale ??ru?ilor
+		UpdateAdjacencyList(&peg1, peg2);
+		UpdateAdjacencyList(&peg2, peg1);
+
+		// ?tergem link-ul din vectorul de link-uri
+
+		m_links.erase(it, m_links.end());
+		return true;
+	}
+	return false;
 }
 
 

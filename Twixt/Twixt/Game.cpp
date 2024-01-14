@@ -410,7 +410,7 @@ void Game::MovePeg(const size_t row, const size_t col) {
 
 	m_board[position] = p;
 
-	
+
 }
 
 bool Game::MoveLink(bool& castig, const size_t row1, const size_t col1, const size_t row2, const size_t col2)
@@ -483,6 +483,11 @@ void Game::showLinks(const Player& player) {
 		}
 	}
 	std::cout << std::endl;
+}
+
+bool Game::LinkConfiguration(const size_t row1, const size_t col1, const size_t row2, const size_t col2)
+{
+	return m_board.RemoveLink(row1, col1, row2, col2);
 }
 
 

@@ -3,6 +3,7 @@
 #include <QtWidgets/QMainWindow>
 #include "Game.h"
 #include "ClickableTable.h"
+#include "CustomLine.h"
 #include<QTextBlock>
 #include <QLabel>
 
@@ -24,7 +25,7 @@ public:
     void ResetBlackNameLineEdit();
     void NextRound();
 
-   // void drawLine(const QPointF& startPoint, const QPointF& endPoint);
+    // void drawLine(const QPointF& startPoint, const QPointF& endPoint);
     void paintEvent(QPaintEvent* event);
 
 
@@ -42,7 +43,7 @@ private:
     QPushButton* btnNextRound;
     QPointF startPoint;
     QPointF endPoint;
-    QList<QLineF> drawnLines;
+    QList<CustomLine> drawnLines;
     bool justOnePeg = false;
     QLabel* playerNameRound;
 

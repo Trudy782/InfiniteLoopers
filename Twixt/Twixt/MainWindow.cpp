@@ -92,18 +92,18 @@ void MainWindow::NextRound()
 void MainWindow::paintEvent(QPaintEvent* event)
 {
     Q_UNUSED(event);
-    // Apeleaz? func?ia pentru a desena o linie
 
     QPainter painter(this);
-    
-    painter.setPen(QPen(Qt::darkGray, 2));
+    painter.setPen(QPen(Qt::black, 2));
 
-
-    // Deseneaz? liniile stocate în list?
-    for (const QLineF& line : drawnLines)
+    for (const CustomLine& line : drawnLines)
     {
-        painter.drawLine(line);
+        if (line.isActive)
+        {
+            painter.drawLine(line);
+        }
     }
+
 }
 
 void MainWindow::handleCellClicked(size_t row, size_t col)
@@ -111,7 +111,7 @@ void MainWindow::handleCellClicked(size_t row, size_t col)
 
     QPushButton* clickedButton = qobject_cast<QPushButton*>(clickableTable->gridLayout->itemAtPosition(row, col)->widget());
 
-    if (g.PegValidation(row,col) && justOnePeg==false)
+    if (g.PegValidation(row, col) && justOnePeg == false)
     {
         g.MovePeg(row, col);
         if (g.GetIsRedTurn())
@@ -186,29 +186,40 @@ void MainWindow::handleCellDoubleClicked(size_t startRow, size_t startCol, size_
     // Ac?iuni specifice unui dublu clic în MainWindow utilizând coordonatele de început ?i sfâr?it
     qDebug() << "Double click detected in MainWindow!" << startRow << " " << startCol << " to " << endRow << " " << endCol << "\n"
         << startRowTable << " " << endRowTable << " " << endRowTable << " " << endColTable;
-    // Ad?ug? aici codul specific pentru dublu clic în fereastra principal?
-    // Converti?i size_t în float sau double
-    bool castig = false;
-    if (g.MoveLink(castig, startRowTable, startColTable, endRowTable, endColTable)) {
-        float xfFloat = static_cast<float>(startRow);
-        float yfFloat = static_cast<float>(startCol);
-
-        float xsFloat = static_cast<float>(endRow);
-        float ysFloat = static_cast<float>(endCol);
-
-        // Creeaz? un obiect QPointF
-        startPoint = { xfFloat,yfFloat };
-        endPoint = { xsFloat,ysFloat };
-
-        QLineF line(startPoint, endPoint);
-        drawnLines.append(line);
-
-        qDebug() << "Updating MainWindow..." << size();
+    Position start = { startRow, startCol };
+    Position end = { endRow, endCol };
+    // e deja acolo, il elimin
+    if (g.LinkConfiguration(startRowTable, startColTable, endRowTable, endColTable))
+    {
+        RemoveLineByStartEnd(drawnLines, start, end);
         update();
-        if (castig == true)
-        {
-            QString qtString = QString::fromStdString(g.currentPlayer().GetName());
-            ShowInfoMessage(qtString + " a castigat!");
+    }
+    else if (g.LinkConfiguration(endRowTable, endColTable, startRowTable, startColTable))
+    {
+        RemoveLineByStartEnd(drawnLines, end, start);
+        update();
+    }
+    else {
+
+        bool castig = false;
+        if (g.MoveLink(castig, startRowTable, startColTable, endRowTable, endColTable)) {
+            float xfFloat = static_cast<float>(startRow);
+            float yfFloat = static_cast<float>(startCol);
+
+            float xsFloat = static_cast<float>(endRow);
+            float ysFloat = static_cast<float>(endCol);
+
+
+            CustomLine customLine(QPointF(xfFloat, yfFloat), QPointF(xsFloat, ysFloat), true, start, end);
+            drawnLines.append(customLine);
+
+            qDebug() << "Updating MainWindow..." << size();
+            update();
+            if (castig == true)
+            {
+                QString qtString = QString::fromStdString(g.currentPlayer().GetName());
+                ShowInfoMessage(qtString + " a castigat!");
+            }
         }
     }
 
@@ -249,7 +260,7 @@ void MainWindow::StartGameClicked()
 
     playerNameRound->setAlignment(Qt::AlignBottom);
     layout->addWidget(playerNameRound);
-    
+
     btnNextRound = new QPushButton(this);
     btnNextRound->setText("Next Round");
     layout->addWidget(btnNextRound);
