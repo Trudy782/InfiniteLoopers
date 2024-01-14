@@ -37,7 +37,7 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>6.7.0_msvc2019_64</QtInstall>
+    <QtInstall>6.6.1_msvc2019_64</QtInstall>
     <QtModules>core;gui;widgets</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
@@ -95,6 +95,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ClickableTable.cpp" />
+    <ClCompile Include="CustomLine.cpp" />
     <ClCompile Include="Peg.cpp" />
     <ClCompile Include="Player.cpp" />
     <QtRcc Include="MainWindow.qrc" />
@@ -115,6 +116,7 @@
     <ClInclude Include="Buldozerist.h" />
     <ClInclude Include="Card.h" />
     <QtMoc Include="ClickableTable.h" />
+    <ClInclude Include="CustomLine.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Link.h" />
     <ClInclude Include="Peg.h" />
