@@ -417,12 +417,11 @@ bool Game::MovePeg(const size_t row, const size_t col) {
 	return false;
 }
 
-bool Game::MoveLink(bool& castig)
+bool Game::MoveLink(bool& castig, const size_t row1, const size_t col1, const size_t row2, const size_t col2)
 {
 	Board::Position startCoordinates, endCoordinates;
-	std::pair< Board::Position, Board::Position> get = m_board.GetNextActionLink();
-	startCoordinates = get.first;
-	endCoordinates = get.second;
+	startCoordinates = { row1,col1 };
+	endCoordinates = { row2,col2 };
 
 	if (m_board[startCoordinates].has_value()) {
 		const std::optional<Peg>& start = m_board[startCoordinates];
@@ -438,6 +437,7 @@ bool Game::MoveLink(bool& castig)
 					std::shared_ptr<Peg> start = std::make_shared<Peg>(startPeg);
 					std::shared_ptr<Peg> end = std::make_shared<Peg>(endPeg);
 					Link link{ start, end };
+
 					m_board.AddLink(link);
 					startPeg.AddAdjacentPeg(endPeg);
 					endPeg.AddAdjacentPeg(startPeg);

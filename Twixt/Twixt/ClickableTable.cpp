@@ -1,83 +1,58 @@
 #include "ClickableTable.h"
 #include <QDebug>
+#include <QMessageBox>
 
 
 ClickableTable::ClickableTable(size_t rows, size_t cols, QWidget* parent)
-    : QWidget(parent), numRows(rows), numCols(cols)
+    : QWidget(parent), numRows(rows), numCols(cols), doubleClick(false)
 {
     gridLayout = new QGridLayout(this);
     initializeTable();
 }
 
-//void ClickableTable::initializeTable()
-//{
-//    for (int row = 0; row < numRows; ++row)
-//    {
-//        for (int col = 0; col < numCols; ++col)
-//        {
-//            QPushButton* button = new QPushButton(this);
-//            button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-//
-//            connect(button, &QPushButton::clicked, this, &ClickableTable::handleCellClick);
-//
-//            // Ini?ializeaz? ?i configureaz? un timer pentru a gestiona dublu click-ul
-//            doubleClickTimer = new QTimer(this);
-//            doubleClickTimer->setSingleShot(true);  // Configur? timer-ul s? ruleze doar o dat?
-//            connect(doubleClickTimer, &QTimer::timeout, this, &ClickableTable::handleCellClick);
-//
-//            gridLayout->addWidget(button, row, col);
-//            // Set a property to store the row and column information
-//            button->setProperty("row", row);
-//            button->setProperty("col", col);
-//        }
-//    }
-//}
-//
-//void ClickableTable::handleCellClick()
-//{
-//
-//    
-//    QPushButton* clickedButton = qobject_cast<QPushButton*>(sender());
-//    if (clickedButton)
-//    {
-//        int row = clickedButton->property("row").toInt();
-//        int col = clickedButton->property("col").toInt();
-//        emit cellClicked(row, col);
-//
-//        // Verific? dac? timer-ul ruleaz? deja (indicând c? un click anterior a avut loc)
-//        if (doubleClickTimer->isActive()) {
-//            // Este un dublu click
-//            qDebug() << "2 click!" << row << " " << col << "\n";
-//            doubleClickTimer->stop();  // Opre?te timer-ul
-//        }
-//        else {
-//            qDebug() << "1 click!" << row << " " << col << "\n";
-//
-//            // Este un click simplu, a?a c? începe timer-ul pentru a a?tepta un posibil dublu click
-//            doubleClickTimer->start(doubleClickInterval);
-//        }
-//    }
-//}
+void ClickableTable::showInfoMessage(const QString& message)
+{
+    QMessageBox::information(this, "Informa?ie", message);
+}
+
+void ClickableTable::drawLineBetweenCells(size_t& startRow, size_t& startCol)
+{
+    size_t dim_cell_h;
+    size_t dim_cell_w;
+    dim_cell_h = (size().height() - 80) / numRows;
+
+
+    dim_cell_w = (size().width() - 60) / numCols;
+
+
+
+    // Calculeaz? coordonatele pixelilor pentru cele dou? celule
+    startCol = startCol * dim_cell_w + 60 + dim_cell_w / 2 - dim_cell_w / 4; // 60 este offset-ul de la marginea stâng?
+    startRow = startRow * dim_cell_h + 80; // 80 este offset-ul de sus
+
+    // Restul codului...
+}
+
 
 void ClickableTable::initializeTable()
 {
-    
+
     for (int row = 0; row < numRows; ++row)
     {
         for (int col = 0; col < numCols; ++col)
         {
             QPushButton* button = new QPushButton(this);
-           
+
             // Seteaz? un stil personalizat
             QString style = "QPushButton {"
                 "  border-radius: 20px; "
                 "  border: 2px solid lightgrey;"  // Contur gri deschis
                 "  background-color: transparent;" // Fundal transparent
-                
+
                 "}";
             button->setStyleSheet(style);
 
-            button->setFixedSize(QSize(40, 40)); 
+            button->setFixedSize(QSize(40, 40));
 
             button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -88,11 +63,15 @@ void ClickableTable::initializeTable()
            /* QTimer* doubleClickTimer = new QTimer(this);
             doubleClickTimer->setSingleShot(true);
             connect(doubleClickTimer, &QTimer::timeout, this, &ClickableTable::handleDoubleClick);*/
+            QTimer* doubleClickTimer = new QTimer(this);
+            doubleClickTimer->setSingleShot(true);
+            connect(doubleClickTimer, &QTimer::timeout, this, &ClickableTable::handleDoubleClick);
 
             // Asociaz? fiecare timer cu butonul corespunz?tor
 
             //buttonToTimerMap[button] = doubleClickTimer;
 
+            buttonToTimerMap[button] = doubleClickTimer;
 
             this->gridLayout->addWidget(button, row, col);
             // Seteaz? o proprietate pentru a stoca informa?iile despre rând ?i coloan?
@@ -111,37 +90,50 @@ void ClickableTable::handleCellClick()
 {
     QPushButton* clickedButton = qobject_cast<QPushButton*>(sender());
 
-    //if (clickedButton)
-    //{
-    //    QTimer* doubleClickTimer = buttonToTimerMap.value(clickedButton);
-    //    size_t row = clickedButton->property("row").toInt();
-    //    size_t col = clickedButton->property("col").toInt();
-    //    if (doubleClickTimer->isActive())
-    //    {
-    //        // Este un dublu click
-    //        qDebug() << "Double click!" << row << " " << col << "\n";
-
-    //        doubleClickTimer->stop();
-    //    }
-    //    else
-    //    {
-    //        // Este un click simplu, a?a c? începe timer-ul pentru a a?tepta un posibil dublu click
-    //        doubleClickTimer->start(doubleClickInterval);
-    //        //qDebug() << "Single click" << row << " " << col << "/n";
-    //        emit cellClicked(row, col);
-
-    //    }
-    //}
-
     if (clickedButton)
     {
-  
+        QTimer* doubleClickTimer = buttonToTimerMap.value(clickedButton);
         size_t row = clickedButton->property("row").toInt();
         size_t col = clickedButton->property("col").toInt();
-        emit cellClicked(row, col);
 
+        if (doubleClickTimer->isActive())
+        {
+            if (doubleClick)
+            {
+                doubleClick = false;
+                endPositionTable = { row, col };
+
+                drawLineBetweenCells(row, col);
+                endPosition = { row,col };
+                qDebug() << "Double click endlink!" << row << " " << col << "\n";
+
+                emit cellDoubleClicked(startPosition.second, startPosition.first, endPosition.second, endPosition.first, startPositionTable.first, startPositionTable.second, endPositionTable.first, endPositionTable.second);
+
+            }
+            else
+            {
+                doubleClick = true;
+                // Swap col and row if necessary
+                startPositionTable = { row,col };
+                drawLineBetweenCells(row, col);
+                startPosition = { row,col };
+                qDebug() << "Double click startlink!" << row << " " << col << "\n";
+            }
+
+            doubleClickTimer->stop();
+        }
+        else
+        {
+            // Este un click simplu, a?a c? începe timer-ul pentru a a?tepta un posibil dublu click
+            doubleClickTimer->start(doubleClickInterval);
+            // qDebug() << "Single click" << row << " " << col << "/n";
+            emit cellClicked(row, col);
+        }
     }
 }
+
+
+
 
 void ClickableTable::handleDoubleClick()
 {
@@ -150,3 +142,5 @@ void ClickableTable::handleDoubleClick()
     qDebug() << "Single click!";
 
 }
+
+

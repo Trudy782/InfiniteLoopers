@@ -1,5 +1,7 @@
 #include "MainWindow.h"
 #include <QDebug>
+#include <QPainter>
+#include <QMessageBox>
 
 
 MainWindow::MainWindow(QWidget* parent)
@@ -7,7 +9,7 @@ MainWindow::MainWindow(QWidget* parent)
 {
     ui.setupUi(this);
 
-    
+
 
     // Initializarea QStackedWidget
     stackedWidget = new QStackedWidget(this);
@@ -16,12 +18,18 @@ MainWindow::MainWindow(QWidget* parent)
     stackedWidget->addWidget(ui.page2);
     // Adaugarea QStackedWidget la layout-ul ferestrei principale
     setCentralWidget(stackedWidget);
-
+    startPoint = QPointF(0, 0);
+    endPoint = QPointF(0, 0);
     SetupConnections();
 }
 
 MainWindow::~MainWindow()
 {}
+
+void MainWindow::ShowInfoMessage(const QString& message)
+{
+    QMessageBox::information(this, "Informatie", message);
+}
 
 void MainWindow::SetupConnections()
 {
@@ -59,10 +67,41 @@ void MainWindow::NextRound()
 
 }
 
+void MainWindow::drawLine(const QPointF& startPoint, const QPointF& endPoint)
+{
+    // Creeaz? un obiect QPainter asociat cu fereastra principal?
+    QPainter painter(this);
+
+    // Seteaz? culoarea ?i grosimea liniei
+    painter.setPen(QPen(Qt::black, 2));
+
+    // Deseneaz? linia între cele dou? puncte
+    painter.drawLine(startPoint, endPoint);
+
+
+}
+
+void MainWindow::paintEvent(QPaintEvent* event)
+{
+    Q_UNUSED(event);
+    // Apeleaz? func?ia pentru a desena o linie
+
+    QPainter painter(this);
+
+    // Seteaz? culoarea ?i grosimea liniei
+    painter.setPen(QPen(Qt::black, 2));
+
+    // Deseneaz? liniile stocate în list?
+    for (const QLineF& line : drawnLines)
+    {
+        painter.drawLine(line);
+    }
+}
+
 void MainWindow::handleCellClicked(size_t row, size_t col)
 {
     // Aici po?i implementa ac?iunile specifice jocului Twixt în func?ie de pozi?ia celulei (row, col)
-    
+
     QPushButton* clickedButton = qobject_cast<QPushButton*>(clickableTable->gridLayout->itemAtPosition(row, col)->widget());
 
     // Seteaz? stilul butonului pentru a-l colora în ro?u
@@ -76,6 +115,8 @@ void MainWindow::handleCellClicked(size_t row, size_t col)
 
     }
 }
+
+
 
 bool MainWindow::CheckData(const QString& size, const QString& redName, const QString& blackName)
 {
@@ -126,6 +167,39 @@ bool MainWindow::CheckData(const QString& size, const QString& redName, const QS
     return true;
 }
 
+void MainWindow::handleCellDoubleClicked(size_t startRow, size_t startCol, size_t endRow, size_t endCol, size_t startRowTable, size_t startColTable, size_t endRowTable, size_t endColTable)
+{
+    // Ac?iuni specifice unui dublu clic în MainWindow utilizând coordonatele de început ?i sfâr?it
+    qDebug() << "Double click detected in MainWindow!" << startRow << " " << startCol << " to " << endRow << " " << endCol << "\n"
+        << startRowTable << " " << endRowTable << " " << endRowTable << " " << endColTable;
+    // Ad?ug? aici codul specific pentru dublu clic în fereastra principal?
+    // Converti?i size_t în float sau double
+    bool castig = false;
+    if (g.MoveLink(castig, startRowTable, startColTable, endRowTable, endColTable)) {
+        float xfFloat = static_cast<float>(startRow);
+        float yfFloat = static_cast<float>(startCol);
+
+        float xsFloat = static_cast<float>(endRow);
+        float ysFloat = static_cast<float>(endCol);
+
+        // Creeaz? un obiect QPointF
+        startPoint = { xfFloat,yfFloat };
+        endPoint = { xsFloat,ysFloat };
+
+        QLineF line(startPoint, endPoint);
+        drawnLines.append(line);
+
+        qDebug() << "Updating MainWindow..." << size();
+        update();
+        if (castig == true)
+        {
+            QString qtString = QString::fromStdString(g.currentPlayer().GetName());
+            ShowInfoMessage(qtString + " a castigat!");
+        }
+    }
+
+}
+
 void MainWindow::StartGameClicked()
 {
     QString size = ui.txtBoardSize->text();
@@ -136,11 +210,11 @@ void MainWindow::StartGameClicked()
         return;
 
     g.Initialize(size.toInt(), redName.toStdString(), blackName.toStdString());
-    
+
     qDebug() << size.toInt() << " " << redName.toStdString() << " " << blackName.toStdString();
 
- 
-    
+
+
     ui.txtBoardSize->setStyleSheet("");
 
     //ascund elemtele ca sa trec la urm pagina
@@ -151,11 +225,13 @@ void MainWindow::StartGameClicked()
     ui.lblRedName->setEnabled(false);
     ui.lblBlackName->setEnabled(false);
     ui.btnStartGame->setEnabled(false);
-    
+
     // Creeaz? ?i afi?eaz? ClickableTable
     clickableTable = new ClickableTable(size.toInt(), size.toInt(), this);
     // Conecteaz? semnalul cellClicked la slotul handleCellClicked
     connect(clickableTable, &ClickableTable::cellClicked, this, &MainWindow::handleCellClicked);
+    connect(clickableTable, &ClickableTable::cellDoubleClicked, this, &MainWindow::handleCellDoubleClicked);
+
     QVBoxLayout* layout = new QVBoxLayout(ui.page2);
     layout->addWidget(clickableTable);
 
@@ -170,8 +246,8 @@ void MainWindow::StartGameClicked()
 
 
     stackedWidget->setCurrentIndex(1);
-    
-    
+
+
 
 }
 
